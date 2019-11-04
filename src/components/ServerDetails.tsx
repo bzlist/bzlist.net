@@ -7,7 +7,7 @@ import {Server, Player, Team} from "../models";
 import * as storage from "../storage";
 import {TimeAgo} from "./TimeAgo";
 import {PlayerRow} from "./PlayerPage";
-import {booleanYesNo, verboseGameStyle} from "../utils";
+import {booleanYesNo, verboseGameStyle, autoPlural} from "../utils";
 
 interface Params{
   address: string;
@@ -185,7 +185,7 @@ export class ServerDetails extends React.Component<Props, State>{
                   </tr>
                   <tr>
                     <th>Drop Bad Flags After</th>
-                    <td>{this.state.server.configuration.dropBadFlags.wins} wins or {this.state.server.configuration.dropBadFlags.time} seconds</td>
+                    <td>{autoPlural(`${this.state.server.configuration.dropBadFlags.wins} win`)} or {autoPlural(`${this.state.server.configuration.dropBadFlags.time} ssecond`)}</td>
                   </tr>
                   <tr>
                     <th>Inertia</th>

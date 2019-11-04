@@ -5,6 +5,7 @@ import * as storage from "../storage";
 import {Player} from "../models";
 import {socket} from "../socket";
 import {TimeAgo} from "./TimeAgo";
+import {autoPlural} from "../utils";
 
 export const PlayerRow = ({player, showServer = true}: {player: Player, showServer: boolean}) => {
   let serverTr;
@@ -123,7 +124,7 @@ export class PlayerPage extends React.Component<any, State>{
           <p className="tagline">With offline and mobile support</p>
         </div>
         <div className="container">
-          <h1>{playerCount} Players and {observerCount} Observers Online</h1>
+          <h1>{autoPlural(`${playerCount} Player`)} and {autoPlural(`${observerCount} Observer`)} Online</h1>
           Updated <TimeAgo timestamp={timestamp}/>.<br/><br/>
           {table}
         </div>

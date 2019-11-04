@@ -5,7 +5,7 @@ import * as storage from "../storage";
 import {Server} from "../models";
 import {socket} from "../socket";
 import {TimeAgo} from "./TimeAgo";
-import {verboseGameStyle, history} from "../utils";
+import {verboseGameStyle, history, autoPlural} from "../utils";
 
 const ServerRow = ({server}: {server: Server}) => (
   <tr onClick={() => history.push(`/s/${server.address}/${server.port}`)}>
@@ -145,7 +145,7 @@ export class HomePage extends React.Component<any, State>{
         </div>
         <div className="container">
           <h1>{this.state.servers.length} Public Servers Online</h1>
-          {playerCount} players and {observerCount} observers online. Updated <TimeAgo timestamp={timestamp}/>.<br/><br/>
+          {autoPlural(`${playerCount} player`)} and {autoPlural(`${observerCount} observer`)} online. Updated <TimeAgo timestamp={timestamp}/>.<br/><br/>
           {table}
           <button className="btn btn-primary" onClick={() => this.showMore()} style={{margin:"22px 32px"}}>{this.state.serversToShow > 0 ? "Show All" : "Show Less"}</button>
         </div>
