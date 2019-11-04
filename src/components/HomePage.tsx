@@ -21,6 +21,7 @@ interface State{
   servers: Server[];
   sort: string;
   sortOrder: number;
+  serversToShow: number;
 }
 
 export class HomePage extends React.Component<any, State>{
@@ -35,7 +36,8 @@ export class HomePage extends React.Component<any, State>{
     this.state = {
       servers: JSON.parse(serverCache),
       sort: "playersCount",
-      sortOrder: 1
+      sortOrder: 1,
+      serversToShow: 10
     };
 
     socket.on<Server[]>("servers", (data: Server[]) => {
@@ -45,7 +47,7 @@ export class HomePage extends React.Component<any, State>{
     socket.emit("servers");
   }
 
-  sortBy(sort: string, sortOrder: number){
+  sortBy(sort: string, sortOrder: number): void{
     if(this.state.sort === sort){
       this.setState({sortOrder: -this.state.sortOrder});
     }else{
@@ -63,7 +65,15 @@ export class HomePage extends React.Component<any, State>{
       servers.sort((a: Server, b: Server) => a[this.state.sort] > b[this.state.sort] ? -this.state.sortOrder : this.state.sortOrder);
     }
 
-    return servers;
+    return servers.slice(0, this.state.serversToShow > 0 ? this.state.serversToShow : this.state.servers.length);
+  }
+
+  showMore(): void{
+    if(this.state.serversToShow > 0){
+      this.setState({serversToShow: 0});
+    }else{
+      this.setState({serversToShow: 10});
+    }
   }
 
   render(): JSX.Element{
@@ -137,6 +147,7 @@ export class HomePage extends React.Component<any, State>{
           <h1>{this.state.servers.length} Public Servers Online</h1>
           {playerCount} players and {observerCount} observers online. Updated <TimeAgo timestamp={timestamp}/>.<br/><br/>
           {table}
+          <button className="btn btn-primary" onClick={() => this.showMore()} style={{margin:"22px 32px"}}>{this.state.serversToShow > 0 ? "Show All" : "Show Less"}</button>
         </div>
       </div>
     );

@@ -102,6 +102,17 @@ a:hover{
   padding: 0 14px;
 }
 
+.btn-primary{
+  background-color: $color-primary;
+  color: #FFF;
+  border: 1px solid $color-primary;
+
+  &:hover{
+    background-color: darken($color-primary, 5%);
+    border-color: darken($color-primary, 5%);
+  }
+}
+
 .wrapper{
   width: 85vw;
   margin: 0 auto;
