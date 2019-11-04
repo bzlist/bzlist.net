@@ -4,6 +4,7 @@ import "./PlayerPage.scss";
 import * as storage from "../storage";
 import {Player} from "../models";
 import {socket} from "../socket";
+import {TimeAgo} from "./TimeAgo";
 
 const PlayerRow = ({player}: {player: Player}) => (
   <tr>
@@ -97,11 +98,16 @@ export class PlayerPage extends React.Component<any, State>{
       );
     }
 
-    // calculate number of players and observers
+    // calculate number of players and observers and get timestamp
     let playerCount = 0;
     let observerCount = 0;
+    let timestamp = -1;
     for(const player of this.state.players){
       player.team === "Observer" ? observerCount++ : playerCount++;
+
+      if(player.timestamp > timestamp){
+        timestamp = player.timestamp;
+      }
     }
 
     return (
@@ -112,7 +118,7 @@ export class PlayerPage extends React.Component<any, State>{
         </div>
         <div className="container">
           <h1>{playerCount} Players and {observerCount} Observers Online</h1>
-          {playerCount} players and {observerCount} observers online.<br/><br/>
+          Updated <TimeAgo timestamp={timestamp}/>.<br/><br/>
           {table}
         </div>
       </div>

@@ -4,6 +4,7 @@ import "./HomePage.scss";
 import * as storage from "../storage";
 import {Server} from "../models";
 import {socket} from "../socket";
+import {TimeAgo} from "./TimeAgo";
 
 const ServerRow = ({server}: {server: Server}) => (
   <tr>
@@ -107,9 +108,10 @@ export class HomePage extends React.Component<any, State>{
       );
     }
 
-    // calculate number of players and observers
+    // calculate number of players and observers and get timestamp
     let playerCount = 0;
     let observerCount = 0;
+    let timestamp = -1;
     for(const server of this.state.servers){
       playerCount += server.playersCount;
 
@@ -117,6 +119,10 @@ export class HomePage extends React.Component<any, State>{
       if(observerTeam){
         playerCount -= observerTeam.players;
         observerCount += observerTeam.players;
+      }
+
+      if(server.timestamp > timestamp){
+        timestamp = server.timestamp;
       }
     }
 
@@ -128,7 +134,7 @@ export class HomePage extends React.Component<any, State>{
         </div>
         <div className="container">
           <h1>{this.state.servers.length} Public Servers Online</h1>
-          {playerCount} players and {observerCount} observers online.<br/><br/>
+          {playerCount} players and {observerCount} observers online. Updated <TimeAgo timestamp={timestamp}/>.<br/><br/>
           {table}
         </div>
       </div>
