@@ -78,12 +78,14 @@ a:hover{
   border: none;
   border-radius: $border-radius;
   outline: none;
+  box-sizing: border-box;
   cursor: pointer;
   user-select: none;
 }
 
 .btn:hover{
   background-color: var(--color-hover);
+  text-decoration: none;
 }
 
 .btn[disabled]{
@@ -106,6 +108,34 @@ a:hover{
   @media screen and (max-width: $breakpoint-mobile){
     padding: 12px 8px;
   }
+}
+
+table{
+  width: 100%;
+  border-collapse: collapse;
+}
+
+tr{
+  height: 36px;
+}
+
+tr:hover{
+  background-color: var(--color-hover);
+}
+
+td, th{
+  padding: 0 8px;
+}
+
+td{
+  font-size: 14px;
+}
+
+th{
+  font-size: 12px;
+  font-weight: normal;
+  text-align: left;
+  cursor: pointer;
 }
 
 .list-shimmer{

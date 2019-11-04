@@ -1,4 +1,5 @@
 export interface Player{
+  [index: string]: any;
   callsign: string;
   motto: string;
   server: string;

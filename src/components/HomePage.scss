@@ -1,0 +1,29 @@
+@import "../variables.scss";
+
+.header{
+  width: 85vw;
+  margin: 0 auto;
+  padding: 48px 0;
+
+  .headline{
+    color: $color-primary;
+    font-size: 44px;
+    font-weight: normal;
+  }
+
+  .tagline{
+    font-size: 22px;
+  }
+
+  @media screen and (max-width: $breakpoint-mobile){
+    width: 90vw;
+
+    .headline{
+      font-size: 30px;
+    }
+
+    .tagline{
+      font-size: 20px;
+    }
+  }
+}

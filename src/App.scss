@@ -55,62 +55,6 @@
   box-sizing: border-box;
 }
 
-table{
-  width: 100%;
-  border-collapse: collapse;
-}
-
-tr{
-  height: 36px;
-}
-
-tr:hover{
-  background-color: var(--color-hover);
-}
-
-td, th{
-  padding: 0 8px;
-}
-
-td{
-  font-size: 14px;
-}
-
-th{
-  font-size: 12px;
-  font-weight: normal;
-  text-align: left;
-  cursor: pointer;
-}
-
-.header{
-  width: 85vw;
-  margin: 0 auto;
-  padding: 48px 0;
-
-  .headline{
-    color: $color-primary;
-    font-size: 44px;
-    font-weight: normal;
-  }
-
-  .tagline{
-    font-size: 22px;
-  }
-
-  @media screen and (max-width: $breakpoint-mobile){
-    width: 90vw;
-
-    .headline{
-      font-size: 30px;
-    }
-
-    .tagline{
-      font-size: 20px;
-    }
-  }
-}
-
 footer{
   width: 80vw;
   margin: 16px auto;
