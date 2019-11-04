@@ -3,7 +3,7 @@ import {Router, Route, Switch, Link} from "react-router-dom";
 import {createBrowserHistory} from "history";
 import "./App.scss";
 
-import {HomePage, PlayerPage, PrivacyPolicy} from "./components";
+import {HomePage, PlayerPage, PrivacyPolicy, TermsOfService} from "./components";
 
 const history = createBrowserHistory();
 
@@ -27,6 +27,7 @@ class App extends React.Component{
           <Switch>
             <Route path="/players" component={PlayerPage}/>
             <Route path="/privacy-policy" component={PrivacyPolicy}/>
+            <Route path="/terms-of-service" component={TermsOfService}/>
             <Route path="/" component={HomePage}/>
           </Switch>
         </div>
@@ -34,7 +35,7 @@ class App extends React.Component{
           <div className="links">
             <a href="https://github.com/bzlist/bzlist.net-react" target="_blank" rel="noopener noreferrer">GitHub</a> •&nbsp;
             <a href="https://github.com/gosquared/flags/blob/master/LICENSE.txt" target="_blank" rel="noopener noreferrer">GoSquared's Flags License</a> •&nbsp;
-            <a href="https://bzlist.net/terms-of-service">Terms of Service</a> •&nbsp;
+            <Link to="/terms-of-service">Terms of Service</Link> •&nbsp;
             <Link to="/privacy-policy">Privacy Policy</Link>
           </div>
           <div className="copyright">Copyright &copy; 2019 The Noah</div>
