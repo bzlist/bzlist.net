@@ -1,3 +1,5 @@
+The official bzlist.net project is located at https://github.com/bzlist/bzlist.net - this is a port of it to React.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

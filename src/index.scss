@@ -1,0 +1,135 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,700&display=swap");
+
+@import "variables.scss";
+
+@font-face{
+  font-family: "Segoe MDL2";
+  src: url(/SegMDL2.ttf) format("truetype");
+}
+
+*{
+  font-family: Montserrat, sans-serif;
+}
+
+html{
+  --bg: #FFF;
+  --bg-one: #AFAFAF;
+  --bg-two: #BFBFBF;
+  --bg-three: #DFDFDF;
+  --bg-light: #FFF;
+  --color-hover: rgba(0, 0, 0, .05);
+  --color-hover-light: rgba(0, 0, 0, .02);
+  --color-hover-dark: rgba(0, 0, 0, .1);
+  --color-text-headings: #606060;
+  --color-text: #606060;
+  --color-text-lighter: #6A6A6A;
+  --color-text-light: #707070;
+  --color-base: 255, 255, 255;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  color: var(--color-text);
+  background-color: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3{
+  margin: 0;
+  color: var(--color-text-headings);
+}
+
+h2, h3{
+  font-weight: 500;
+}
+
+h1{
+  font-size: 32px;
+}
+
+a{
+  color: $color-primary;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:hover{
+  color: lighten($color-primary, 10%);
+  text-decoration: underline;
+}
+
+.icon{
+  font-family: "Segoe MDL2";
+  font-weight: normal;
+}
+
+.btn{
+  min-width: 70px;
+  margin: 0 2px;
+  padding: 0 18px;
+  background: transparent;
+  color: var(--color-text);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 30px;
+  display: inline-block;
+  border: none;
+  border-radius: $border-radius;
+  outline: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn:hover{
+  background-color: var(--color-hover);
+}
+
+.btn[disabled]{
+  color: var(--color-text-lighter);
+  background-color: var(--color-hover);
+}
+
+.btn svg{
+  fill: var(--color-text);
+}
+
+.btn.icon{
+  min-width: 0;
+  padding: 0 14px;
+}
+
+.container{
+  padding: 28px 32px;
+
+  @media screen and (max-width: $breakpoint-mobile){
+    padding: 12px 8px;
+  }
+}
+
+.list-shimmer{
+  width: 90vw;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.list-shimmer li{
+  height: 16px;
+  margin: 18px 0;
+  background: linear-gradient(to right, var(--color-hover-dark) 4%, var(--color-hover) 25%, var(--color-hover-dark) 36%);
+  background-size: 1000px 100%;
+  border-radius: 2;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer{
+  0%{
+    background-position: -1000px 0;
+  }
+
+  100%{
+    background-position: 1000px 0;
+  }
+}
