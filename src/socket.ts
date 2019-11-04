@@ -7,8 +7,8 @@ class Socket{
     this.socket = io.connect("https://api.bzlist.net");
   }
 
-  emit(event: string): void{
-    this.socket.emit(event);
+  emit(event: string, data: any = null): void{
+    this.socket.emit(event, data);
   }
 
   on<T>(event: string, callback: (data: T) => void): void{

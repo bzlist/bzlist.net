@@ -1,6 +1,6 @@
 import {Player} from "./player.model";
 
-interface Team{
+export interface Team{
   name: string;
   players: number;
   maxPlayers: number;

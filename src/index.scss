@@ -109,8 +109,13 @@ a:hover{
 
   &:hover{
     background-color: darken($color-primary, 5%);
+    color: #FFF;
     border-color: darken($color-primary, 5%);
   }
+}
+
+.outline{
+  border: 1px solid var(--color-text-light);
 }
 
 .wrapper{

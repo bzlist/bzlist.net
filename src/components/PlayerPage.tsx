@@ -6,14 +6,20 @@ import {Player} from "../models";
 import {socket} from "../socket";
 import {TimeAgo} from "./TimeAgo";
 
-const PlayerRow = ({player}: {player: Player}) => (
-  <tr>
-    <td key={player.callsign}>{player.callsign} {player.motto ? (<i>({player.motto})</i>) : ""}</td>
-    <td key={player.score}>{player.score}</td>
-    <td key={player.team}>{player.team}</td>
-    <td key={player.server}>{player.server}</td>
-  </tr>
-);
+export const PlayerRow = ({player, showServer = true}: {player: Player, showServer: boolean}) => {
+  let serverTr;
+  if(player.server && showServer){
+    serverTr = <td key={player.server}>{player.server}</td>;
+  }
+  return (
+    <tr>
+      <td key={player.callsign}>{player.callsign} {player.motto ? (<i>({player.motto})</i>) : ""}</td>
+      <td key={player.wins - player.losses}>{player.wins - player.losses}</td>
+      <td key={player.team}>{player.team}</td>
+      {serverTr}
+    </tr>
+  )
+};
 
 interface State{
   players: Player[];
@@ -73,7 +79,7 @@ export class PlayerPage extends React.Component<any, State>{
             </tr>
           </thead>
           <tbody>
-            {this.getPlayers().map((player: Player) => <PlayerRow player={player}/>)}
+            {this.getPlayers().map((player: Player) => <PlayerRow player={player} showServer={true}/>)}
           </tbody>
         </table>
       );

@@ -1,11 +1,9 @@
 import React from "react";
 import {Router, Route, Switch, Link} from "react-router-dom";
-import {createBrowserHistory} from "history";
 import "./App.scss";
 
-import {HomePage, PlayerPage, PrivacyPolicy, TermsOfService, Help} from "./components";
-
-const history = createBrowserHistory();
+import {HomePage, PlayerPage, PrivacyPolicy, TermsOfService, Help, ServerDetails} from "./components";
+import {history} from "./utils";
 
 class App extends React.Component{
   render(): JSX.Element{
@@ -29,6 +27,7 @@ class App extends React.Component{
             <Route path="/privacy-policy" component={PrivacyPolicy}/>
             <Route path="/terms-of-service" component={TermsOfService}/>
             <Route path="/Help" component={Help}/>
+            <Route path="/s/:address/:port" component={ServerDetails}/>
             <Route path="/" component={HomePage}/>
           </Switch>
         </div>
