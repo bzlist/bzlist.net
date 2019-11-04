@@ -10,9 +10,8 @@
   position: absolute;
   top: 0;
 
-  .logo{
+  .logo, .logo svg{
     height: 24px;
-    outline: none;
   }
 
   .btn{
@@ -27,7 +26,7 @@
     margin: 8px 0;
     padding: 0 12px;
 
-    .logo{
+    .logo, .logo svg{
       height: 18px;
     }
 
