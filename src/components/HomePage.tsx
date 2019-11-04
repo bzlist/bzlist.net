@@ -5,13 +5,14 @@ import * as storage from "../storage";
 import {Server} from "../models";
 import {socket} from "../socket";
 import {TimeAgo} from "./TimeAgo";
+import {verboseGameStyle} from "../utils";
 
 const ServerRow = ({server}: {server: Server}) => (
   <tr>
     <td key={server.playersCount}>{server.playersCount}</td>
     <td key={`${server.address}:${server.port}`}>{server.address}:{server.port}</td>
     <td key={server.country}><img src={`https://countryflags.io/${server.countryCode}/flat/32.png`} alt={server.countryCode} title={server.country}/></td>
-    <td key={server.configuration.gameStyle}>{server.configuration.gameStyle}</td>
+    <td key={server.configuration.gameStyle} title={verboseGameStyle(server.configuration.gameStyle)}>{server.configuration.gameStyle}</td>
     <td key={server.title}>{server.title}</td>
   </tr>
 );
