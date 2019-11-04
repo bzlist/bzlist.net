@@ -102,6 +102,17 @@ a:hover{
   padding: 0 14px;
 }
 
+.wrapper{
+  width: 85vw;
+  margin: 0 auto;
+  margin-top: 64px;
+
+  @media screen and (max-width: $breakpoint-mobile){
+    width: 90vw;
+    margin-top: 32px;
+  }
+}
+
 .container{
   padding: 28px 32px;
 
