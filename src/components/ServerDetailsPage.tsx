@@ -119,16 +119,19 @@ export class ServerDetailsPage extends React.Component<Props, State>{
         <div className="container"><h1 className="title">{this.state.server.title}</h1></div>
         <div style={{"background":"var(--bg)"}}>
           <div className="server-header">
-            <div><button className="play" onClick={() => this.setState({selectTeam: true})} title="Requires BZFlag Launcher">&#9658; Play</button></div>
-            <div style={{position:"relative",bottom:"2px"}}>
+            <div className="mobile-hide"><button className="play" onClick={() => this.setState({selectTeam: true})} title="Requires BZFlag Launcher">&#9658; Play</button></div>
+            <div>
               <img src={`https://countryflags.io/${this.state.server.countryCode}/flat/32.png`} style={{"margin":"0 6px -10px 0"}} alt=""/>
-              <b>{this.state.server.country}</b>
+              {this.state.server.country}
             </div>
-            <div style={{position:"relative",top:"4px"}}><b>Updated</b><br/><small><TimeAgo timestamp={this.state.server.timestamp}/></small></div>
+            <div><b>{autoPlural(`${this.state.server.playersCount} Player`)}</b></div>
+          </div><br/>
+          <div style={{width:"90vw",margin:"0 auto"}}>
+            Updated <TimeAgo timestamp={this.state.server.timestamp}/>.
           </div>
           <div className="container content">
             <div>
-              <h1>Info</h1><br/>
+              <h2>Info</h2><br/>
               <table>
                 <tbody>
                   <tr>
@@ -195,7 +198,7 @@ export class ServerDetailsPage extends React.Component<Props, State>{
               </table>
             </div>
             <div>
-              <h1>{playerCount} Players and {observerCount} Observers Online</h1><br/>
+              <h2>{autoPlural(`${playerCount} Player`)} and {autoPlural(`${observerCount} Observer`)} Online</h2><br/>
               <table>
               <thead>
                 <tr>

@@ -12,34 +12,26 @@
   color: #EEE;
   font-size: 38px;
   font-weight: normal;
-  text-shadow: 0 1px 8px var(--color-text-headings);
+  text-shadow: 0 1px 8px #000;
+
+  @media screen and (max-width: $breakpoint-mobile){
+    font-size: 30px;
+  }
 }
 
 .server-header{
+  height: 32px;
   padding: 8px 18px;
-  background-color: var(--bg);
-  transition: 200ms;
 
   div{
-    margin-right: 32px;
+    margin-right: 48px;
     display: inline-block;
-    height: 38px;
     line-height: .9em;
-  }
 
-  b{
-    text-transform: uppercase;
-    font-weight: 500;
+    @media screen and (max-width: $breakpoint-mobile){
+      margin-right: 22px;
+    }
   }
-}
-
-.header-fixed{
-  width: 100vw;
-  box-shadow: $shadow;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1;
 }
 
 .play{
@@ -68,10 +60,6 @@
     margin-bottom: 22px;
     flex: 1 350px;
   }
-}
-
-.header-fixed + .content{
-  margin-top: 58px;
 }
 
 .yes{
