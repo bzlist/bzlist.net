@@ -31,7 +31,7 @@ export class Checkbox extends React.Component<Props, State>{
         <div className="checkbox__inner-container">
           <span className="checkox__background">
             <svg className="checkbox__checkmark" xmlSpace="preserve" focusable="false" version="1.1" viewBox="0 0 24 24">
-              <path d="M4.1,12.7 9,17.6 20.3,6.3" fill="none" stroke="white" stroke-width="2"></path>
+              <path d="M4.1,12.7 9,17.6 20.3,6.3" fill="none" stroke="white" strokeWidth="2"></path>
             </svg>
           </span>
         </div>
