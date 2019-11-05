@@ -1,6 +1,22 @@
 {
   "name": "bzlist.net-react",
   "version": "0.1.0",
+  "description": "BZList is an online service providing real-time BZFlag server information.",
+  "homepage": "https://bzlist.net",
+  "license": "GPL-3.0",
+  "keywords": [
+    "bzlist",
+    "bzflag",
+    "bzflag servers"
+  ],
+  "author": "The Noah (https://github.com/The-Noah)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bzlist/bzlist.net-react.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bzlist/bzlist.net-react/issues"
+  },
   "private": true,
   "dependencies": {
     "node-sass": "^4.13.0",
