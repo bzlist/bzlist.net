@@ -211,28 +211,29 @@ a:hover svg{
 
 table{
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0 4px;
 }
 
 tr{
-  height: 36px;
+  height: 32px;
 }
 
 tr:hover{
-  background-color: var(--color-hover);
+  background-color: var(--color-hover-light);
 }
 
 td, th{
   padding: 0 8px;
-}
-
-td{
   font-size: 14px;
+
+  @media screen and (max-width: $breakpoint-mobile){
+    padding: 0 2px;
+  }
 }
 
 th{
   font-size: 12px;
-  font-weight: normal;
   text-align: left;
   cursor: pointer;
 }
@@ -240,10 +241,6 @@ th{
 .table-compact tr,
 .table-compact tr img{
   height: 24px;
-
-  td{
-    font-size: .9em;
-  }
 }
 
 .label{
