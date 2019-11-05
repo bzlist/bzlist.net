@@ -1,4 +1,5 @@
 import React from "react";
+import "./HomePage.scss";
 
 import {cache, socket, verboseGameStyle, history, autoPlural} from "../lib";
 import {Server} from "../models";
@@ -22,6 +23,8 @@ interface State{
 }
 
 export class HomePage extends React.Component<any, State>{
+  mobile = false;
+
   constructor(props: any){
     super(props);
 
@@ -42,6 +45,10 @@ export class HomePage extends React.Component<any, State>{
       cache.set("servers", JSON.stringify(data));
     });
     socket.emit("servers");
+
+    if(window.innerWidth <= 768){
+      this.mobile = true;
+    }
   }
 
   sortBy(sort: string, sortOrder: number): void{
@@ -74,29 +81,62 @@ export class HomePage extends React.Component<any, State>{
   }
 
   render(): JSX.Element{
-    let table;
+    let servers;
 
     if(this.state.servers.length > 0){
-      table = (
-        <table>
-          <thead>
-            <tr>
-              <th onClick={() => this.sortBy("playersCount", 1)}>Players</th>
-              <th onClick={() => this.sortBy("address", -1)}>Address</th>
-              <th onClick={() => this.sortBy("country", -1)}>Country</th>
-              <th onClick={() => this.sortBy("configuration.gameStyle", -1)}>Game Style</th>
-              <th onClick={() => this.sortBy("title", -1)}>Title</th>
-            </tr>
-          </thead>
-          <tbody>
+      if(this.mobile){
+        servers = (
+          <div className="card-list">
             {this.getServers().map((server: Server) =>
-              <ServerRow server={server}/>
+              <div key={`${server.address}:${server.port}`}>
+                <h2>{server.title}</h2><br/>
+                <table style={{width:"100%"}}>
+                  <tbody>
+                    <tr>
+                      <td>Server</td>
+                      <td>{server.address}:{server.port}</td>
+                    </tr>
+                    <tr>
+                      <td>IP Address</td>
+                      <td>{server.ip}</td>
+                    </tr>
+                    <tr>
+                      <td>Game Style</td>
+                      <td>{verboseGameStyle(server.configuration.gameStyle)}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <hr/>
+                <small>
+                  <img src={`https://countryflags.io/${server.countryCode}/flat/16.png`} title={server.country} alt=""/>
+                  {server.country} • {server.playersCount} players online
+                </small>
+              </div>
             )}
-          </tbody>
-        </table>
-      );
+          </div>
+        );
+      }else{
+        servers = (
+          <table>
+            <thead>
+              <tr>
+                <th onClick={() => this.sortBy("playersCount", 1)}>Players</th>
+                <th onClick={() => this.sortBy("address", -1)}>Address</th>
+                <th onClick={() => this.sortBy("country", -1)}>Country</th>
+                <th onClick={() => this.sortBy("configuration.gameStyle", -1)}>Game Style</th>
+                <th onClick={() => this.sortBy("title", -1)}>Title</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.getServers().map((server: Server) =>
+                <ServerRow server={server}/>
+              )}
+            </tbody>
+          </table>
+        );
+      }
     }else{
-      table = (
+      servers = (
         <ul className="list-shimmer">
           <li></li>
           <li></li>
@@ -143,7 +183,7 @@ export class HomePage extends React.Component<any, State>{
         <div className="container">
           <h2>{this.state.servers.length} Public Servers Online</h2>
           {autoPlural(`${playerCount} player`)} and {autoPlural(`${observerCount} observer`)} online. Updated <TimeAgo timestamp={timestamp}/>.<br/><br/>
-          {table}
+          {servers}
           <button className="btn btn-primary" onClick={() => this.showMore()} style={{margin:"22px 32px"}}>{this.state.serversToShow > 0 ? "Show All" : "Show Less"}</button>
         </div>
       </div>

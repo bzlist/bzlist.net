@@ -1,0 +1,24 @@
+@import "../variables.scss";
+
+.card-list{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  & > *{
+    margin: 0 8px;
+    margin-bottom: 16px;
+    padding: 16px 24px;
+    display: block;
+    box-shadow: $shadow;
+    border-radius: $border-radius;
+    flex: 1 0 450px;
+
+    @media screen and (max-width: $breakpoint-mobile){
+      margin: 0 4px;
+      margin-bottom: 16px;
+      flex-basis: 300px;
+    }
+  }
+}
