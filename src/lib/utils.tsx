@@ -31,3 +31,21 @@ export const booleanYesNo = (value: boolean): JSX.Element => {
 export const autoPlural = (value: string): string => {
   return value.split(" ")[0] === "1" ? value : `${value}s`;
 };
+
+export const api =  async (endpoint: string, body: Object, method = "POST"): Promise<any> => {
+  return fetch(`https://api.bzlist.net/users/${endpoint}`, {
+    headers: {
+      "Content-Type": "application/json"
+    },
+    method,
+    body: JSON.stringify(body)
+  }).then((res: Response) => res.json()).catch(console.error);
+};
+
+let _bzLoginURL;
+if(process.env.NODE_ENV === "production"){
+  _bzLoginURL = "https://my.bzflag.org/weblogin.php?action=weblogin&url=https%3A%2F%2Fbzlist.net%2Faccount%3Fusername%3D%25USERNAME%25%26token%3D%25TOKEN%25";
+}else{
+  _bzLoginURL = "https://my.bzflag.org/weblogin.php?action=weblogin&url=http%3A%2F%2Flocalhost%3A3000%2Faccount%3Fusername%3D%25USERNAME%25%26token%3D%25TOKEN%25";
+}
+export const bzLoginURL = _bzLoginURL;

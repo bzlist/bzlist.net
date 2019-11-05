@@ -91,13 +91,23 @@ h2{
   }
 }
 
-a{
+.link{
+  margin: 0;
+  padding: 0;
+  background: none;
+  font-size: 1em;
+  display: inline;
+  border: none;
+  outline: none;
+}
+
+a, .link{
   color: $color-primary;
   text-decoration: none;
   cursor: pointer;
 }
 
-a:hover{
+a:hover, .link:hover{
   color: lighten($color-primary, 10%);
   text-decoration: underline;
 }
