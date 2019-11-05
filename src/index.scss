@@ -147,12 +147,18 @@ a:hover{
 .btn-primary{
   background-color: $color-primary;
   color: #FFF;
+  font-weight: bold;
   border: 1px solid $color-primary;
 
   &:hover{
     background-color: darken($color-primary, 5%);
     color: #FFF;
     border-color: darken($color-primary, 5%);
+  }
+
+  &:active{
+    background-color: darken($color-primary, 10%);
+    border-color: darken($color-primary, 10%);
   }
 }
 
