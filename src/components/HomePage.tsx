@@ -1,6 +1,6 @@
 import React from "react";
 
-import {cache, socket, verboseGameStyle, history, autoPlural} from "../lib";
+import {cache, socket, verboseGameStyle, history, autoPlural, settings} from "../lib";
 import {Server} from "../models";
 import {TimeAgo} from "./TimeAgo";
 
@@ -116,7 +116,7 @@ export class HomePage extends React.Component<any, State>{
         );
       }else{
         servers = (
-          <table>
+          <table className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
             <thead>
               <tr>
                 <th onClick={() => this.sortBy("playersCount", 1)}>Players</th>

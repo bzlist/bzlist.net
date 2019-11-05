@@ -1,7 +1,7 @@
 import React from "react";
 
 import {Player} from "../models";
-import {cache, socket, autoPlural} from "../lib";
+import {cache, socket, autoPlural, settings} from "../lib";
 import {TimeAgo} from "./TimeAgo";
 
 export const PlayerRow = ({player, showServer = true}: {player: Player, showServer: boolean}) => {
@@ -111,7 +111,7 @@ export class PlayerPage extends React.Component<any, State>{
         );
       }else{
         table = (
-          <table>
+          <table className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
             <thead>
               <tr>
                 <th onClick={() => this.sortBy("callsign", -1)}>Callsign</th>

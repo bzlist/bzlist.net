@@ -2,7 +2,7 @@ import React from "react";
 import {match, Link} from "react-router-dom";
 import "./ServerDetailsPage.scss";
 
-import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural} from "../lib";
+import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings} from "../lib";
 import {Server, Player, Team} from "../models";
 import {TimeAgo, PlayerRow} from ".";
 
@@ -132,7 +132,7 @@ export class ServerDetailsPage extends React.Component<Props, State>{
           <div className="container content">
             <div>
               <h2>Info</h2><br/>
-              <table>
+              <table className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
                 <tbody>
                   <tr>
                     <th>Online</th>
@@ -199,7 +199,7 @@ export class ServerDetailsPage extends React.Component<Props, State>{
             </div>
             <div>
               <h2>{autoPlural(`${playerCount} Player`)} and {autoPlural(`${observerCount} Observer`)} Online</h2><br/>
-              <table>
+              <table className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
               <thead>
                 <tr>
                   <th>Callsign</th>

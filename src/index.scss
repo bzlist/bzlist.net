@@ -233,6 +233,15 @@ th{
   cursor: pointer;
 }
 
+.table-compact tr,
+.table-compact tr img{
+  height: 24px;
+
+  td{
+    font-size: .9em;
+  }
+}
+
 .label{
   padding: 2px 0;
   display: inline-block;

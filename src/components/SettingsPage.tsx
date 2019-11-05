@@ -1,7 +1,7 @@
 import React from "react";
 
 import {settings, cache} from "../lib";
-import {Dropdown} from "./Dropdown";
+import {Dropdown, Checkbox} from ".";
 
 const themes = ["Light", "Dark", "Midnight"];
 
@@ -23,6 +23,16 @@ export class SettingsPage extends React.Component<any, State>{
     settings.set("theme", value);
   }
 
+  set(key: string, value: string): void{
+    settings.set(key, value);
+    this.message("Saved");
+  }
+
+  message(message: string): void{
+    this.setState({message});
+    setTimeout(() => this.setState({message: ""}), 3000);
+  }
+
   render(): JSX.Element{
     let currentTheme = settings.get("theme");
     if(currentTheme === ""){
@@ -33,16 +43,17 @@ export class SettingsPage extends React.Component<any, State>{
 
     return (
       <div className="wrapper">
-        <h1>Settings</h1><br/>
+        <h1>Settings</h1>
+        <p>
+          <Checkbox label="Compact Tables" checked={settings.get("compactTables") === "true"} onChange={(value: boolean) => this.set("compactTables", value.toString())}/>
+        </p>
         <span className="label">Theme</span>
         <Dropdown items={themes} selected={currentTheme} onChange={(value: string) => this.setTheme(value.toLowerCase())}/>
         <p>
-          <button className="btn outline" onClick={() => {settings.clear();this.setState({message:"Settings cleared"});}}>Reset</button>
-          <button className="btn outline" onClick={() => {cache.clear();this.setState({message:"Cache cleared"});}}>Clear Cache</button>
+          <button className="btn outline" onClick={() => {settings.clear();this.message("Settings cleared");}}>Reset</button>&nbsp;
+          <button className="btn outline" onClick={() => {cache.clear();this.message("Cache cleared");}}>Clear Cache</button>&nbsp;
+          {this.state.message}
         </p>
-        {this.state.message ?
-          <p>{this.state.message}.</p>
-        : null}
       </div>
     );
   }
