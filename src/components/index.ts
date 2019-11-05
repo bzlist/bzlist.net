@@ -5,4 +5,6 @@ export * from "./TermsOfService";
 export * from "./Help";
 export * from "./TimeAgo";
 export * from "./ServerDetails";
+export * from "./Settings";
+export * from "./Dropdown";
 
