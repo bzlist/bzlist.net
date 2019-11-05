@@ -13,17 +13,20 @@ class App extends React.Component{
   }
 
   async loadSettings(): Promise<void>{
-    const callsign = storage.get("callsign");
-    const token = storage.get("token");
-    if(callsign !== "" && token !== ""){
-      console.log("fetching settings");
-      const data = await api("settings", {callsign, token});
+    if(storage.get("syncSettings") === "true"){
+      const callsign = storage.get("callsign");
+      const token = storage.get("token");
 
-      if(data.error){
-        console.error("error getting settings:", data.error);
-      }else{
-        settings.clear();
-        settings.setJson(data);
+      if(callsign !== "" && token !== ""){
+        console.log("fetching settings");
+        const data = await api("settings", {callsign, token});
+
+        if(data.error){
+          console.error("error getting settings:", data.error);
+        }else{
+          settings.clear();
+          settings.setJson(data);
+        }
       }
     }
 

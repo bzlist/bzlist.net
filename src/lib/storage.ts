@@ -67,6 +67,10 @@ export const cache = new Storage("cache_");
 export const settings = new Storage("setting_");
 
 settings.onChange = (key: string, value: string): void => {
+  if(storage.get("syncSettings") !== "true"){
+    return;
+  }
+
   const callsign = storage.get("callsign");
   const token = storage.get("token");
   if(callsign !== "" && token !== ""){
