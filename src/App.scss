@@ -15,11 +15,15 @@
   }
 
   .btn{
-    color: var(--color-text);
+    font-size: 15px;
   }
 
   nav .btn{
     margin-right: 24px;
+  }
+
+  .btn:hover{
+    background: transparent;
   }
 
   @media screen and (max-width: $breakpoint-mobile){
