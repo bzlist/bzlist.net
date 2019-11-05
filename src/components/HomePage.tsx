@@ -178,7 +178,7 @@ export class HomePage extends React.Component<any, State>{
       <div>
         <div className="header">
           <h1>Real-time BZFlag server stats</h1>
-          <p className="tagline">With offline and mobile support</p>
+          <div>With offline and mobile support</div>
         </div>
         <div className="container">
           <h2>{this.state.servers.length} Public Servers Online</h2>

@@ -235,15 +235,17 @@ th{
   margin: 0 auto;
   padding: 48px 0;
 
-  .tagline{
-    font-size: 22px;
+  div{
+    margin-top: 1em;
+    font-size: 24px;
   }
 
   @media screen and (max-width: $breakpoint-mobile){
     width: 90vw;
+    padding: 24px 0;
 
-    .tagline{
-      font-size: 20px;
+    div{
+      font-size: 18px;
     }
   }
 }
