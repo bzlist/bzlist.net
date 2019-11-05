@@ -1,6 +1,6 @@
 import React from "react";
 
-import {settings, cache} from "../storage";
+import {settings, cache} from "../lib";
 import {Dropdown} from "./Dropdown";
 
 const themes = ["Light", "Dark", "Midnight"];
@@ -9,7 +9,7 @@ interface State{
   message: string;
 }
 
-export class Settings extends React.Component<any, State>{
+export class SettingsPage extends React.Component<any, State>{
   constructor(props: any){
     super(props);
 

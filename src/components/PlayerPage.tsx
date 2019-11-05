@@ -1,10 +1,8 @@
 import React from "react";
 
-import {cache} from "../storage";
 import {Player} from "../models";
-import {socket} from "../socket";
+import {cache, socket, autoPlural} from "../lib";
 import {TimeAgo} from "./TimeAgo";
-import {autoPlural} from "../utils";
 
 export const PlayerRow = ({player, showServer = true}: {player: Player, showServer: boolean}) => {
   let serverTr;

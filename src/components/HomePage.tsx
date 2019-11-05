@@ -1,10 +1,8 @@
 import React from "react";
 
-import {cache} from "../storage";
+import {cache, socket, verboseGameStyle, history, autoPlural} from "../lib";
 import {Server} from "../models";
-import {socket} from "../socket";
 import {TimeAgo} from "./TimeAgo";
-import {verboseGameStyle, history, autoPlural} from "../utils";
 
 const ServerRow = ({server}: {server: Server}) => (
   <tr onClick={() => history.push(`/s/${server.address}/${server.port}`)}>

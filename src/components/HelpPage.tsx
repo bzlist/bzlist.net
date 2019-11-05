@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Help = (): JSX.Element => (
+export const HelpPage = (): JSX.Element => (
   <div className="wrapper">
     <h1>Help</h1>
     <p>I can be contacted <a href="https://forums.bzflag.org/ucp.php?i=pm&mode=compose&u=58103" target="_blank" rel="noopener noreferrer">here</a> via the BZFlag Forums.</p><br/>

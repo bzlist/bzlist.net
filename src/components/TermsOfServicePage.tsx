@@ -1,6 +1,6 @@
 import React from "react";
 
-export const TermsOfService = (): JSX.Element => (
+export const TermsOfServicePage = (): JSX.Element => (
   /* tslint:disable:max-line-length */
   <div className="wrapper">
     <h1>BZList Terms of Service</h1><br/>

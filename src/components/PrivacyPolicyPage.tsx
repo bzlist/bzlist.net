@@ -1,6 +1,6 @@
 import React from "react";
 
-export const PrivacyPolicy = (): JSX.Element => (
+export const PrivacyPolicyPage = (): JSX.Element => (
   /* tslint:disable:max-line-length */
   <div className="wrapper">
     <h1>Privacy Policy</h1>

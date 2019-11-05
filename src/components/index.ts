@@ -1,10 +1,9 @@
 export * from "./HomePage";
 export * from "./PlayerPage";
-export * from "./PrivacyPolicy";
-export * from "./TermsOfService";
-export * from "./Help";
+export * from "./PrivacyPolicyPage";
+export * from "./TermsOfServicePage";
+export * from "./HelpPage";
 export * from "./TimeAgo";
-export * from "./ServerDetails";
-export * from "./Settings";
+export * from "./ServerDetailsPage";
+export * from "./SettingsPage";
 export * from "./Dropdown";
-

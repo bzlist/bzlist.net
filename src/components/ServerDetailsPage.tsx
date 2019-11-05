@@ -1,13 +1,10 @@
 import React from "react";
 import {match, Link} from "react-router-dom";
-import "./ServerDetails.scss";
+import "./ServerDetailsPage.scss";
 
-import {socket} from "../socket";
+import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural} from "../lib";
 import {Server, Player, Team} from "../models";
-import {cache} from "../storage";
-import {TimeAgo} from "./TimeAgo";
-import {PlayerRow} from "./PlayerPage";
-import {booleanYesNo, verboseGameStyle, autoPlural} from "../utils";
+import {TimeAgo, PlayerRow} from ".";
 
 interface Params{
   address: string;
@@ -23,7 +20,7 @@ interface State{
   selectTeam: boolean;
 }
 
-export class ServerDetails extends React.Component<Props, State>{
+export class ServerDetailsPage extends React.Component<Props, State>{
   banner = "";
 
   constructor(props: Props){
