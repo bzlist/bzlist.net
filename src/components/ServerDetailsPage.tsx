@@ -95,7 +95,7 @@ export class ServerDetailsPage extends React.Component<Props, State>{
             </div>
             <div className="inner">
               {this.state.server.teams.map((team: Team) =>
-                <button key={team.name} className="btn outline" onClick={() => this.joinTeam(team.name)}>{team.name}</button>
+                <button key={team.name} className="btn btn-outline" onClick={() => this.joinTeam(team.name)}>{team.name}</button>
               )}
             </div>
           </div>

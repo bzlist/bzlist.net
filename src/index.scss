@@ -181,8 +181,12 @@ a:hover svg{
   fill: lighten($color-primary, 10%);
 }
 
-.outline{
+.btn-outline{
   border: 1px solid var(--color-text-light);
+
+  &:active{
+    border-color: $color-primary;
+  }
 }
 
 .wrapper{

@@ -50,8 +50,8 @@ export class SettingsPage extends React.Component<any, State>{
         <span className="label">Theme</span>
         <Dropdown items={themes} selected={currentTheme} onChange={(value: string) => this.setTheme(value.toLowerCase())}/>
         <p>
-          <button className="btn outline" onClick={() => {settings.clear();this.message("Settings cleared");}}>Reset</button>&nbsp;
-          <button className="btn outline" onClick={() => {cache.clear();this.message("Cache cleared");}}>Clear Cache</button>&nbsp;
+          <button className="btn btn-outline" onClick={() => {settings.clear();this.message("Settings cleared");}}>Reset</button>&nbsp;
+          <button className="btn btn-outline" onClick={() => {cache.clear();this.message("Cache cleared");}}>Clear Cache</button>&nbsp;
           {this.state.message}
         </p>
       </div>
