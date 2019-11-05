@@ -216,7 +216,7 @@ th{
   margin: 18px 0;
   background: linear-gradient(to right, var(--color-hover-dark) 4%, var(--color-hover) 25%, var(--color-hover-dark) 36%);
   background-size: 1000px 100%;
-  border-radius: 2;
+  border-radius: $border-radius;
   animation: shimmer 2s infinite;
 }
 
