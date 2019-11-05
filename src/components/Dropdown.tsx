@@ -56,7 +56,7 @@ export class Dropdown extends React.Component<Props, State>{
         </div>
         {
           this.state.show ? <div className="dropdown__content">
-            {this.props.items.map((item: string) => 
+            {this.props.items.map((item: string) =>
               <div key={item} className="dropdown__option" onClick={() => this.select(item)}>{item}</div>
             )}
           </div> : null

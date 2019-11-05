@@ -37,10 +37,10 @@ export class Settings extends React.Component<any, State>{
         <span className="label">Theme</span>
         <Dropdown items={themes} selected={currentTheme} onChange={(value: string) => this.setTheme(value.toLowerCase())}/>
         <p>
-          <button className="btn outline" onClick={() => {settings.clear();this.setState({message:"Settings cleared"})}}>Reset</button>
-          <button className="btn outline" onClick={() => {cache.clear();this.setState({message:"Cache cleared"})}}>Clear Cache</button>
+          <button className="btn outline" onClick={() => {settings.clear();this.setState({message:"Settings cleared"});}}>Reset</button>
+          <button className="btn outline" onClick={() => {cache.clear();this.setState({message:"Cache cleared"});}}>Clear Cache</button>
         </p>
-        {this.state.message ? 
+        {this.state.message ?
           <p>{this.state.message}.</p>
         : null}
       </div>

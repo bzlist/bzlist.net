@@ -24,7 +24,7 @@ interface State{
 }
 
 export class HomePage extends React.Component<any, State>{
-  constructor(props: React.Props<any>){
+  constructor(props: any){
     super(props);
 
     let serverCache = cache.get("servers");
@@ -91,7 +91,7 @@ export class HomePage extends React.Component<any, State>{
             </tr>
           </thead>
           <tbody>
-            {this.getServers().map((server: Server) => 
+            {this.getServers().map((server: Server) =>
               <ServerRow server={server}/>
             )}
           </tbody>

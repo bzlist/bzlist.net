@@ -46,7 +46,7 @@ export class ServerDetails extends React.Component<Props, State>{
 
     let server = null;
     if(serverCache && playerCache){
-      server = serversCache.filter((server: Server) => server.address === address && server.port === +port)[0];
+      server = serversCache.filter((_server: Server) => _server.address === address && _server.port === +port)[0];
       if(server){
         server.players = playersCache.filter((player: Player) => player.server === `${address}:${port}`).sort((a: Player, b: Player) => a.wins - a.losses > b.wins - b.losses ? -1 : 1);
       }
@@ -61,7 +61,7 @@ export class ServerDetails extends React.Component<Props, State>{
       if(data.players){
         data.players.sort((a: Player, b: Player) => a.wins - a.losses > b.wins - b.losses ? -1 : 1);
       }
-      this.setState({server: data})
+      this.setState({server: data});
     });
     socket.emit("server", {address, port: +port});
   }
@@ -97,7 +97,7 @@ export class ServerDetails extends React.Component<Props, State>{
               <div className="close"><button className="btn icon" onClick={() => this.setState({selectTeam: false})}>&#xE711;</button></div>
             </div>
             <div className="inner">
-              {this.state.server.teams.map((team: Team) => 
+              {this.state.server.teams.map((team: Team) =>
                 <button key={team.name} className="btn outline" onClick={() => this.joinTeam(team.name)}>{team.name}</button>
               )}
             </div>
@@ -123,7 +123,10 @@ export class ServerDetails extends React.Component<Props, State>{
         <div style={{"background":"var(--bg)"}}>
           <div className="server-header">
             <div><button className="play" onClick={() => this.setState({selectTeam: true})} title="Requires BZFlag Launcher">&#9658; Play</button></div>
-            <div style={{position:"relative",bottom:"2px"}}><img src={`https://countryflags.io/${this.state.server.countryCode}/flat/32.png`} style={{"margin":"0 6px -10px 0"}} alt=""/> <b>{this.state.server.country}</b></div>
+            <div style={{position:"relative",bottom:"2px"}}>
+              <img src={`https://countryflags.io/${this.state.server.countryCode}/flat/32.png`} style={{"margin":"0 6px -10px 0"}} alt=""/>
+              <b>{this.state.server.country}</b>
+            </div>
             <div style={{position:"relative",top:"4px"}}><b>Updated</b><br/><small><TimeAgo timestamp={this.state.server.timestamp}/></small></div>
           </div>
           <div className="container content">
@@ -205,7 +208,7 @@ export class ServerDetails extends React.Component<Props, State>{
                 </tr>
               </thead>
                 <tbody>
-                  {this.state.server.players.map((player: Player) => 
+                  {this.state.server.players.map((player: Player) =>
                     <PlayerRow key={player.callsign} player={player} showServer={false}/>
                   )}
                 </tbody>

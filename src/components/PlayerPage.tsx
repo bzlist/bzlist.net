@@ -18,7 +18,7 @@ export const PlayerRow = ({player, showServer = true}: {player: Player, showServ
       <td key={player.team}>{player.team}</td>
       {serverTr}
     </tr>
-  )
+  );
 };
 
 interface State{
@@ -28,7 +28,7 @@ interface State{
 }
 
 export class PlayerPage extends React.Component<any, State>{
-  constructor(props: React.Props<any>){
+  constructor(props: any){
     super(props);
 
     let playerCache = cache.get("players");

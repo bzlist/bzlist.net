@@ -1,6 +1,7 @@
 import React from "react";
 
 export const PrivacyPolicy = (): JSX.Element => (
+  /* tslint:disable:max-line-length */
   <div className="wrapper">
     <h1>Privacy Policy</h1>
     <p>This policy is effective as of 2 November 2019.</p>
@@ -21,4 +22,5 @@ export const PrivacyPolicy = (): JSX.Element => (
     <h2>Information Disclosure</h2>
     <p>I don’t share any personally identifying information publicly or with third-parties, except when required to by law.</p>
   </div>
+  /* tslint:enable:max-line-length */
 );

@@ -21,13 +21,13 @@ export const verboseGameStyle = (value: string): string => {
   }
 
   return value;
-}
+};
 
 export const booleanYesNo = (value: boolean): JSX.Element => {
   // convert boolean value to yes/no with proper class
   return value ? <span className="yes">Yes</span> : <span className="no">No</span>;
-}
+};
 
 export const autoPlural = (value: string): string => {
   return value.split(" ")[0] === "1" ? value : `${value}s`;
-}
+};
