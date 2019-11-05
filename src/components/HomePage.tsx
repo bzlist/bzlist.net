@@ -32,10 +32,12 @@ export class HomePage extends React.Component<any, State>{
       serverCache = "[]";
     }
 
+    const {sort, sortOrder} = settings.getJson("serverSort", {sort: "playersCount", sortOrder: 1});
+
     this.state = {
       servers: JSON.parse(serverCache),
-      sort: "playersCount",
-      sortOrder: 1,
+      sort,
+      sortOrder,
       serversToShow: 10
     };
 
@@ -52,10 +54,11 @@ export class HomePage extends React.Component<any, State>{
 
   sortBy(sort: string, sortOrder: number): void{
     if(this.state.sort === sort){
-      this.setState({sortOrder: -this.state.sortOrder});
-    }else{
-      this.setState({sort, sortOrder});
+      sortOrder = -this.state.sortOrder;
     }
+
+    this.setState({sort, sortOrder});
+    settings.set("serverSort", JSON.stringify({sort, sortOrder}));
   }
 
   getServers(): Server[]{

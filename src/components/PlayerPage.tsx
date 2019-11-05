@@ -36,10 +36,12 @@ export class PlayerPage extends React.Component<any, State>{
       playerCache = "[]";
     }
 
+    const {sort, sortOrder} = settings.getJson("playerSort", {sort: "score", sortOrder: 1});
+
     this.state = {
       players: JSON.parse(playerCache),
-      sort: "score",
-      sortOrder: 1
+      sort,
+      sortOrder
     };
 
     socket.on<Player[]>("players", (data: Player[]) => {
@@ -55,10 +57,11 @@ export class PlayerPage extends React.Component<any, State>{
 
   sortBy(sort: string, sortOrder: number){
     if(this.state.sort === sort){
-      this.setState({sortOrder: -this.state.sortOrder});
-    }else{
-      this.setState({sort, sortOrder});
+      sortOrder = -this.state.sortOrder;
     }
+
+    this.setState({sort, sortOrder});
+    settings.set("playerSort", JSON.stringify({sort, sortOrder}));
   }
 
   getPlayers(): Player[]{

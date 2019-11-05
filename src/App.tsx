@@ -25,7 +25,7 @@ class App extends React.Component{
           console.error("error getting settings:", data.error);
         }else{
           settings.clear();
-          settings.setJson(data);
+          settings.setData(data);
         }
       }
     }

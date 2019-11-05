@@ -18,6 +18,11 @@ export class Storage{
     return value ? value : "";
   }
 
+  getJson(key: string, defaultValue: Object = {}): any{
+    const value = localStorage.getItem(this.prefix+key);
+    return value ? JSON.parse(value) : defaultValue;
+  }
+
   set(key: string, value: string): void{
     localStorage.setItem(this.prefix+key, value);
     this.onChange(key, value);
@@ -53,7 +58,7 @@ export class Storage{
     return data;
   }
 
-  setJson(data: any): void{
+  setData(data: any): void{
     for(const key in data){
       if(data.hasOwnProperty(key)){
         this.set(key, data[key]);
