@@ -269,3 +269,9 @@ th{
     background-position: 1000px 0;
   }
 }
+
+@media screen and (max-width: $breakpoint-mobile){
+  .mobile-hide{
+    display: none;
+  }
+}
