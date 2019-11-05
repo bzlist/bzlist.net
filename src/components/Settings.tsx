@@ -1,18 +1,30 @@
 import React from "react";
 
-import * as storage from "../storage";
+import {settings, cache} from "../storage";
 import {Dropdown} from "./Dropdown";
 
 const themes = ["Light", "Dark", "Midnight"];
 
-export class Settings extends React.Component{
+interface State{
+  message: string;
+}
+
+export class Settings extends React.Component<any, State>{
+  constructor(props: any){
+    super(props);
+
+    this.state = {
+      message: ""
+    };
+  }
+
   setTheme(value: string): void{
     document.documentElement.setAttribute("data-theme", value);
-    storage.setSetting("theme", value);
+    settings.set("theme", value);
   }
 
   render(): JSX.Element{
-    let currentTheme = storage.getSetting("theme");
+    let currentTheme = settings.get("theme");
     if(currentTheme === ""){
       currentTheme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
       this.setTheme(currentTheme);
@@ -24,6 +36,13 @@ export class Settings extends React.Component{
         <h1>Settings</h1><br/>
         <span className="label">Theme</span>
         <Dropdown items={themes} selected={currentTheme} onChange={(value: string) => this.setTheme(value.toLowerCase())}/>
+        <p>
+          <button className="btn outline" onClick={() => {settings.clear();this.setState({message:"Settings cleared"})}}>Reset</button>
+          <button className="btn outline" onClick={() => {cache.clear();this.setState({message:"Cache cleared"})}}>Clear Cache</button>
+        </p>
+        {this.state.message ? 
+          <p>{this.state.message}.</p>
+        : null}
       </div>
     );
   }

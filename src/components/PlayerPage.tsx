@@ -1,7 +1,7 @@
 import React from "react";
 import "./PlayerPage.scss";
 
-import * as storage from "../storage";
+import {cache} from "../storage";
 import {Player} from "../models";
 import {socket} from "../socket";
 import {TimeAgo} from "./TimeAgo";
@@ -32,7 +32,7 @@ export class PlayerPage extends React.Component<any, State>{
   constructor(props: React.Props<any>){
     super(props);
 
-    let playerCache = storage.getItem("playersCache");
+    let playerCache = cache.get("players");
     if(playerCache === ""){
       playerCache = "[]";
     }
@@ -45,7 +45,7 @@ export class PlayerPage extends React.Component<any, State>{
 
     socket.on<Player[]>("players", (data: Player[]) => {
       this.setState({players: data});
-      storage.setItem("playersCache", JSON.stringify(data));
+      cache.set("players", JSON.stringify(data));
     });
     socket.emit("players");
   }

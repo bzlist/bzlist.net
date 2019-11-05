@@ -1,7 +1,7 @@
 import React from "react";
 import "./HomePage.scss";
 
-import * as storage from "../storage";
+import {cache} from "../storage";
 import {Server} from "../models";
 import {socket} from "../socket";
 import {TimeAgo} from "./TimeAgo";
@@ -28,7 +28,7 @@ export class HomePage extends React.Component<any, State>{
   constructor(props: React.Props<any>){
     super(props);
 
-    let serverCache = storage.getItem("serversCache");
+    let serverCache = cache.get("servers");
     if(serverCache === ""){
       serverCache = "[]";
     }
@@ -42,7 +42,7 @@ export class HomePage extends React.Component<any, State>{
 
     socket.on<Server[]>("servers", (data: Server[]) => {
       this.setState({servers: data});
-      storage.setItem("serversCache", JSON.stringify(data));
+      cache.set("servers", JSON.stringify(data));
     });
     socket.emit("servers");
   }

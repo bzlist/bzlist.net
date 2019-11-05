@@ -4,7 +4,7 @@ import "./ServerDetails.scss";
 
 import {socket} from "../socket";
 import {Server, Player, Team} from "../models";
-import * as storage from "../storage";
+import {cache} from "../storage";
 import {TimeAgo} from "./TimeAgo";
 import {PlayerRow} from "./PlayerPage";
 import {booleanYesNo, verboseGameStyle, autoPlural} from "../utils";
@@ -32,11 +32,11 @@ export class ServerDetails extends React.Component<Props, State>{
     const {address, port} = this.props.match.params;
 
     // get cache
-    let serverCache = storage.getItem("serversCache");
+    let serverCache = cache.get("servers");
     if(serverCache === ""){
       serverCache = "[]";
     }
-    let playerCache = storage.getItem("playersCache");
+    let playerCache = cache.get("players");
     if(playerCache === ""){
       playerCache = "[]";
     }

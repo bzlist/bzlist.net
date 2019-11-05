@@ -4,13 +4,13 @@ import "./App.scss";
 
 import {HomePage, PlayerPage, PrivacyPolicy, TermsOfService, Help, ServerDetails, Settings} from "./components";
 import {history} from "./utils";
-import * as storage from "./storage";
+import {settings} from "./storage";
 
 class App extends React.Component{
   constructor(props: any){
     super(props);
 
-    document.documentElement.setAttribute("data-theme", storage.getSetting("theme"));
+    document.documentElement.setAttribute("data-theme", settings.get("theme"));
   }
 
   render(): JSX.Element{
