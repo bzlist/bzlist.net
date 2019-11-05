@@ -20,5 +20,10 @@
       margin-bottom: 16px;
       flex-basis: 300px;
     }
+
+    small > img{
+      position: relative;
+      top: 4px;
+    }
   }
 }

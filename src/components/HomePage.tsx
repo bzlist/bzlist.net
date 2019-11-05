@@ -88,7 +88,7 @@ export class HomePage extends React.Component<any, State>{
         servers = (
           <div className="card-list">
             {this.getServers().map((server: Server) =>
-              <div key={`${server.address}:${server.port}`}>
+              <div key={`${server.address}:${server.port}`} onClick={() => history.push(`/s/${server.address}/${server.port}`)}>
                 <h2>{server.title}</h2><br/>
                 <table style={{width:"100%"}}>
                   <tbody>
@@ -108,7 +108,7 @@ export class HomePage extends React.Component<any, State>{
                 </table>
                 <hr/>
                 <small>
-                  <img src={`https://countryflags.io/${server.countryCode}/flat/16.png`} title={server.country} alt=""/>
+                  <img src={`https://countryflags.io/${server.countryCode}/flat/16.png`} title={server.country} alt=""/>&nbsp;
                   {server.country} • {server.playersCount} players online
                 </small>
               </div>
