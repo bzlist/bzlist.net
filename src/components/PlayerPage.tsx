@@ -1,5 +1,4 @@
 import React from "react";
-import "./PlayerPage.scss";
 
 import {cache} from "../storage";
 import {Player} from "../models";
@@ -120,11 +119,11 @@ export class PlayerPage extends React.Component<any, State>{
     return (
       <div>
         <div className="header">
-          <h1 className="headline">Real-time BZFlag server stats - but the players</h1>
+          <h1>Real-time BZFlag server stats - but the players</h1>
           <p className="tagline">With offline and mobile support</p>
         </div>
         <div className="container">
-          <h1>{autoPlural(`${playerCount} Player`)} and {autoPlural(`${observerCount} Observer`)} Online</h1>
+          <h2>{autoPlural(`${playerCount} Player`)} and {autoPlural(`${observerCount} Observer`)} Online</h2>
           Updated <TimeAgo timestamp={timestamp}/>.<br/><br/>
           {table}
         </div>

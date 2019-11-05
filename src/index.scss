@@ -78,7 +78,17 @@ h2, h3{
 }
 
 h1{
-  font-size: 32px;
+  color: $color-primary;
+  font-size: 44px;
+  font-weight: normal;
+
+  @media screen and (max-width: $breakpoint-mobile){
+    font-size: 30px;
+  }
+}
+
+h2{
+  font-size: 28px;
 }
 
 a{
@@ -154,6 +164,7 @@ a:hover{
   width: 85vw;
   margin: 0 auto;
   margin-top: 64px;
+  line-height: 1.7;
 
   @media screen and (max-width: $breakpoint-mobile){
     width: 90vw;
@@ -202,6 +213,24 @@ th{
   display: inline-block;
   font-size: 15px;
   font-weight: 700;
+}
+
+.header{
+  width: 85vw;
+  margin: 0 auto;
+  padding: 48px 0;
+
+  .tagline{
+    font-size: 22px;
+  }
+
+  @media screen and (max-width: $breakpoint-mobile){
+    width: 90vw;
+
+    .tagline{
+      font-size: 20px;
+    }
+  }
 }
 
 .list-shimmer{

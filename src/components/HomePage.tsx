@@ -1,5 +1,4 @@
 import React from "react";
-import "./HomePage.scss";
 
 import {cache} from "../storage";
 import {Server} from "../models";
@@ -140,11 +139,11 @@ export class HomePage extends React.Component<any, State>{
     return (
       <div>
         <div className="header">
-          <h1 className="headline">Real-time BZFlag server stats</h1>
+          <h1>Real-time BZFlag server stats</h1>
           <p className="tagline">With offline and mobile support</p>
         </div>
         <div className="container">
-          <h1>{this.state.servers.length} Public Servers Online</h1>
+          <h2>{this.state.servers.length} Public Servers Online</h2>
           {autoPlural(`${playerCount} player`)} and {autoPlural(`${observerCount} observer`)} online. Updated <TimeAgo timestamp={timestamp}/>.<br/><br/>
           {table}
           <button className="btn btn-primary" onClick={() => this.showMore()} style={{margin:"22px 32px"}}>{this.state.serversToShow > 0 ? "Show All" : "Show Less"}</button>
