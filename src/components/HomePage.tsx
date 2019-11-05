@@ -1,5 +1,4 @@
 import React from "react";
-import "./HomePage.scss";
 
 import {cache, socket, verboseGameStyle, history, autoPlural} from "../lib";
 import {Server} from "../models";

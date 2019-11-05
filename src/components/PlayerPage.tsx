@@ -11,7 +11,7 @@ export const PlayerRow = ({player, showServer = true}: {player: Player, showServ
   }
   return (
     <tr>
-      <td key={player.callsign}>{player.callsign} {player.motto ? (<i>({player.motto})</i>) : ""}</td>
+      <td key={player.callsign}>{player.callsign} {player.motto ? <i>({player.motto})</i> : ""}</td>
       <td key={player.wins - player.losses}>{player.wins - player.losses}</td>
       <td key={player.team}>{player.team}</td>
       {serverTr}
@@ -26,6 +26,8 @@ interface State{
 }
 
 export class PlayerPage extends React.Component<any, State>{
+  mobile = false;
+
   constructor(props: any){
     super(props);
 
@@ -45,6 +47,10 @@ export class PlayerPage extends React.Component<any, State>{
       cache.set("players", JSON.stringify(data));
     });
     socket.emit("players");
+
+    if(window.innerWidth <= 768){
+      this.mobile = true;
+    }
   }
 
   sortBy(sort: string, sortOrder: number){
@@ -66,21 +72,60 @@ export class PlayerPage extends React.Component<any, State>{
     let table;
 
     if(this.state.players.length > 0){
-      table = (
-        <table>
-          <thead>
-            <tr>
-              <th onClick={() => this.sortBy("callsign", -1)}>Callsign</th>
-              <th onClick={() => this.sortBy("score", 1)}>Score</th>
-              <th onClick={() => this.sortBy("team", -1)}>Team</th>
-              <th onClick={() => this.sortBy("server", -1)}>Server</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.getPlayers().map((player: Player) => <PlayerRow player={player} showServer={true}/>)}
-          </tbody>
-        </table>
-      );
+      if(this.mobile){
+        table = (
+          <div className="card-list">
+            {this.getPlayers().map((player: Player) =>
+              <div key={`${player.callsign}:${player.server}`}>
+                <h2>{player.callsign}</h2><br/>
+                <table style={{width:"100%"}}>
+                  <tbody>
+                    <tr>
+                      <td>Score</td>
+                      <td>{player.wins - player.losses}</td>
+                    </tr>
+                    <tr>
+                      <td>Team</td>
+                      <td>{player.team}</td>
+                    </tr>
+                    <tr>
+                      <td>Server</td>
+                      <td>{player.server}</td>
+                    </tr>
+                    {player.motto ?
+                      <tr>
+                        <td>Motto</td>
+                        <td>{player.motto}</td>
+                      </tr>
+                    : null}
+                  </tbody>
+                </table>
+                {/* <hr/>
+                <small>
+                  <img src={`https://countryflags.io/${server.countryCode}/flat/16.png`} title={server.country} alt=""/>&nbsp;
+                  {server.country} • {server.playersCount} players online
+                </small> */}
+              </div>
+            )}
+          </div>
+        );
+      }else{
+        table = (
+          <table>
+            <thead>
+              <tr>
+                <th onClick={() => this.sortBy("callsign", -1)}>Callsign</th>
+                <th onClick={() => this.sortBy("score", 1)}>Score</th>
+                <th onClick={() => this.sortBy("team", -1)}>Team</th>
+                <th onClick={() => this.sortBy("server", -1)}>Server</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.getPlayers().map((player: Player) => <PlayerRow player={player} showServer={true}/>)}
+            </tbody>
+          </table>
+        );
+      }
     }else{
       table = (
         <ul className="list-shimmer">

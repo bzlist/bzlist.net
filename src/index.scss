@@ -250,6 +250,33 @@ th{
   }
 }
 
+.card-list{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  & > *{
+    margin: 0;
+    margin-bottom: 16px;
+    padding: 16px 24px;
+    display: block;
+    box-shadow: $shadow;
+    border-radius: $border-radius;
+    flex: 1 0 450px;
+
+    @media screen and (max-width: $breakpoint-mobile){
+      margin-bottom: 16px;
+      flex-basis: 250px;
+    }
+
+    small > img{
+      position: relative;
+      top: 4px;
+    }
+  }
+}
+
 .list-shimmer{
   width: 90vw;
   margin: 0 auto;
