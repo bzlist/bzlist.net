@@ -83,7 +83,7 @@ export class PlayerPage extends React.Component<any, State>{
             {this.getPlayers().map((player: Player) =>
               <div key={`${player.callsign}:${player.server}`}>
                 <h2>{player.callsign}</h2><br/>
-                <table style={{width:"100%"}}>
+                <table style={{width:"100%"}} className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
                   <tbody>
                     <tr>
                       <td>Score</td>
