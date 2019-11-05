@@ -3,11 +3,13 @@ import React from "react";
 import {Player} from "../models";
 import {cache, socket, autoPlural, settings} from "../lib";
 import {TimeAgo} from "./TimeAgo";
+import {Link} from "react-router-dom";
 
 export const PlayerRow = ({player, showServer = true}: {player: Player, showServer: boolean}) => {
   let serverTr;
   if(player.server && showServer){
-    serverTr = <td key={player.server}>{player.server}</td>;
+    const serverLink = `/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`;
+    serverTr = <td key={player.server}><Link to={serverLink}>{player.server}</Link></td>;
   }
   return (
     <tr>
