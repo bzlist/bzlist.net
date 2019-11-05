@@ -6,7 +6,7 @@ import {Server} from "../models";
 import {TimeAgo} from "./TimeAgo";
 
 const ServerRow = ({server}: {server: Server}) => (
-  <tr onClick={() => history.push(`/s/${server.address}/${server.port}`)}>
+  <tr onClick={() => history.push(`/s/${server.address}/${server.port}`)} style={{fontWeight:server.playersCount > 0 ? "bold" : "inherit"}}>
     <td key={server.playersCount}>{server.playersCount}</td>
     <td key={`${server.address}:${server.port}`}>{server.address}:{server.port}</td>
     <td key={server.country}><img src={`https://countryflags.io/${server.countryCode}/flat/32.png`} alt={server.countryCode} title={server.country}/></td>
