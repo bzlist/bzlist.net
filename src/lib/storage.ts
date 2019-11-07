@@ -79,6 +79,6 @@ settings.onChange = (key: string, value: string): void => {
   const callsign = storage.get("callsign");
   const token = storage.get("token");
   if(callsign !== "" && token !== ""){
-    api("settings", {callsign, token, settings: settings.json()}, "PATCH");
+    api("users/settings", {callsign, token, settings: settings.json()}, "PATCH");
   }
 };

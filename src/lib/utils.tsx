@@ -32,7 +32,7 @@ export const autoPlural = (value: string): string => {
 };
 
 export const api =  async (endpoint: string, body: Object, method = "POST"): Promise<any> => {
-  return fetch(`https://api.bzlist.net/users/${endpoint}`, {
+  return fetch(`https://api.bzlist.net/${endpoint}`, {
     headers: {
       "Content-Type": "application/json"
     },

@@ -40,7 +40,7 @@ export class AccountPage extends React.Component<any, State>{
       }
     }
 
-    const data = await api("token", {callsign, token});
+    const data = await api("users/token", {callsign, token});
 
     if(data.token){
       this.setState({callsign, token: data.token});
@@ -65,7 +65,7 @@ export class AccountPage extends React.Component<any, State>{
       return;
     }
 
-    const data = await api("", {callsign: this.state.callsign, token: this.state.token});
+    const data = await api("users/", {callsign: this.state.callsign, token: this.state.token});
 
     if(data.error){
       console.error("error checking token:", data.error);
@@ -78,7 +78,7 @@ export class AccountPage extends React.Component<any, State>{
   }
 
   async signout(): Promise<void>{
-    const data = await api("token", {callsign: this.state.callsign, token: this.state.token}, "DELETE");
+    const data = await api("users/token", {callsign: this.state.callsign, token: this.state.token}, "DELETE");
 
     if(data.error){
       console.error("error signing out:", data.error);
@@ -94,7 +94,7 @@ export class AccountPage extends React.Component<any, State>{
   }
 
   async delete(): Promise<void>{
-    const data = await api("", {callsign: this.state.callsign, token: this.state.token}, "DELETE");
+    const data = await api("users/", {callsign: this.state.callsign, token: this.state.token}, "DELETE");
 
     if(data.error){
       console.error("error delete account:", data.error);

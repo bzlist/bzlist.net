@@ -1,9 +1,13 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 export const HelpPage = (): JSX.Element => (
   <div className="wrapper">
     <h1>Help</h1>
-    <p>I can be contacted <a href="https://forums.bzflag.org/ucp.php?i=pm&mode=compose&u=58103" target="_blank" rel="noopener noreferrer">here</a> via the BZFlag Forums.</p><br/>
+    <p>
+      I can be contacted <a href="https://forums.bzflag.org/ucp.php?i=pm&mode=compose&u=58103" target="_blank" rel="noopener noreferrer">here</a> via the BZFlag Forums.
+      You can also submit <Link to="/feedback">feedback</Link> directly.
+    </p>
     <h2>FAQ</h2>
     <p>
       <span className="label">How do I see details about a server?</span><br/>

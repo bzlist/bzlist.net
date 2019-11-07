@@ -297,6 +297,53 @@ th{
   }
 }
 
+textarea{
+  width: 100%;
+  max-width: 400px;
+  height: 200px;
+  min-height: 50px;
+  padding: 4px 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+  border: 1px solid var(--color-text-light);
+  border-radius: $border-radius;
+  outline: none;
+  resize: vertical;
+
+  &:focus{
+    border-color: $color-primary;
+  }
+}
+
+.text-box{
+  height: 32px;
+  padding: 1px 4px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  border: 1px solid var(--color-text-light);
+  border-radius: $border-radius;
+
+  input{
+    margin: 0 4px;
+    padding: 0;
+    background: transparent;
+    color: var(--color-text);
+    font-size: 14px;
+    box-sizing: border-box;
+    flex: 1 1 0;
+    border: none;
+    outline: none;
+    overflow: hidden;
+
+    &::placeholder{
+      color: var(--color-text);
+    }
+  }
+}
+
 .list-shimmer{
   width: 90vw;
   margin: 0 auto;
