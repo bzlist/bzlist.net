@@ -9,13 +9,13 @@ export const PlayerRow = ({player, showServer = true}: {player: Player, showServ
   let serverTr;
   if(player.server && showServer){
     const serverLink = `/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`;
-    serverTr = <td key={player.server}><Link to={serverLink}>{player.server}</Link></td>;
+    serverTr = <td><Link to={serverLink}>{player.server}</Link></td>;
   }
   return (
     <tr>
-      <td key={player.callsign}>{player.callsign} {player.motto ? <i>({player.motto})</i> : ""}</td>
-      <td key={player.wins - player.losses}>{player.wins - player.losses}</td>
-      <td key={player.team}>{player.team}</td>
+      <td>{player.callsign} {player.motto ? <i>({player.motto})</i> : ""}</td>
+      <td>{player.wins - player.losses}</td>
+      <td>{player.team}</td>
       {serverTr}
     </tr>
   );
@@ -126,7 +126,7 @@ export class PlayerPage extends React.Component<any, State>{
               </tr>
             </thead>
             <tbody>
-              {this.getPlayers().map((player: Player) => <PlayerRow player={player} showServer={true}/>)}
+              {this.getPlayers().map((player: Player) => <PlayerRow key={`${player.callsign}:${player.server}`} player={player} showServer={true}/>)}
             </tbody>
           </table>
         );
