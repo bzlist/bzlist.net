@@ -10,6 +10,10 @@
   position: absolute;
   top: 0;
 
+  .hamburger{
+    display: none;
+  }
+
   .logo, .logo svg{
     height: 24px;
   }
@@ -27,26 +31,44 @@
   }
 
   @media screen and (max-width: $breakpoint-mobile){
-    height: 32px;
-    margin: 8px 0;
+    height: 48px;
     padding: 0 12px;
+    background-color: var(--bg);
+    position: fixed;
+    z-index: 99;
+
+    .hamburger{
+      margin-right: 16px;
+      display: block;
+    }
 
     .logo, .logo svg{
       height: 18px;
     }
 
     nav{
-      margin-right: 0;
+      width: 0;
+      height: 100vh;
+      background-color: var(--bg);
+      position: fixed;
+      top: 48px;
+      left: 0;
+      flex-direction: column;
+      display: flex;
+      overflow-x: hidden;
+      transition: all 200ms cubic-bezier(0, 1, .5, 1);
 
       .btn{
-        min-width: 50px;
-        margin-right: 6px;
-        padding: 0 4px;
+        margin-bottom: 8px;
+      }
+
+      &.visible{
+        width: 70vw;
       }
     }
 
     .icon{
-      padding: 0 6px;
+      padding: 0 8px;
     }
   }
 }
