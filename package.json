@@ -1,6 +1,6 @@
 {
   "name": "bzlist.net-react",
-  "version": "0.1.0",
+  "version": "0.8.0",
   "description": "BZList is an online service providing real-time BZFlag server information.",
   "homepage": "https://bzlist.net",
   "license": "GPL-3.0",
