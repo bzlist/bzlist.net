@@ -1,7 +1,7 @@
 # BZList
 
 [![GitHub license](https://img.shields.io/github/license/bzlist/bzlist.net.svg)](https://github.com/bzlist/bzlist.net/blob/master/LICENSE)
-![GitHub package.json version](https://img.shields.io/github/package-json/v/bzlist/bzlist.net.svg)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/bzlist/bzlist.net)
 [![Build Status](https://travis-ci.org/bzlist/bzlist.net.svg?branch=master)](https://travis-ci.org/bzlist/bzlist.net)
 [![IRC #bzlist](https://img.shields.io/badge/IRC-%23bzlist-blue.svg)](http://webchat.freenode.net/?channels=#bzlist)
 
