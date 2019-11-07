@@ -188,7 +188,7 @@ export class HomePage extends React.Component<any, State>{
           {servers}
           <button className="btn btn-primary" onClick={() => this.showMore()} style={{margin:"22px 32px"}}>{this.state.serversToShow > 0 ? "Show All" : "Show Less"}</button>
           {this.state.serversToShow <= 0 ?
-            <button className="btn outline" onClick={() => document.documentElement.scrollTop = 0} style={{margin:"22px 0"}}>Scroll to Top</button>
+            <button className="btn btn-outline" onClick={() => document.documentElement.scrollTop = 0} style={{margin:"22px 0"}}>Scroll to Top</button>
           : null}
         </div>
       </div>
