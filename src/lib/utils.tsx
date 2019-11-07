@@ -43,7 +43,7 @@ export const api =  async (endpoint: string, body: Object, method = "POST"): Pro
 
 let _bzLoginURL;
 if(process.env.NODE_ENV === "production"){
-  _bzLoginURL = "https://my.bzflag.org/weblogin.php?action=weblogin&url=https%3A%2F%2Freact.bzlist.net%2Faccount%3Fusername%3D%25USERNAME%25%26token%3D%25TOKEN%25";
+  _bzLoginURL = "https://my.bzflag.org/weblogin.php?action=weblogin&url=https%3A%2F%2Fbzlist.net%2Faccount%3Fusername%3D%25USERNAME%25%26token%3D%25TOKEN%25";
 }else{
   _bzLoginURL = "https://my.bzflag.org/weblogin.php?action=weblogin&url=http%3A%2F%2Flocalhost%3A3000%2Faccount%3Fusername%3D%25USERNAME%25%26token%3D%25TOKEN%25";
 }
