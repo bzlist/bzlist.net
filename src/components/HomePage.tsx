@@ -6,11 +6,11 @@ import {TimeAgo} from "./TimeAgo";
 
 const ServerRow = ({server}: {server: Server}) => (
   <tr onClick={() => history.push(`/s/${server.address}/${server.port}`)} style={{fontWeight:server.playersCount > 0 ? "bold" : "inherit"}}>
-    <td key={server.playersCount}>{server.playersCount}</td>
-    <td key={`${server.address}:${server.port}`}>{server.address}:{server.port}</td>
-    <td key={server.country}><img src={`https://countryflags.io/${server.countryCode}/flat/32.png`} alt={server.countryCode} title={server.country}/></td>
-    <td key={server.configuration.gameStyle} title={verboseGameStyle(server.configuration.gameStyle)}>{server.configuration.gameStyle}</td>
-    <td key={server.title}>{server.title}</td>
+    <td>{server.playersCount}</td>
+    <td>{server.address}:{server.port}</td>
+    <td><img src={`https://countryflags.io/${server.countryCode}/flat/32.png`} alt={server.countryCode} title={server.country}/></td>
+    <td title={verboseGameStyle(server.configuration.gameStyle)}>{server.configuration.gameStyle}</td>
+    <td>{server.title}</td>
   </tr>
 );
 
@@ -131,7 +131,7 @@ export class HomePage extends React.Component<any, State>{
             </thead>
             <tbody>
               {this.getServers().map((server: Server) =>
-                <ServerRow server={server}/>
+                <ServerRow key={`${server.address}:${server.port}`} server={server}/>
               )}
             </tbody>
           </table>
