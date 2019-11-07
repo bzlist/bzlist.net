@@ -7,7 +7,7 @@ export const TermsOfServicePage = (): JSX.Element => (
     <h2>1. Terms</h2>
     <p>By accessing the website at <a href="https://bzlist.net">https://bzlist.net</a>, you are agreeing to be bound by these terms of service, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws. If you do not agree with any of these terms, you are prohibited from using or accessing this site. The materials contained in this website are protected by applicable copyright and trademark law.</p>
     <h2>2. Use License</h2>
-    <p>BZList is licensed under the GNU General Public License v3.0 which can be found <a href="https://github.com/bzlist/bzlist.net/blob/master/LICENSE" target="_blank" rel="noopener noreferrer">here</a>.</p>
+    <p>BZList is licensed under the MIT License which can be found <a href="https://github.com/bzlist/bzlist.net/blob/master/LICENSE" target="_blank" rel="noopener noreferrer">here</a>.</p>
     <h2>3. Disclaimer</h2>
     <ol type="a">
       <li>The materials on BZList's website are provided on an 'as is' basis. BZList makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.</li>
