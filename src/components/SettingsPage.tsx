@@ -43,10 +43,8 @@ export class SettingsPage extends React.Component<any, State>{
 
     return (
       <div className="wrapper">
-        <h1>Settings</h1>
-        <p>
-          <Checkbox label="Compact Tables" checked={settings.get("compactTables") === "true"} onChange={(value: boolean) => this.set("compactTables", value.toString())}/>
-        </p>
+        <h1>Settings</h1><br/>
+        <Checkbox label="Compact Tables" checked={settings.get("compactTables") === "true"} onChange={(value: boolean) => this.set("compactTables", value.toString())}/><br/><br/>
         <span className="label">Theme</span>
         <Dropdown items={themes} selected={currentTheme} onChange={(value: string) => this.setTheme(value.toLowerCase())}/>
         <p>
