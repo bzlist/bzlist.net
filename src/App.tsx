@@ -30,7 +30,12 @@ class App extends React.Component{
       }
     }
 
-    document.documentElement.setAttribute("data-theme", settings.get("theme"));
+    let currentTheme = settings.get("theme");
+    if(currentTheme === ""){
+      currentTheme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      settings.set("theme", currentTheme);
+    }
+    document.documentElement.setAttribute("data-theme", currentTheme);
   }
 
   render(): JSX.Element{
