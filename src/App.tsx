@@ -34,7 +34,9 @@ class App extends React.Component<any, State>{
         console.log("fetching settings");
         const data = await api("users/settings", {callsign, token});
 
-        if(data.error){
+        if(!data){
+          this.setState({offline: true});
+        }else if(data.error){
           console.error("error getting settings:", data.error);
         }else{
           settings.clear();
