@@ -91,27 +91,26 @@ export class HomePage extends React.Component<any, State>{
             {this.getServers().map((server: Server) =>
               <div key={`${server.address}:${server.port}`} onClick={() => history.push(`/s/${server.address}/${server.port}`)}>
                 <h2>{server.title}</h2><br/>
-                <table style={{width:"100%"}}>
+                <table>
                   <tbody>
+                    <tr>
+                      <td>Players</td>
+                      <td><b>{server.playersCount}</b></td>
+                    </tr>
                     <tr>
                       <td>Server</td>
                       <td>{server.address}:{server.port}</td>
                     </tr>
                     <tr>
-                      <td>IP Address</td>
-                      <td>{server.ip}</td>
-                    </tr>
-                    <tr>
                       <td>Game Style</td>
                       <td>{verboseGameStyle(server.configuration.gameStyle)}</td>
                     </tr>
+                    <tr>
+                      <td>Country</td>
+                      <td><img src={`https://countryflags.io/${server.countryCode}/flat/16.png`} title={server.country} alt=""/> {server.country}</td>
+                    </tr>
                   </tbody>
                 </table>
-                <hr/>
-                <small>
-                  <img src={`https://countryflags.io/${server.countryCode}/flat/16.png`} title={server.country} alt=""/>&nbsp;
-                  {server.country} • {server.playersCount} players online
-                </small>
               </div>
             )}
           </div>

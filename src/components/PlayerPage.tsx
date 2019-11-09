@@ -6,14 +6,10 @@ import {TimeAgo} from "./TimeAgo";
 import {Link} from "react-router-dom";
 
 export const PlayerRow = ({player, showServer = true}: {player: Player, showServer: boolean}) => {
-  let serverTr;
-  if(player.server && showServer){
-    const serverLink = `/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`;
-    serverTr = <td><Link to={serverLink}>{player.server}</Link></td>;
-  }
+  const serverTr = player.server && showServer ? <td><Link to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`}>{player.server}</Link></td> : null;
   return (
     <tr>
-      <td>{player.callsign} {player.motto ? <i>({player.motto})</i> : ""}</td>
+      <td><b>{player.callsign}</b> {player.motto ? `(${player.motto})` : ""}</td>
       <td>{player.wins - player.losses}</td>
       <td>{player.team}</td>
       {serverTr}
@@ -82,7 +78,7 @@ export class PlayerPage extends React.Component<any, State>{
             {this.getPlayers().map((player: Player) =>
               <div key={`${player.callsign}:${player.server}`}>
                 <h2>{player.callsign}</h2><br/>
-                <table style={{width:"100%"}} className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
+                <table className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
                   <tbody>
                     <tr>
                       <td>Score</td>
@@ -94,7 +90,7 @@ export class PlayerPage extends React.Component<any, State>{
                     </tr>
                     <tr>
                       <td>Server</td>
-                      <td>{player.server}</td>
+                      <td><Link to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`}>{player.server}</Link></td>
                     </tr>
                     {player.motto ?
                       <tr>
@@ -104,11 +100,6 @@ export class PlayerPage extends React.Component<any, State>{
                     : null}
                   </tbody>
                 </table>
-                {/* <hr/>
-                <small>
-                  <img src={`https://countryflags.io/${server.countryCode}/flat/16.png`} title={server.country} alt=""/>&nbsp;
-                  {server.country} • {server.playersCount} players online
-                </small> */}
               </div>
             )}
           </div>
@@ -166,7 +157,7 @@ export class PlayerPage extends React.Component<any, State>{
     return (
       <div>
         <div className="header">
-          <h1>Real-time BZFlag server stats - but the players</h1>
+          <h1>Real-time BZFlag player stats</h1>
           <div>With offline and mobile support</div>
         </div>
         <div className="container">

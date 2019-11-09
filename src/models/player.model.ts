@@ -8,5 +8,4 @@ export interface Player{
   wins: number;
   losses: number;
   tks: number;
-  score: number;
 }

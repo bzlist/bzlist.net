@@ -155,9 +155,6 @@ export class ServerDetailsPage extends React.Component<Props, State>{
             {this.state.server.country}
           </div>
           <div><b>{autoPlural(`${this.state.server.playersCount} Player`)}</b></div>
-        </div><br/>
-        <div style={{width:"90vw",margin:"0 auto"}}>
-          Updated <TimeAgo timestamp={this.state.server.timestamp}/>.
         </div>
         <div className="container content">
           <div>
@@ -165,8 +162,8 @@ export class ServerDetailsPage extends React.Component<Props, State>{
             <table className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
               <tbody>
                 <tr>
-                  <th>Online</th>
-                  <td>{booleanYesNo(this.state.server.online)}</td>
+                  <th>Updated</th>
+                  <td><TimeAgo timestamp={this.state.server.timestamp}/></td>
                 </tr>
                 <tr>
                   <th>Server</th>
@@ -197,10 +194,6 @@ export class ServerDetailsPage extends React.Component<Props, State>{
                   <td>{booleanYesNo(this.state.server.configuration.superflags)}</td>
                 </tr>
                 <tr>
-                  <th>Antidote Flags</th>
-                  <td>{booleanYesNo(this.state.server.configuration.antidoteFlags)}</td>
-                </tr>
-                <tr>
                   <th>No Team Kills</th>
                   <td>{booleanYesNo(this.state.server.configuration.noTeamKills)}</td>
                 </tr>
@@ -213,16 +206,8 @@ export class ServerDetailsPage extends React.Component<Props, State>{
                   <td>{booleanYesNo(this.state.server.configuration.ricochet)}</td>
                 </tr>
                 <tr>
-                  <th>Drop Bad Flags</th>
-                  <td>{booleanYesNo(this.state.server.configuration.shaking)}</td>
-                </tr>
-                <tr>
                   <th>Drop Bad Flags After</th>
                   <td>{autoPlural(`${this.state.server.configuration.dropBadFlags.wins} win`)} or {autoPlural(`${this.state.server.configuration.dropBadFlags.time} second`)}</td>
-                </tr>
-                <tr>
-                  <th>Inertia</th>
-                  <td>{booleanYesNo(this.state.server.configuration.inertia)}</td>
                 </tr>
               </tbody>
             </table>
