@@ -13,6 +13,7 @@
   font-size: 38px;
   font-weight: normal;
   text-shadow: 0 1px 8px #000;
+  word-break: break-all;
 
   @media screen and (max-width: $breakpoint-mobile){
     font-size: 30px;

@@ -290,6 +290,10 @@ th{
       flex-basis: 250px;
     }
 
+    & > h2{
+      word-break: break-all;
+    }
+
     small > img{
       margin-bottom: -4px;
     }
