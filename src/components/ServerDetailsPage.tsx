@@ -188,7 +188,7 @@ export class ServerDetailsPage extends React.Component<Props, State>{
                   </tr>
                   <tr>
                     <th>Drop Bad Flags After</th>
-                    <td>{autoPlural(`${this.state.server.configuration.dropBadFlags.wins} win`)} or {autoPlural(`${this.state.server.configuration.dropBadFlags.time} ssecond`)}</td>
+                    <td>{autoPlural(`${this.state.server.configuration.dropBadFlags.wins} win`)} or {autoPlural(`${this.state.server.configuration.dropBadFlags.time} second`)}</td>
                   </tr>
                   <tr>
                     <th>Inertia</th>
