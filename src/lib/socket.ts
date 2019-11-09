@@ -1,25 +1,16 @@
 import * as io from "socket.io-client";
 
-class Socket{
-  private socket: SocketIOClient.Socket;
-
-  constructor(){
-    this.socket = io.connect("https://api.bzlist.net");
-  }
-
+export const socket = {
+  _socket: io.connect("https://api.bzlist.net"),
   emit(event: string, data: any = null): void{
-    this.socket.emit(event, data);
-  }
-
+    this._socket.emit(event, data);
+  },
   on<T>(event: string, callback: (data: T) => void): void{
-    this.socket.on(event, (data: T) => {
+    this._socket.on(event, (data: T) => {
       callback(data);
     });
-  }
-
+  },
   off(event: string): void{
-    this.socket.off(event);
+    this._socket.off(event);
   }
-}
-
-export const socket = new Socket();
+};
