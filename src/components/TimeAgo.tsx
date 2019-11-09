@@ -60,8 +60,8 @@ export class TimeAgo extends React.Component<Props, State>{
 
   private getSecondsUntilUpdate(seconds: number): number{
     if(seconds < MINUTE){
-      // less than 1 min, update every 10 seconds
-      return 10;
+      // less than 1 min, update every 5 seconds
+      return 5;
     }else if(seconds < HOUR){
       // less than an hour, update every 30 seconds
       return 30;
