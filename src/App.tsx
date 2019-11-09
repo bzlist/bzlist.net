@@ -39,7 +39,6 @@ class App extends React.Component<any, State>{
         }else if(data.error){
           console.error("error getting settings:", data.error);
         }else{
-          settings.clear();
           settings.setData(data);
         }
       }
