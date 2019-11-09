@@ -1,20 +1,14 @@
 @import "../variables.scss";
 
-.banner{
-  width: 100%;
-  height: 300px;
-  position: absolute;
-  z-index: -1;
-}
-
 .title{
   height: 300px;
-  padding: 12px 8px;
+  padding: 26px 36px;
   display: flex;
   box-sizing: border-box;
 
   @media screen and (max-width: $breakpoint-mobile){
     height: 200px;
+    padding: 12px 8px;
   }
 
   & > h1{
