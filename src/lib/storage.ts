@@ -20,7 +20,12 @@ export class Storage{
 
   getJson(key: string, defaultValue: Object = {}): any{
     const value = localStorage.getItem(this.prefix+key);
-    return value ? JSON.parse(value) : defaultValue;
+    try{
+      return value ? JSON.parse(value) : defaultValue;
+    }catch(err){
+      console.error("error getting json from storage.", err);
+      return defaultValue;
+    }
   }
 
   set(key: string, value: string): void{

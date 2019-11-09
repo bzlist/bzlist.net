@@ -33,15 +33,10 @@ export class PlayerPage extends React.Component<any, State>{
   constructor(props: any){
     super(props);
 
-    let playerCache = cache.get("players");
-    if(playerCache === ""){
-      playerCache = "[]";
-    }
-
     const {sort, sortOrder} = settings.getJson("playerSort", {sort: "score", sortOrder: 1});
 
     this.state = {
-      players: JSON.parse(playerCache),
+      players: cache.getJson("players", []),
       sort,
       sortOrder
     };

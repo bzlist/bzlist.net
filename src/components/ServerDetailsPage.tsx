@@ -31,20 +31,11 @@ export class ServerDetailsPage extends React.Component<Props, State>{
     this.port = +this.props.match.params.port;
 
     // get cache
-    let serverCache = cache.get("servers");
-    if(serverCache === ""){
-      serverCache = "[]";
-    }
-    let playerCache = cache.get("players");
-    if(playerCache === ""){
-      playerCache = "[]";
-    }
-
-    const serversCache = JSON.parse(serverCache);
-    const playersCache = JSON.parse(playerCache);
+    const serversCache: Server[] = cache.getJson("servers", []);
+    const playersCache: Player[] = cache.getJson("players", []);
 
     let server = null;
-    if(serverCache && playerCache){
+    if(serversCache && playersCache){
       server = serversCache.filter((_server: Server) => _server.address === this.address && _server.port === this.port)[0];
       if(server){
         server.players = playersCache.filter((player: Player) => player.server === `${this.address}:${this.port}`).sort((a: Player, b: Player) => a.wins - a.losses > b.wins - b.losses ? -1 : 1);
@@ -61,6 +52,39 @@ export class ServerDetailsPage extends React.Component<Props, State>{
         data.players.sort((a: Player, b: Player) => a.wins - a.losses > b.wins - b.losses ? -1 : 1);
       }
       this.setState({server: data});
+
+      // update servers cache
+      if(serversCache){
+        server = serversCache.filter((_server: Server) => _server.address === data.address && _server.port === data.port)[0];
+        if(server){
+          const serverIndex = serversCache.indexOf(server);
+          server = {...data};
+          delete server.players;
+
+          serversCache[serverIndex] = server;
+          cache.set("servers", JSON.stringify(serversCache));
+        }
+      }
+
+      // update players cache
+      if(playersCache && data.players){
+        let players = data.players.map((player: Player) => {
+          player.server = `${data.address}:${data.port}`;
+          player.timestamp = data.timestamp;
+
+          return player;
+        });
+
+        for(let i = 0; i < playersCache.length; i++){
+          if(playersCache[i].server === `${data.address}:${data.port}`){
+            playersCache.splice(i, 1);
+            i--;
+          }
+        }
+
+        players = players.concat(playersCache);
+        cache.set("players", JSON.stringify(players));
+      }
     });
     socket.emit("server", {address: this.address, port: this.port});
   }

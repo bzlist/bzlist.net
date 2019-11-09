@@ -27,15 +27,10 @@ export class HomePage extends React.Component<any, State>{
   constructor(props: any){
     super(props);
 
-    let serverCache = cache.get("servers");
-    if(serverCache === ""){
-      serverCache = "[]";
-    }
-
     const {sort, sortOrder} = settings.getJson("serverSort", {sort: "playersCount", sortOrder: 1});
 
     this.state = {
-      servers: JSON.parse(serverCache),
+      servers: cache.getJson("servers", []),
       sort,
       sortOrder,
       serversToShow: 10
