@@ -9,6 +9,8 @@ Socket.io + React = *(kind of)* real-time server stats for BZFlag.
 
 The app is running at [bzlist.net](https://bzlist.net). The origonal version was writtin using Angular, and can be found [here](https://github.com/bzlist/bzlist.net-old).
 
+There is a changelog (ish) which can be found [here](CHANGELOG.md).
+
 ## Get started
 
 It's easy to get started, just follow the few steps below.
