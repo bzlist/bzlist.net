@@ -52,6 +52,10 @@ export class HomePage extends React.Component<any, State>{
     }
   }
 
+  componentWillUnmount(): void{
+    socket.off("servers");
+  }
+
   sortBy(sort: string, sortOrder: number): void{
     if(this.state.sort === sort){
       sortOrder = -this.state.sortOrder;

@@ -57,6 +57,10 @@ export class PlayerPage extends React.Component<any, State>{
     }
   }
 
+  componentWillUnmount(): void{
+    socket.off("players");
+  }
+
   sortBy(sort: string, sortOrder: number){
     if(this.state.sort === sort){
       sortOrder = -this.state.sortOrder;

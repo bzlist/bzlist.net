@@ -22,11 +22,14 @@ interface State{
 
 export class ServerDetailsPage extends React.Component<Props, State>{
   banner = "";
+  address = "";
+  port = -1;
 
   constructor(props: Props){
     super(props);
 
-    const {address, port} = this.props.match.params;
+    this.address = this.props.match.params.address;
+    this.port = +this.props.match.params.port;
 
     // get cache
     let serverCache = cache.get("servers");
@@ -43,9 +46,9 @@ export class ServerDetailsPage extends React.Component<Props, State>{
 
     let server = null;
     if(serverCache && playerCache){
-      server = serversCache.filter((_server: Server) => _server.address === address && _server.port === +port)[0];
+      server = serversCache.filter((_server: Server) => _server.address === this.address && _server.port === this.port)[0];
       if(server){
-        server.players = playersCache.filter((player: Player) => player.server === `${address}:${port}`).sort((a: Player, b: Player) => a.wins - a.losses > b.wins - b.losses ? -1 : 1);
+        server.players = playersCache.filter((player: Player) => player.server === `${this.address}:${this.port}`).sort((a: Player, b: Player) => a.wins - a.losses > b.wins - b.losses ? -1 : 1);
       }
     }
 
@@ -54,13 +57,17 @@ export class ServerDetailsPage extends React.Component<Props, State>{
       selectTeam: false
     };
 
-    socket.on<Server>(`${address}:${port}`, (data: Server) => {
+    socket.on<Server>(`${this.address}:${this.port}`, (data: Server) => {
       if(data.players){
         data.players.sort((a: Player, b: Player) => a.wins - a.losses > b.wins - b.losses ? -1 : 1);
       }
       this.setState({server: data});
     });
-    socket.emit("server", {address, port: +port});
+    socket.emit("server", {address: this.address, port: this.port});
+  }
+
+  componentWillUnmount(): void{
+    socket.off(`${this.address}:${this.port}`);
   }
 
   joinTeam(team: string): void{

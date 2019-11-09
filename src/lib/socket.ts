@@ -16,6 +16,10 @@ class Socket{
       callback(data);
     });
   }
+
+  off(event: string): void{
+    this.socket.off(event);
+  }
 }
 
 export const socket = new Socket();
