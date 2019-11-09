@@ -21,7 +21,6 @@ interface State{
 }
 
 export class ServerDetailsPage extends React.Component<Props, State>{
-  banner = "";
   address = "";
   port = -1;
 
@@ -122,105 +121,104 @@ export class ServerDetailsPage extends React.Component<Props, State>{
 
     return (
       <div>
-        <div className="banner" style={{background: `url(/images/servers/${this.state.server.address}_${this.state.server.port}.png), url(/images/servers/default.png) no-repeat top center`}}></div>
-        <div className="container"><h1 className="title">{this.state.server.title}</h1></div>
-        <div style={{"background":"var(--bg)"}}>
-          <div className="server-header">
-            <div className="mobile-hide"><button className="play" onClick={() => this.setState({selectTeam: true})} title="Requires BZFlag Launcher">&#9658; Play</button></div>
-            <div>
-              <img src={`https://countryflags.io/${this.state.server.countryCode}/flat/32.png`} style={{"margin":"0 6px -10px 0"}} alt=""/>
-              {this.state.server.country}
-            </div>
-            <div><b>{autoPlural(`${this.state.server.playersCount} Player`)}</b></div>
-          </div><br/>
-          <div style={{width:"90vw",margin:"0 auto"}}>
-            Updated <TimeAgo timestamp={this.state.server.timestamp}/>.
+        <div className="title" style={{background: `url(/images/servers/${this.state.server.address}_${this.state.server.port}.png), url(/images/servers/default.png) no-repeat center center`}}>
+          <h1>{this.state.server.title}</h1>
+        </div>
+        <div className="server-header">
+          <div className="mobile-hide"><button className="play" onClick={() => this.setState({selectTeam: true})} title="Requires BZFlag Launcher">&#9658; Play</button></div>
+          <div>
+            <img src={`https://countryflags.io/${this.state.server.countryCode}/flat/32.png`} style={{"margin":"0 6px -10px 0"}} alt=""/>
+            {this.state.server.country}
           </div>
-          <div className="container content">
-            <div>
-              <h2>Info</h2><br/>
-              <table className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
-                <tbody>
-                  <tr>
-                    <th>Online</th>
-                    <td>{booleanYesNo(this.state.server.online)}</td>
-                  </tr>
-                  <tr>
-                    <th>Server</th>
-                    <td>{this.state.server.address}:{this.state.server.port}</td>
-                  </tr>
-                  <tr>
-                    <th>IP Address</th>
-                    <td>{this.state.server.ip}</td>
-                  </tr>
-                  <tr>
-                    <th>Owner</th>
-                    <td>{this.state.server.owner}</td>
-                  </tr>
-                  <tr>
-                    <th>Game Style</th>
-                    <td>{verboseGameStyle(this.state.server.configuration.gameStyle)}</td>
-                  </tr>
-                  <tr>
-                    <th>Max shots</th>
-                    <td>{this.state.server.configuration.maxShots}</td>
-                  </tr>
-                  <tr>
-                    <th>Max Players</th>
-                    <td>{this.state.server.configuration.maxPlayers}</td>
-                  </tr>
-                  <tr>
-                    <th>Flags</th>
-                    <td>{booleanYesNo(this.state.server.configuration.superflags)}</td>
-                  </tr>
-                  <tr>
-                    <th>Antidote Flags</th>
-                    <td>{booleanYesNo(this.state.server.configuration.antidoteFlags)}</td>
-                  </tr>
-                  <tr>
-                    <th>No Team Kills</th>
-                    <td>{booleanYesNo(this.state.server.configuration.noTeamKills)}</td>
-                  </tr>
-                  <tr>
-                    <th>Jumping</th>
-                    <td>{booleanYesNo(this.state.server.configuration.jumping)}</td>
-                  </tr>
-                  <tr>
-                    <th>Ricochet</th>
-                    <td>{booleanYesNo(this.state.server.configuration.ricochet)}</td>
-                  </tr>
-                  <tr>
-                    <th>Drop Bad Flags</th>
-                    <td>{booleanYesNo(this.state.server.configuration.shaking)}</td>
-                  </tr>
-                  <tr>
-                    <th>Drop Bad Flags After</th>
-                    <td>{autoPlural(`${this.state.server.configuration.dropBadFlags.wins} win`)} or {autoPlural(`${this.state.server.configuration.dropBadFlags.time} second`)}</td>
-                  </tr>
-                  <tr>
-                    <th>Inertia</th>
-                    <td>{booleanYesNo(this.state.server.configuration.inertia)}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div>
-              <h2>{autoPlural(`${playerCount} Player`)} and {autoPlural(`${observerCount} Observer`)} Online</h2><br/>
-              <table className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
-              <thead>
+          <div><b>{autoPlural(`${this.state.server.playersCount} Player`)}</b></div>
+        </div><br/>
+        <div style={{width:"90vw",margin:"0 auto"}}>
+          Updated <TimeAgo timestamp={this.state.server.timestamp}/>.
+        </div>
+        <div className="container content">
+          <div>
+            <h2>Info</h2><br/>
+            <table className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
+              <tbody>
                 <tr>
-                  <th>Callsign</th>
-                  <th>Score</th>
-                  <th>Team</th>
+                  <th>Online</th>
+                  <td>{booleanYesNo(this.state.server.online)}</td>
                 </tr>
-              </thead>
-                <tbody>
-                  {this.state.server.players.map((player: Player) =>
-                    <PlayerRow key={player.callsign} player={player} showServer={false}/>
-                  )}
-                </tbody>
-              </table>
-            </div>
+                <tr>
+                  <th>Server</th>
+                  <td>{this.state.server.address}:{this.state.server.port}</td>
+                </tr>
+                <tr>
+                  <th>IP Address</th>
+                  <td>{this.state.server.ip}</td>
+                </tr>
+                <tr>
+                  <th>Owner</th>
+                  <td>{this.state.server.owner}</td>
+                </tr>
+                <tr>
+                  <th>Game Style</th>
+                  <td>{verboseGameStyle(this.state.server.configuration.gameStyle)}</td>
+                </tr>
+                <tr>
+                  <th>Max shots</th>
+                  <td>{this.state.server.configuration.maxShots}</td>
+                </tr>
+                <tr>
+                  <th>Max Players</th>
+                  <td>{this.state.server.configuration.maxPlayers}</td>
+                </tr>
+                <tr>
+                  <th>Flags</th>
+                  <td>{booleanYesNo(this.state.server.configuration.superflags)}</td>
+                </tr>
+                <tr>
+                  <th>Antidote Flags</th>
+                  <td>{booleanYesNo(this.state.server.configuration.antidoteFlags)}</td>
+                </tr>
+                <tr>
+                  <th>No Team Kills</th>
+                  <td>{booleanYesNo(this.state.server.configuration.noTeamKills)}</td>
+                </tr>
+                <tr>
+                  <th>Jumping</th>
+                  <td>{booleanYesNo(this.state.server.configuration.jumping)}</td>
+                </tr>
+                <tr>
+                  <th>Ricochet</th>
+                  <td>{booleanYesNo(this.state.server.configuration.ricochet)}</td>
+                </tr>
+                <tr>
+                  <th>Drop Bad Flags</th>
+                  <td>{booleanYesNo(this.state.server.configuration.shaking)}</td>
+                </tr>
+                <tr>
+                  <th>Drop Bad Flags After</th>
+                  <td>{autoPlural(`${this.state.server.configuration.dropBadFlags.wins} win`)} or {autoPlural(`${this.state.server.configuration.dropBadFlags.time} second`)}</td>
+                </tr>
+                <tr>
+                  <th>Inertia</th>
+                  <td>{booleanYesNo(this.state.server.configuration.inertia)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <h2>{autoPlural(`${playerCount} Player`)} and {autoPlural(`${observerCount} Observer`)} Online</h2><br/>
+            <table className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
+            <thead>
+              <tr>
+                <th>Callsign</th>
+                <th>Score</th>
+                <th>Team</th>
+              </tr>
+            </thead>
+              <tbody>
+                {this.state.server.players.map((player: Player) =>
+                  <PlayerRow key={player.callsign} player={player} showServer={false}/>
+                )}
+              </tbody>
+            </table>
           </div>
         </div>
         {playPopup}

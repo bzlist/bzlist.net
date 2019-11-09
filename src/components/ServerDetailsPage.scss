@@ -8,15 +8,26 @@
 }
 
 .title{
-  margin-top: 150px;
-  color: #EEE;
-  font-size: 38px;
-  font-weight: normal;
-  text-shadow: 0 1px 8px #000;
-  word-break: break-all;
+  height: 300px;
+  padding: 12px 8px;
+  display: flex;
+  box-sizing: border-box;
 
   @media screen and (max-width: $breakpoint-mobile){
-    font-size: 30px;
+    height: 200px;
+  }
+
+  & > h1{
+    color: #EEE;
+    font-size: 38px;
+    font-weight: normal;
+    text-shadow: 0 1px 8px #000;
+    word-break: break-all;
+    align-self: flex-end;
+
+    @media screen and (max-width: $breakpoint-mobile){
+      font-size: 30px;
+    }
   }
 }
 
