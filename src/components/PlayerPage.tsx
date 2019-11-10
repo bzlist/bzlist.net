@@ -10,7 +10,7 @@ export const PlayerRow = ({player, showServer = true}: {player: Player, showServ
   return (
     <tr>
       <td><b>{player.callsign}</b> {player.motto ? `(${player.motto})` : ""}</td>
-      <td>{player.wins - player.losses}</td>
+      <td>{player.team === "Observer" ? "" : player.wins - player.losses}</td>
       <td>{player.team}</td>
       {serverTr}
     </tr>
