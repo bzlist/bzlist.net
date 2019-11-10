@@ -29,7 +29,12 @@ export class TimeAgo extends React.Component<Props, State>{
   }
 
   componentWillUnmount(): void{
-    window.clearTimeout(this.timer);
+    clearTimeout(this.timer);
+  }
+
+  componentWillUpdate(): void{
+    clearTimeout(this.timer);
+    this.timer = setTimeout(this.update);
   }
 
   update = (): void => {
@@ -55,6 +60,7 @@ export class TimeAgo extends React.Component<Props, State>{
 
     this.setState({text: time});
     // create timer
+    clearTimeout(this.timer);
     this.timer = setTimeout(this.update, Number.isNaN(this.props.timestamp) ? 1000 : this.getSecondsUntilUpdate(value) * 1000);
   }
 
