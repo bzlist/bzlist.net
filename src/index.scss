@@ -3,8 +3,8 @@
 @import "variables.scss";
 
 @font-face{
-  font-family: "Segoe MDL2";
-  src: url(/SegMDL2.ttf) format("truetype");
+  font-family: Icons;
+  src: url(/icons.ttf) format("truetype");
 }
 
 *{
@@ -118,7 +118,7 @@ hr{
 }
 
 .icon{
-  font-family: "Segoe MDL2";
+  font-family: Icons;
   font-weight: normal;
 }
 
