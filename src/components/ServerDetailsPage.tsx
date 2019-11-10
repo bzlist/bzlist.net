@@ -6,6 +6,8 @@ import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings} fro
 import {Server, Player, Team} from "../models";
 import {TimeAgo, PlayerRow} from ".";
 
+const playerSort = (a: Player, b: Player) => a.team === "Observer" ? 1 : b.team === "Observer" ? -1 : a.wins - a.losses > b.wins - b.losses ? -1 : 1;
+
 interface Params{
   address: string;
   port: string;
@@ -38,7 +40,7 @@ export class ServerDetailsPage extends React.Component<Props, State>{
     if(serversCache && playersCache){
       server = serversCache.filter((_server: Server) => _server.address === this.address && _server.port === this.port)[0];
       if(server){
-        server.players = playersCache.filter((player: Player) => player.server === `${this.address}:${this.port}`).sort((a: Player, b: Player) => a.wins - a.losses > b.wins - b.losses ? -1 : 1);
+        server.players = playersCache.filter((player: Player) => player.server === `${this.address}:${this.port}`).sort(playerSort);
       }
     }
 
@@ -49,7 +51,7 @@ export class ServerDetailsPage extends React.Component<Props, State>{
 
     socket.on<Server>(`${this.address}:${this.port}`, (data: Server) => {
       if(data.players){
-        data.players.sort((a: Player, b: Player) => a.wins - a.losses > b.wins - b.losses ? -1 : 1);
+        data.players.sort(playerSort);
       }
       this.setState({server: data});
 

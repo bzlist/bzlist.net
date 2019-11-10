@@ -21,6 +21,7 @@ interface State{
   players: Player[];
   sort: string;
   sortOrder: number;
+  showObservers: boolean;
 }
 
 export class PlayerPage extends React.Component<any, State>{
@@ -34,7 +35,8 @@ export class PlayerPage extends React.Component<any, State>{
     this.state = {
       players: cache.getJson("players", []),
       sort,
-      sortOrder
+      sortOrder,
+      showObservers: false
     };
 
     socket.on<Player[]>("players", (data: Player[]) => {
@@ -62,10 +64,16 @@ export class PlayerPage extends React.Component<any, State>{
   }
 
   getPlayers(): Player[]{
-    return this.state.players.map((player: Player) => {
+    const players = this.state.players.map((player: Player) => {
       player.score = player.wins - player.losses;
       return player;
-    }).sort((a: Player, b: Player) => a[this.state.sort] > b[this.state.sort] ? -this.state.sortOrder : this.state.sortOrder);
+    }).sort((a: Player, b: Player) => a.team === "Observer" ? 1 : b.team === "Observer" ? -1 : a[this.state.sort] > b[this.state.sort] ? -this.state.sortOrder : this.state.sortOrder)
+
+    if(!this.state.showObservers){
+      return players.filter((player: Player) => player.team !== "Observer");
+    }
+
+    return players;
   }
 
   render(): JSX.Element{
@@ -151,7 +159,8 @@ export class PlayerPage extends React.Component<any, State>{
           <h2>{autoPlural(`${playerCount} Player`)} and {autoPlural(`${observerCount} Observer`)} Online</h2>
           Updated <TimeAgo timestamp={timestamp}/>.<br/><br/>
           {table}
-          <button className="btn btn-outline" onClick={() => document.documentElement.scrollTop = 0} style={{margin:"22px 32px"}}>Scroll to Top</button>
+          <button className="btn btn-primary" onClick={() => this.setState({showObservers: !this.state.showObservers})} style={{margin:"22px 32px"}}>{!this.state.showObservers ? "Show Observers" : "Hide Observers"}</button>
+          <button className="btn btn-outline" onClick={() => document.documentElement.scrollTop = 0} style={{margin:"22px 0"}}>Scroll to Top</button>
         </div>
       </div>
     );
