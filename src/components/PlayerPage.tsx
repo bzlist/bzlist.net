@@ -80,10 +80,12 @@ export class PlayerPage extends React.Component<any, State>{
                 <h2>{player.callsign}</h2><br/>
                 <table className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
                   <tbody>
-                    <tr>
-                      <td>Score</td>
-                      <td>{player.wins - player.losses}</td>
-                    </tr>
+                    {player.team !== "Observer" ?
+                      <tr>
+                        <td>Score</td>
+                        <td>{player.wins - player.losses}</td>
+                      </tr>
+                    : null}
                     <tr>
                       <td>Team</td>
                       <td>{player.team}</td>
