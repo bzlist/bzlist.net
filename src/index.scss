@@ -346,32 +346,6 @@ textarea{
   }
 }
 
-.list-shimmer{
-  width: 90vw;
-  margin: 0 auto;
-  padding: 0;
-  list-style: none;
-}
-
-.list-shimmer li{
-  height: 16px;
-  margin: 18px 0;
-  background: linear-gradient(to right, var(--color-hover-dark) 4%, var(--color-hover) 25%, var(--color-hover-dark) 36%);
-  background-size: 1000px 100%;
-  border-radius: $border-radius;
-  animation: shimmer 2s infinite;
-}
-
-@keyframes shimmer{
-  0%{
-    background-position: -1000px 0;
-  }
-
-  100%{
-    background-position: 1000px 0;
-  }
-}
-
 @media screen and (max-width: $breakpoint-mobile){
   .mobile-hide{
     display: none !important;

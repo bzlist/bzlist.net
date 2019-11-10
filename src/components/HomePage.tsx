@@ -137,22 +137,7 @@ export class HomePage extends React.Component<any, State>{
       }
     }else{
       servers = (
-        <ul className="list-shimmer">
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-        </ul>
+        <div>Loading...</div>
       );
     }
 

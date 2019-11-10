@@ -123,22 +123,7 @@ export class PlayerPage extends React.Component<any, State>{
       }
     }else{
       table = (
-        <ul className="list-shimmer">
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-        </ul>
+        <div>Loading...</div>
       );
     }
 
