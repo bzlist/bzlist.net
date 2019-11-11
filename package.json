@@ -28,7 +28,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && sw-precache --config=sw-precache-config.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "tslint 'src/**/*.{ts,tsx}' && stylelint src/**/*.scss"
@@ -56,6 +56,7 @@
     "source-map-loader": "^0.2.4",
     "stylelint": "^11.1.1",
     "stylelint-config-standard": "^19.0.0",
+    "sw-precache": "^5.2.1",
     "ts-loader": "^6.2.1",
     "tslint": "^6.0.0-beta0",
     "typescript": "^3.6.4"
