@@ -67,7 +67,7 @@ export class PlayerPage extends React.Component<any, State>{
     const players = this.state.players.map((player: Player) => {
       player.score = player.wins - player.losses;
       return player;
-    }).sort((a: Player, b: Player) => a.team === "Observer" ? 1 : b.team === "Observer" ? -1 : a[this.state.sort] > b[this.state.sort] ? -this.state.sortOrder : this.state.sortOrder)
+    }).sort((a: Player, b: Player) => a.team === "Observer" ? 1 : b.team === "Observer" ? -1 : a[this.state.sort] > b[this.state.sort] ? -this.state.sortOrder : this.state.sortOrder);
 
     if(!this.state.showObservers){
       return players.filter((player: Player) => player.team !== "Observer");
