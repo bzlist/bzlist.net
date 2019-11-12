@@ -1,18 +1,25 @@
 import React from "react";
 
 import {cache, socket, verboseGameStyle, history, autoPlural, settings} from "../lib";
-import {Server} from "../models";
+import {Server, Team} from "../models";
 import {TimeAgo} from "./TimeAgo";
 
-const ServerRow = ({server}: {server: Server}) => (
-  <tr onClick={() => history.push(`/s/${server.address}/${server.port}`)} style={{fontWeight:server.playersCount > 0 ? "bold" : "inherit"}}>
-    <td>{server.playersCount}</td>
-    <td>{server.address}:{server.port}</td>
-    <td><img src={`https://countryflags.io/${server.countryCode}/flat/32.png`} alt={server.countryCode} title={server.country}/></td>
-    <td title={verboseGameStyle(server.configuration.gameStyle)}>{server.configuration.gameStyle}</td>
-    <td>{server.title}</td>
-  </tr>
-);
+const ServerRow = ({server}: {server: Server}) => {
+  let playersCount = server.playersCount;
+  if(settings.get("excludeObservers")){
+    playersCount -= server.teams.filter((team: Team) => team.name === "Observer")[0].players;
+  }
+
+  return (
+    <tr onClick={() => history.push(`/s/${server.address}/${server.port}`)} style={{fontWeight:playersCount > 0 ? "bold" : "inherit"}}>
+      <td>{playersCount}</td>
+      <td>{server.address}:{server.port}</td>
+      <td><img src={`https://countryflags.io/${server.countryCode}/flat/32.png`} alt={server.countryCode} title={server.country}/></td>
+      <td title={verboseGameStyle(server.configuration.gameStyle)}>{server.configuration.gameStyle}</td>
+      <td>{server.title}</td>
+    </tr>
+  );
+};
 
 interface State{
   servers: Server[];
