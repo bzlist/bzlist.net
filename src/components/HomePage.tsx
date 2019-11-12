@@ -6,7 +6,7 @@ import {TimeAgo} from "./TimeAgo";
 
 const ServerRow = ({server}: {server: Server}) => {
   let playersCount = server.playersCount;
-  if(settings.get("excludeObservers")){
+  if(settings.get("excludeObservers") === "true"){
     playersCount -= server.teams.filter((team: Team) => team.name === "Observer")[0].players;
   }
 
