@@ -47,7 +47,7 @@ export class HomePage extends React.Component<any, State>{
       this.setState({servers: data});
       cache.set("servers", JSON.stringify(data));
     });
-    socket.emit("servers");
+    socket.emit("servers", {onlinePlayers: settings.get("onlyServersWithPlayers") === "true"});
 
     if(window.innerWidth <= 768){
       this.mobile = true;
@@ -176,7 +176,9 @@ export class HomePage extends React.Component<any, State>{
           <h2>{this.state.servers.length} Public Servers Online</h2>
           {autoPlural(`${playerCount} player`)} and {autoPlural(`${observerCount} observer`)} online. Updated <TimeAgo timestamp={timestamp}/>.<br/><br/>
           {servers}
-          <button className="btn btn-primary" onClick={() => this.showMore()} style={{margin:"22px 32px"}}>{this.state.serversToShow > 0 ? "Show All" : "Show Less"}</button>
+          {this.state.servers.length > this.state.serversToShow ?
+            <button className="btn btn-primary" onClick={() => this.showMore()} style={{margin:"22px 32px"}}>{this.state.serversToShow > 0 ? "Show All" : "Show Less"}</button>
+          : null}
           {this.state.serversToShow <= 0 ?
             <button className="btn btn-outline" onClick={() => document.documentElement.scrollTop = 0} style={{margin:"22px 0"}}>Scroll to Top</button>
           : null}

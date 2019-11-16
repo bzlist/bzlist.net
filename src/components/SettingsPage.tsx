@@ -45,6 +45,8 @@ export class SettingsPage extends React.Component<any, State>{
       <div className="wrapper">
         <h1>Settings</h1><br/>
         <Checkbox label="Compact Tables" checked={settings.get("compactTables") === "true"} onChange={(value: boolean) => this.set("compactTables", value.toString())}/><br/>
+        <Checkbox label="Only Get Servers with Players" checked={settings.get("onlyServersWithPlayers") === "true"}
+          onChange={(value: boolean) => this.set("onlyServersWithPlayers", value.toString())}/><br/>
         <Checkbox label="Exclude Observers from Player Count" checked={settings.get("excludeObservers") === "true"} onChange={(value: boolean) => this.set("excludeObservers", value.toString())}/><br/>
         <br/>
         <span className="label">Theme</span>
