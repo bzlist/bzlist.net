@@ -2,11 +2,11 @@ import {api} from "./utils";
 
 export class Storage{
   prefix: string;
-  onChange: (key: string, value: string) => void;
+  onChange: (key: string, value: string, data?: any) => void;
 
   constructor(prefix = ""){
     this.prefix = prefix;
-    this.onChange = (key: string, value: string): void => {};
+    this.onChange = (key: string, value: string, data?: any): void => {};
   }
 
   key(index: number): string | null{
@@ -28,7 +28,7 @@ export class Storage{
     }
   }
 
-  set(key: string, value: string): void{
+  set(key: string, value: string, sync: boolean = false): void{
     localStorage.setItem(this.prefix+key, value);
     this.onChange(key, value);
   }
@@ -66,7 +66,7 @@ export class Storage{
   setData(data: any): void{
     for(const key in data){
       if(data.hasOwnProperty(key)){
-        this.set(key, data[key]);
+        this.set(key, data[key], false);
       }
     }
   }
@@ -76,8 +76,12 @@ export const storage = new Storage();
 export const cache = new Storage("cache_");
 export const settings = new Storage("setting_");
 
-settings.onChange = (key: string, value: string): void => {
-  if(storage.get("syncSettings") !== "true"){
+settings.onChange = (key: string, value: string, sync: boolean): void => {
+  if(value === "false"){
+    settings.remove(key);
+  }
+
+  if(storage.get("syncSettings") !== "true" || !sync){
     return;
   }
 
