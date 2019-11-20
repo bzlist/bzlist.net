@@ -63,8 +63,10 @@
 
   & > div{
     padding: 16px 26px;
+    background-color: var(--bg-lighter);
     flex: 1 350px;
     box-shadow: $shadow;
+    border-radius: $border-radius;
 
     @media screen and (max-width: $breakpoint-mobile){
       margin-bottom: 22px;
@@ -97,7 +99,8 @@
   justify-content: center;
 
   .overlay{
-    background-color: rgba(var(--color-base), .5);
+    background-color: var(--bg);
+    opacity: .5;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -116,7 +119,7 @@
   & > div{
     width: 340px;
     min-height: 100px;
-    background-color: var(--bg-light);
+    background-color: var(--bg-lighter);
     position: relative;
     box-shadow: $shadow;
     border-radius: $border-radius;

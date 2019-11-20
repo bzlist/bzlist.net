@@ -24,6 +24,13 @@ class App extends React.Component<any, State>{
   }
 
   async loadSettings(): Promise<void>{
+    let currentTheme = settings.get("theme");
+    if(currentTheme === ""){
+      currentTheme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      settings.set("theme", currentTheme);
+    }
+    document.documentElement.setAttribute("data-theme", currentTheme);
+
     if(storage.get("syncSettings") === "true"){
       const callsign = storage.get("callsign");
       const token = storage.get("token");
@@ -42,12 +49,9 @@ class App extends React.Component<any, State>{
       }
     }
 
-    let currentTheme = settings.get("theme");
-    if(currentTheme === ""){
-      currentTheme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      settings.set("theme", currentTheme);
+    if(settings.get("theme") !== currentTheme){
+      document.documentElement.setAttribute("data-theme", settings.get("theme"));
     }
-    document.documentElement.setAttribute("data-theme", currentTheme);
   }
 
   render(): JSX.Element{
