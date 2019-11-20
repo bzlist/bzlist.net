@@ -12,21 +12,21 @@
 }
 
 html{
-  --bg: hsl(210, 10%, 97%);
-  --bg-lighter: hsl(210, 10%, 99%);
+  --bg: hsl(210, 5%, 97%);
+  --bg-lighter: hsl(210, 5%, 99%);
   --color-hover: rgba(0, 0, 0, .05);
   --color-hover-light: rgba(0, 0, 0, .02);
-  --color-text-headings: hsl(210, 10%, 30%);
-  --color-text: hsl(210, 10%, 40%);
+  --color-text-headings: hsl(210, 5%, 30%);
+  --color-text: hsl(210, 5%, 40%);
 }
 
 html[data-theme=dark]{
-  --bg: hsl(210, 10%, 10%);
-  --bg-lighter: hsl(210, 10%, 12%);
+  --bg: hsl(210, 5%, 10%);
+  --bg-lighter: hsl(210, 5%, 12%);
   --color-hover: rgba(255, 255, 255, .05);
   --color-hover-light: rgba(255, 255, 255, .02);
-  --color-text-headings: hsl(210, 10%, 85%);
-  --color-text: hsl(210, 10%, 75%);
+  --color-text-headings: hsl(210, 5%, 85%);
+  --color-text: hsl(210, 5%, 75%);
 }
 
 html[data-theme=midnight]{
@@ -34,8 +34,8 @@ html[data-theme=midnight]{
   --bg-lighter: hsl(210, 10%, 3%);
   --color-hover: rgba(255, 255, 255, .1);
   --color-hover-light: rgba(255, 255, 255, .05);
-  --color-text-headings: hsl(210, 10%, 90%);
-  --color-text: hsl(210, 10%, 80%);
+  --color-text-headings: hsl(210, 5%, 90%);
+  --color-text: hsl(210, 5%, 80%);
 }
 
 body{
