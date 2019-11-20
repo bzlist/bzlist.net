@@ -74,8 +74,10 @@
     }
 
     @media screen and (min-width: $breakpoint-mobile){
-      &:first-child{
-        margin-right: 32px;
+      margin-right: 32px;
+
+      &:last-child{
+        margin-right: 0;
       }
     }
   }

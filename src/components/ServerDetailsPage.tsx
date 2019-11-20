@@ -215,7 +215,7 @@ export class ServerDetailsPage extends React.Component<Props, State>{
             </table>
           </div>
           <div>
-            <h2>{autoPlural(`${playerCount} Player`)} and {autoPlural(`${observerCount} Observer`)} Online</h2><br/>
+            <h2>{autoPlural(`${playerCount} Player`)} and {autoPlural(`${observerCount} Observer`)}</h2><br/>
             <table className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
             <thead>
               <tr>
@@ -227,6 +227,27 @@ export class ServerDetailsPage extends React.Component<Props, State>{
               <tbody>
                 {this.state.server.players.map((player: Player) =>
                   <PlayerRow key={player.callsign} player={player} showServer={false}/>
+                )}
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <h2>{autoPlural(`${this.state.server.teams.length} Team`)}</h2><br/>
+            <table className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Score</th>
+                <th>Players</th>
+              </tr>
+            </thead>
+              <tbody>
+                {this.state.server.teams.sort((a: Team, b: Team) => a.wins - a.losses > b.wins - b.losses ? -1 : 1).map((team: Team) =>
+                  <tr key={team.name}>
+                    <td>{team.name}</td>
+                    <td>{team.name === "Observer" ? "" : team.wins - team.losses}</td>
+                    <td>{team.players}</td>
+                  </tr>
                 )}
               </tbody>
             </table>
