@@ -32,7 +32,7 @@ export class TimeAgo extends React.Component<Props, State>{
     clearTimeout(this.timer);
   }
 
-  componentWillUpdate(): void{
+  componentDidUpdate(): void{
     clearTimeout(this.timer);
     this.timer = setTimeout(this.update);
   }
