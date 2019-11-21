@@ -214,6 +214,7 @@ export class ServerDetailsPage extends React.Component<Props, State>{
               </tbody>
             </table>
           </div>
+          {this.state.server.playersCount > 0 ?
           <div>
             <h2>{autoPlural(`${playerCount} Player`)} and {autoPlural(`${observerCount} Observer`)}</h2><br/>
             <table className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
@@ -231,6 +232,7 @@ export class ServerDetailsPage extends React.Component<Props, State>{
               </tbody>
             </table>
           </div>
+          : null}
           <div>
             <h2>{autoPlural(`${this.state.server.teams.length} Team`)}</h2><br/>
             <table className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
