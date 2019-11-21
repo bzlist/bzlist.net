@@ -21,6 +21,42 @@ class App extends React.Component<any, State>{
 
     window.ononline = () => this.setState({offline: false});
     window.onoffline = () => this.setState({offline: true});
+
+    // swiping
+    const touchsurface = document.documentElement,
+          threshold = 100, // required min distance traveled to be considered swipe
+          allowedTime = 1000; // maximum time allowed to travel that distance
+    let startX = 0,
+        startY = 0,
+        startTime = 0;
+
+    touchsurface.addEventListener("touchstart", (e) => {
+        const touch = e.changedTouches[0];
+        startX = touch.pageX;
+        startY = touch.pageY;
+        startTime = new Date().getTime();
+    });
+
+    touchsurface.addEventListener("touchend", (e) => {
+      const touch = e.changedTouches[0];
+      const elapsedTime = new Date().getTime() - startTime;
+      const drawerToggle: any = document.querySelector("#drawer-toggle");
+
+      if(elapsedTime <= allowedTime && Math.abs(touch.pageY - startY) <= 100 && drawerToggle){
+        if(touch.pageX - startX >= threshold){
+          drawerToggle.checked = true;
+        }else if(touch.pageX + startX >= threshold){
+          drawerToggle.checked = false;
+        }
+      }
+    });
+
+    history.listen(() => {
+      const drawerToggle: any = document.querySelector("#drawer-toggle");
+      if(drawerToggle){
+        drawerToggle.checked = false;
+      }
+    });
   }
 
   async loadSettings(): Promise<void>{
