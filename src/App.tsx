@@ -81,12 +81,12 @@ class App extends React.Component<any, State>{
           console.error("error getting settings:", data.error);
         }else{
           settings.setData(data);
+
+          if(data.theme && data.theme !== currentTheme){
+            document.documentElement.setAttribute("data-theme", data.theme);
+          }
         }
       }
-    }
-
-    if(settings.get("theme") !== currentTheme){
-      document.documentElement.setAttribute("data-theme", settings.get("theme"));
     }
   }
 
