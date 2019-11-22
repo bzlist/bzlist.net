@@ -219,26 +219,47 @@ table{
 }
 
 tr{
-  height: 32px;
+  height: 36px;
+
+  @media screen and (max-width: $breakpoint-mobile){
+    height: 30px;
+  }
 }
 
 tr:hover{
-  background-color: var(--color-hover-light);
-}
-
-td, th{
-  padding: 0 8px;
-  font-size: 14px;
-
-  @media screen and (max-width: $breakpoint-mobile){
-    padding: 0 2px;
-  }
+  background-color: var(--bg-lighter);
+  box-shadow: $shadow;
 }
 
 th{
   font-size: 12px;
   text-align: left;
   cursor: pointer;
+}
+
+td, th{
+  padding: 0 8px;
+  font-size: 14px;
+
+  &:first-child{
+    padding-left: 14px;
+  }
+
+  &:last-child{
+    padding-right: 14px;
+  }
+
+  @media screen and (max-width: $breakpoint-mobile){
+    padding: 0 6px;
+
+    &:first-child{
+      padding-left: 4px;
+    }
+
+    &:last-child{
+      padding-right: 4px;
+    }
+  }
 }
 
 .table-compact tr,
