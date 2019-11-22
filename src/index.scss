@@ -12,9 +12,9 @@
 }
 
 html{
-  --bg: hsl(210, 5%, 97%);
+  --bg: hsl(210, 5%, 98%);
   --bg-lighter: hsl(210, 5%, 100%);
-  --bg-darker: hsl(210, 5%, 95%);
+  --bg-darker: hsl(210, 5%, 96%);
   --color-hover: rgba(0, 0, 0, .05);
   --color-hover-light: rgba(0, 0, 0, .02);
   --color-text-headings: hsl(210, 5%, 30%);
@@ -136,6 +136,7 @@ a:hover, .link:hover{
   color: #FFF;
   font-weight: bold;
   border: 1px solid $color-primary;
+  box-shadow: $shadow;
 
   &:hover{
     background-color: darken($color-primary, 5%);
@@ -277,13 +278,15 @@ textarea{
   max-width: 400px;
   height: 200px;
   min-height: 50px;
-  padding: 4px 8px;
-  background-color: var(--bg);
+  padding: 6px 8px;
+  background-color: var(--bg-lighter);
   color: var(--color-text);
   font-size: 14px;
   box-sizing: border-box;
-  border: 1px solid var(--color-text);
+  // border: 1px solid var(--color-text);
+  border: none;
   border-radius: $border-radius;
+  box-shadow: $shadow;
   outline: none;
   resize: vertical;
 
