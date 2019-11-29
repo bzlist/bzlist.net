@@ -1,12 +1,46 @@
-*Note: this is an outline and does not contain every change. Check the commits for a full list of changes.*
+# Changelog
+
+This is an outline and does not contain every change. Check the commits for a full list of Changed.
+
+## v0.9.1 - Tweaks, Fixes, and More Settings (2019-11-29)
+
+### Added
+- Link to changelog in readme
+- Scroll to top button on player page
+- Hide observers by default and sort them to bottom
+- Setting to hide observers from server list player count
+- Setting to only get servers with players online
+- dns-prefetch for domains
+- Team info to server details page
+
+### Changed
+- Logo tweaked
+- Don't show score for observers
+- Compressed icons
+- Better hamburger menu
+- Theme colors
+- Optimized settings
+- Don't show players table on server with none online
+- Improved navigation drawer
+- Updated dependencies
+- Tweaked styling
+
+## Removed
+- Loading shimmer effect
+
+### Fixed
+- Time ago not always updating
+- Service worker not always updating
+- Unsafe code from TimeAgo component
+- Settings not syncing properly
 
 ## v0.9.0 - React & tweaks 😮 (2019-11-9)
 
 **NOTE:** This includes a complete(ish) rewrite from Angular to React. Overall it is mostly the same with very few functional changes and some appearience changes. The old version can be found at https://old.bzflag.net/. BZList is also now relicened from GPL-3.0 to MIT.
 
-**Changes before rewrite.**
+**Changed before rewrite.**
 
-### Additions
+### Added
 - Support for TWA
 - Offline detection
 - stylelint for SCSS linting
@@ -14,34 +48,34 @@
 - Terms of Service
 - Privacy Policy
 
-### Changes
+### Changed
 - Updated server card
 - Reduced whitespace o server and player pages
 - Use shorthand for game-style in server list
 
-### Fixes
+### Fixed
 - Scrollbar always being present
 - Footer not always being on bottom
 
 ---
 
-**Changes after rewrite.**
+**Changed after rewrite.**
 
-### Additions
+### Added
 - Show more button for servers
 - Scroll to top button on server list
 - Feedback page
 - Hamburger menu on mobile
 - Detect if API is offline (kinda)
 
-### Changes
+### Changed
 - Logo in README
 - Tweaks to server details page
 - Focus more on important data
 
 ## v0.8.0 - Search & new UI 🔍 (2019-10-21)
 
-### Additions
+### Added
 - Custom wrapper for Socket.io
 - Added option to hide specific servers
 - Added search for servers and players
@@ -50,14 +84,14 @@
 - Player list server column addded to settings
 - Settings reset button
 
-### Changes
+### Changed
 - Updated help page
 - Shimmer effect when servers are loading
 - Updated checkbox
 - Dropdown for theme selection
 - Redesigned UI
 
-### Fixes
+### Fixed
 - Build error in settings page
 - GitHub icon not changing color with theme
 - Navigation bar overflowing on mobile
@@ -66,12 +100,12 @@
 
 ## v0.7.0 - Server page redesign ✨ (2019-9-30)
 
-### Additions
+### Added
 - Server and player data is now cached
 - Remember last sorted field for tables
 - Added banner image to server page
 
-### Changes
+### Changed
 - GitHub link now goes directly to bzlist.net project
 - Removed old account button
 - Moved version number to navigation bar
@@ -81,7 +115,7 @@
 - Updated button design
 - Updated splashscreen
 
-### Fixes
+### Fixed
 - Fixed team sorting getting messed up
 - Fixed settings page
 - Fixed typo in README
