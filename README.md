@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="logo.svg" height="150">
+[<img src="logo.svg" height="150">](https://bzlist.net)
 
 [![GitHub license](https://img.shields.io/github/license/bzlist/bzlist.net.svg)](https://github.com/bzlist/bzlist.net/blob/master/LICENSE)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/bzlist/bzlist.net)
