@@ -1,6 +1,6 @@
 # Changelog
 
-This is an outline and does not contain every change. Check the commits for a full list of Changed.
+This is an outline and does not contain every change. Check the commits for a full list of changes.
 
 ## v0.9.1 - Tweaks, Fixes, and More Settings (2019-11-29)
 
@@ -38,7 +38,7 @@ This is an outline and does not contain every change. Check the commits for a fu
 
 **NOTE:** This includes a complete(ish) rewrite from Angular to React. Overall it is mostly the same with very few functional changes and some appearience changes. The old version can be found at https://old.bzflag.net/. BZList is also now relicened from GPL-3.0 to MIT.
 
-**Changed before rewrite.**
+**Before rewrite.**
 
 ### Added
 - Support for TWA
@@ -59,7 +59,7 @@ This is an outline and does not contain every change. Check the commits for a fu
 
 ---
 
-**Changed after rewrite.**
+**After rewrite.**
 
 ### Added
 - Show more button for servers
