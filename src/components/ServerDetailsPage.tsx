@@ -4,7 +4,7 @@ import "./ServerDetailsPage.scss";
 
 import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings} from "../lib";
 import {Server, Player, Team} from "../models";
-import {TimeAgo, PlayerRow} from ".";
+import {TimeAgo, PlayerRow, Checkbox} from ".";
 
 const playerSort = (a: Player, b: Player) => a.team === "Observer" ? 1 : b.team === "Observer" ? -1 : a.wins - a.losses > b.wins - b.losses ? -1 : 1;
 
@@ -104,6 +104,23 @@ export class ServerDetailsPage extends React.Component<Props, State>{
     this.setState({selectTeam: false});
   }
 
+  hideServer(): void{
+    if(!this.state.server){
+      return;
+    }
+
+    const server = `${this.state.server.address}:${this.state.server.port}`;
+    const hiddenServers = settings.getJson("hiddenServers", []);
+
+    if(hiddenServers.includes(server)){
+      hiddenServers.splice(hiddenServers.indexOf(server), 1);
+    }else{
+      hiddenServers.splice(hiddenServers.indexOf(server), 0, server);
+    }
+
+    settings.set("hiddenServers", JSON.stringify(hiddenServers));
+  }
+
   render(): JSX.Element{
     if(!this.state.server || !this.state.server.players){
       const {address, port} = this.props.match.params;
@@ -145,6 +162,8 @@ export class ServerDetailsPage extends React.Component<Props, State>{
       observerCount += observerTeam.players;
     }
 
+    const isServerHidden = settings.getJson("hiddenServers", []).includes(`${this.state.server.address}:${this.state.server.port}`);
+
     return (
       <div>
         <div className="title" style={{background: `url(/images/servers/${this.state.server.address}_${this.state.server.port}.png), url(/images/servers/default.png) no-repeat center center`}}>
@@ -158,101 +177,104 @@ export class ServerDetailsPage extends React.Component<Props, State>{
           </div>
           <div><b>{autoPlural(`${this.state.server.playersCount} Player`)}</b></div>
         </div>
-        <div className="container content">
-          <div>
-            <h2>Info</h2><br/>
-            <table className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
-              <tbody>
-                <tr>
-                  <th>Updated</th>
-                  <td><TimeAgo timestamp={this.state.server.timestamp}/></td>
-                </tr>
-                <tr>
-                  <th>Server</th>
-                  <td>{this.state.server.address}:{this.state.server.port}</td>
-                </tr>
-                <tr>
-                  <th>IP Address</th>
-                  <td>{this.state.server.ip}</td>
-                </tr>
-                <tr>
-                  <th>Owner</th>
-                  <td>{this.state.server.owner}</td>
-                </tr>
-                <tr>
-                  <th>Game Style</th>
-                  <td>{verboseGameStyle(this.state.server.configuration.gameStyle)}</td>
-                </tr>
-                <tr>
-                  <th>Max shots</th>
-                  <td>{this.state.server.configuration.maxShots}</td>
-                </tr>
-                <tr>
-                  <th>Max Players</th>
-                  <td>{this.state.server.configuration.maxPlayers}</td>
-                </tr>
-                <tr>
-                  <th>Flags</th>
-                  <td>{booleanYesNo(this.state.server.configuration.superflags)}</td>
-                </tr>
-                <tr>
-                  <th>No Team Kills</th>
-                  <td>{booleanYesNo(this.state.server.configuration.noTeamKills)}</td>
-                </tr>
-                <tr>
-                  <th>Jumping</th>
-                  <td>{booleanYesNo(this.state.server.configuration.jumping)}</td>
-                </tr>
-                <tr>
-                  <th>Ricochet</th>
-                  <td>{booleanYesNo(this.state.server.configuration.ricochet)}</td>
-                </tr>
-                <tr>
-                  <th>Drop Bad Flags After</th>
-                  <td>{autoPlural(`${this.state.server.configuration.dropBadFlags.wins} win`)} or {autoPlural(`${this.state.server.configuration.dropBadFlags.time} second`)}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          {this.state.server.playersCount > 0 ?
-          <div>
-            <h2>{autoPlural(`${playerCount} Player`)} and {autoPlural(`${observerCount} Observer`)}</h2><br/>
-            <table className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
-            <thead>
-              <tr>
-                <th>Callsign</th>
-                <th>Score</th>
-                <th>Team</th>
-              </tr>
-            </thead>
-              <tbody>
-                {this.state.server.players.map((player: Player) =>
-                  <PlayerRow key={player.callsign} player={player} showServer={false}/>
-                )}
-              </tbody>
-            </table>
-          </div>
-          : null}
-          <div>
-            <h2>{autoPlural(`${this.state.server.teams.length} Team`)}</h2><br/>
-            <table className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Score</th>
-                <th>Players</th>
-              </tr>
-            </thead>
-              <tbody>
-                {this.state.server.teams.sort((a: Team, b: Team) => a.wins - a.losses > b.wins - b.losses ? -1 : 1).map((team: Team) =>
-                  <tr key={team.name}>
-                    <td><b>{team.name}</b></td>
-                    <td>{team.name === "Observer" ? "" : team.wins - team.losses}</td>
-                    <td>{team.players}</td>
+        <div className="container">
+          <Checkbox label="Hide Server" checked={isServerHidden} onChange={() => this.hideServer()}/><br/><br/>
+          <div className="content">
+            <div>
+              <h2>Info</h2><br/>
+              <table className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
+                <tbody>
+                  <tr>
+                    <th>Updated</th>
+                    <td><TimeAgo timestamp={this.state.server.timestamp}/></td>
                   </tr>
-                )}
-              </tbody>
-            </table>
+                  <tr>
+                    <th>Server</th>
+                    <td>{this.state.server.address}:{this.state.server.port}</td>
+                  </tr>
+                  <tr>
+                    <th>IP Address</th>
+                    <td>{this.state.server.ip}</td>
+                  </tr>
+                  <tr>
+                    <th>Owner</th>
+                    <td>{this.state.server.owner}</td>
+                  </tr>
+                  <tr>
+                    <th>Game Style</th>
+                    <td>{verboseGameStyle(this.state.server.configuration.gameStyle)}</td>
+                  </tr>
+                  <tr>
+                    <th>Max shots</th>
+                    <td>{this.state.server.configuration.maxShots}</td>
+                  </tr>
+                  <tr>
+                    <th>Max Players</th>
+                    <td>{this.state.server.configuration.maxPlayers}</td>
+                  </tr>
+                  <tr>
+                    <th>Flags</th>
+                    <td>{booleanYesNo(this.state.server.configuration.superflags)}</td>
+                  </tr>
+                  <tr>
+                    <th>No Team Kills</th>
+                    <td>{booleanYesNo(this.state.server.configuration.noTeamKills)}</td>
+                  </tr>
+                  <tr>
+                    <th>Jumping</th>
+                    <td>{booleanYesNo(this.state.server.configuration.jumping)}</td>
+                  </tr>
+                  <tr>
+                    <th>Ricochet</th>
+                    <td>{booleanYesNo(this.state.server.configuration.ricochet)}</td>
+                  </tr>
+                  <tr>
+                    <th>Drop Bad Flags After</th>
+                    <td>{autoPlural(`${this.state.server.configuration.dropBadFlags.wins} win`)} or {autoPlural(`${this.state.server.configuration.dropBadFlags.time} second`)}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            {this.state.server.playersCount > 0 ?
+            <div>
+              <h2>{autoPlural(`${playerCount} Player`)} and {autoPlural(`${observerCount} Observer`)}</h2><br/>
+              <table className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
+              <thead>
+                <tr>
+                  <th>Callsign</th>
+                  <th>Score</th>
+                  <th>Team</th>
+                </tr>
+              </thead>
+                <tbody>
+                  {this.state.server.players.map((player: Player) =>
+                    <PlayerRow key={player.callsign} player={player} showServer={false}/>
+                  )}
+                </tbody>
+              </table>
+            </div>
+            : null}
+            <div>
+              <h2>{autoPlural(`${this.state.server.teams.length} Team`)}</h2><br/>
+              <table className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Score</th>
+                  <th>Players</th>
+                </tr>
+              </thead>
+                <tbody>
+                  {this.state.server.teams.sort((a: Team, b: Team) => a.wins - a.losses > b.wins - b.losses ? -1 : 1).map((team: Team) =>
+                    <tr key={team.name}>
+                      <td><b>{team.name}</b></td>
+                      <td>{team.name === "Observer" ? "" : team.wins - team.losses}</td>
+                      <td>{team.players}</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
         {playPopup}

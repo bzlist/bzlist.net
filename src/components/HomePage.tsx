@@ -26,6 +26,7 @@ interface State{
   sort: string;
   sortOrder: number;
   serversToShow: number;
+  showHidden: boolean;
 }
 
 export class HomePage extends React.Component<any, State>{
@@ -40,7 +41,8 @@ export class HomePage extends React.Component<any, State>{
       servers: cache.getJson("servers", []),
       sort,
       sortOrder,
-      serversToShow: 10
+      serversToShow: 10,
+      showHidden: false
     };
 
     socket.on<Server[]>("servers", (data: Server[]) => {
@@ -68,7 +70,7 @@ export class HomePage extends React.Component<any, State>{
   }
 
   getServers(): Server[]{
-    const servers = this.state.servers;
+    let servers = this.state.servers;
 
     if(this.state.sort.startsWith("configuration.")){
       const sort = this.state.sort.replace("configuration.", "");
@@ -77,6 +79,9 @@ export class HomePage extends React.Component<any, State>{
       servers.sort((a: Server, b: Server) => a[this.state.sort] > b[this.state.sort] ? -this.state.sortOrder : this.state.sortOrder);
     }
 
+    if(!this.state.showHidden){
+      servers = servers.filter((server) => !settings.getJson("hiddenServers", []).includes(`${server.address}:${server.port}`));
+    }
     return servers.slice(0, this.state.serversToShow > 0 ? this.state.serversToShow : this.state.servers.length);
   }
 
@@ -178,6 +183,11 @@ export class HomePage extends React.Component<any, State>{
           {servers}
           {this.state.servers.length > this.state.serversToShow ?
             <button className="btn btn-primary" onClick={() => this.showMore()} style={{margin:"22px 32px"}}>{this.state.serversToShow > 0 ? "Show All" : "Show Less"}</button>
+          : null}
+          {settings.getJson("hiddenServers", []).length > 0 ?
+            <button className="btn btn-outline" onClick={() => this.setState({showHidden: !this.state.showHidden})} style={{margin:"22px 0"}}>
+              {this.state.showHidden ? "Hide Hidden" : "Show Hidden"}
+            </button>
           : null}
           {this.state.serversToShow <= 0 ?
             <button className="btn btn-outline" onClick={() => document.documentElement.scrollTop = 0} style={{margin:"22px 0"}}>Scroll to Top</button>
