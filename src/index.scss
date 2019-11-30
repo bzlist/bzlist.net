@@ -12,6 +12,8 @@
 }
 
 html{
+  scroll-behavior: smooth;
+
   --bg: hsl(210, 5%, 98%);
   --bg-lighter: hsl(210, 5%, 100%);
   --bg-darker: hsl(210, 5%, 96%);
