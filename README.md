@@ -1,4 +1,6 @@
-![BZList](logo.svg)
+<div align="center">
+
+<img src="logo.svg" height="150">
 
 [![GitHub license](https://img.shields.io/github/license/bzlist/bzlist.net.svg)](https://github.com/bzlist/bzlist.net/blob/master/LICENSE)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/bzlist/bzlist.net)
@@ -6,6 +8,8 @@
 [![IRC #bzlist](https://img.shields.io/badge/IRC-%23bzlist-blue.svg)](http://webchat.freenode.net/?channels=#bzlist)
 
 Socket.io + React = *(kind of)* real-time server stats for BZFlag.
+
+</div>
 
 The app is running at [bzlist.net](https://bzlist.net). The origonal version was writtin using Angular, and can be found [here](https://github.com/bzlist/bzlist.net-old).
 
