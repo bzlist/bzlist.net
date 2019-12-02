@@ -11,9 +11,9 @@ Socket.io + React = *(kind of)* real-time server stats for BZFlag.
 
 </div>
 
-The app is running at [bzlist.net](https://bzlist.net). The origonal version was writtin using Angular, and can be found [here](https://github.com/bzlist/bzlist.net-old).
+The app is running at [bzlist.net](https://bzlist.net). The origonal version was made with Angular, and can be found [here](https://github.com/bzlist/bzlist.net-old).
 
-There is a changelog (ish) which can be found [here](CHANGELOG.md).
+You can view the changelog [here](CHANGELOG.md).
 
 ## Get started
 
@@ -29,11 +29,9 @@ git clone https://github.com/bzlist/bzlist.net.git
 cd bzlist.net
 ```
 
-The ZIP file can be found at https://github.com/bzlist/bzlist.net/archive/master.zip.
+The latest ZIP file can be found at [here](https://github.com/bzlist/bzlist.net/archive/master.zip).
 
 ### Install npm packages
-
-Install the `npm` packages and verify everything is working:
 
 ```sh
 npm install
@@ -41,15 +39,9 @@ npm install
 
 ## Available Scripts
 
-In the project directory, you can run:
-
 ### `npm start`
 
-Runs the app in the development mode.<br/>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br/>
-You will also see any lint errors in the console.
+Runs the app in the development mode. Open [http://localhost:3000](http://localhost:3000) to view it in your browser and the page will live reload when you make edits.
 
 ### `npm run lint`
 
@@ -57,10 +49,8 @@ Lints the TypeScript and SCSS files in `src`.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.<br/>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Builds the app for production and outputs it to `build`. It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br/>
-Your app is ready to be deployed!
+## License
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Licensed under the [MIT license](LICENSE).
