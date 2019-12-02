@@ -126,7 +126,10 @@ export class AccountPage extends React.Component<any, State>{
           :
             <div>
               <h1>Account</h1>
-              <p>Sign in to sync your settigs across devices.</p>
+              <p>
+                Sign in with your <a href="https://forums.bzflag.org" target="_blank" rel="noopener noreferrer">BZFlag account</a> to sync your settigs across devices.
+                No password or extra information required.
+              </p>
               <a className="btn btn-primary" href={bzLoginURL}>Sign In with BZFlag</a>
             </div>
           }
