@@ -1,6 +1,8 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
+import {version} from "../../package.json";
+
 export const HelpPage = (): JSX.Element => (
   <div className="wrapper">
     <h1>Help</h1>
@@ -19,5 +21,6 @@ export const HelpPage = (): JSX.Element => (
       <span className="label">Data doesn't seem to be updating.</span><br/>
       If the API had to restart (due to an error or update) then refreshing the page should fix it. If you continue to experience issues contact me.
     </p>
+    <p><small>Version v{version}.</small></p>
   </div>
 );
