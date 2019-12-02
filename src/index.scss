@@ -134,7 +134,7 @@ a:hover, .link:hover{
 }
 
 .btn-primary{
-  background-color: $color-primary;
+  background: linear-gradient(to right, hsl(191, 70%, 60%), $color-primary);
   color: #FFF;
   font-weight: bold;
   border: 1px solid $color-primary;
