@@ -47,8 +47,8 @@
   }
 
   &[data-checked=true] .switch__slider{
-    // background-color: $color-primary;
     background: $gradient-primary;
+
     &:before{
       left: 22px;
     }
