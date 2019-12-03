@@ -138,7 +138,7 @@ a:hover, .link:hover{
   color: #FFF;
   font-weight: bold;
   border: 1px solid $color-primary;
-  box-shadow: $shadow;
+  box-shadow: 0 0 8px $color-primary;
 
   &:hover{
     background-color: darken($color-primary, 5%);
