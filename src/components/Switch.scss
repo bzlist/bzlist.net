@@ -21,6 +21,8 @@
     width: 42px;
     height: 24px;
     position: relative;
+    box-shadow: $shadow;
+    border-radius: 34px;
   }
 
   .switch__slider{
