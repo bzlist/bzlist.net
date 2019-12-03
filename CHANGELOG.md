@@ -2,6 +2,27 @@
 
 This is an outline and does not contain every change. Check the commits for a full list of changes.
 
+## v0.9.2 - Hide Servers and More Gradients (2019-11-29)
+
+### Added
+- Setting to hide specific servers
+- Scroll to top is now smooth
+- Version number to help page
+
+### Changed
+- Improved README
+- Primary button background is now a gradient
+- Wording on account sign in is improved
+- Replaced checkboxes with switches
+- Largest headings color is now a gradient
+- Tweaked shadows
+
+### Fixed
+- Typo and wording in changelog
+- Server details table hover contrast
+
+### Added
+
 ## v0.9.1 - Tweaks, Fixes, and More Settings (2019-11-29)
 
 ### Added
