@@ -58,9 +58,12 @@ h1, h2, h3{
 }
 
 h1{
-  color: $color-primary;
+  background: $gradient-primary;
+  background-clip: text;
+  color: transparent;
   font-size: 44px;
   font-weight: 500;
+  display: inline-block;
 
   @media screen and (max-width: $breakpoint-mobile){
     font-size: 30px;
