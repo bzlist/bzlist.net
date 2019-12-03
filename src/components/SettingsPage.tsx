@@ -1,7 +1,7 @@
 import React from "react";
 
 import {settings, cache} from "../lib";
-import {Dropdown, Checkbox} from ".";
+import {Dropdown, Switch} from ".";
 
 const themes = ["Light", "Dark", "Midnight"];
 
@@ -44,13 +44,20 @@ export class SettingsPage extends React.Component<any, State>{
     return (
       <div className="wrapper">
         <h1>Settings</h1><br/>
-        <Checkbox label="Compact Tables" checked={settings.get("compactTables") === "true"} onChange={(value: boolean) => this.set("compactTables", value.toString())}/><br/>
-        <Checkbox label="Only Get Servers with Players" checked={settings.get("onlyServersWithPlayers") === "true"}
-          onChange={(value: boolean) => this.set("onlyServersWithPlayers", value.toString())}/><br/>
-        <Checkbox label="Exclude Observers from Player Count" checked={settings.get("excludeObservers") === "true"} onChange={(value: boolean) => this.set("excludeObservers", value.toString())}/><br/>
-        <br/>
+        <Switch label="Compact Tables"
+                description="Reduce the height of table rows"
+                checked={settings.get("compactTables") === "true"}
+                onChange={(value: boolean) => this.set("compactTables", value.toString())}/><br/>
+        <Switch label="Active Servers Only"
+                description="Only get servers with at least 1 player or observer"
+                checked={settings.get("onlyServersWithPlayers") === "true"}
+                onChange={(value: boolean) => this.set("onlyServersWithPlayers", value.toString())}/><br/>
+        <Switch label="Ignore Online Observers"
+                description="Don't treat observers as players on the server list"
+                checked={settings.get("excludeObservers") === "true"}
+                onChange={(value: boolean) => this.set("excludeObservers", value.toString())}/><br/>
         <span className="label">Theme</span>
-        <Dropdown items={themes} selected={currentTheme} onChange={(value: string) => this.setTheme(value.toLowerCase())}/>
+        <Dropdown items={themes} selected={currentTheme} onChange={(value: string) => this.setTheme(value.toLowerCase())}/><br/>
         <p>
           <button className="btn btn-outline" onClick={() => {settings.clear();this.message("Settings cleared");}}>Reset</button>&nbsp;
           <button className="btn btn-outline" onClick={() => {cache.clear();this.message("Cache cleared");}}>Clear Cache</button>&nbsp;

@@ -1,0 +1,56 @@
+@import "../variables.scss";
+
+.switch{
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+
+  & > div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .switch__label{
+    line-height: 20px;
+  }
+
+  .switch__inner-container{
+    width: 42px;
+    height: 24px;
+    position: relative;
+  }
+
+  .switch__slider{
+    background-color: hsl(210, 5%, 20%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 34px;
+    transition: .1s all ease-out;
+
+    &:before{
+      content: "";
+      width: 16px;
+      height: 16px;
+      background-color: #F0F0F0;
+      position: absolute;
+      left: 4px;
+      bottom: 4px;
+      border-radius: 50%;
+      transition: .1s all ease-out;
+    }
+  }
+
+  &[data-checked=true] .switch__slider{
+    // background-color: $color-primary;
+    background: $gradient-primary;
+    &:before{
+      left: 22px;
+    }
+  }
+}

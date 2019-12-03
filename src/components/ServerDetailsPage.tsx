@@ -4,7 +4,7 @@ import "./ServerDetailsPage.scss";
 
 import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings} from "../lib";
 import {Server, Player, Team} from "../models";
-import {TimeAgo, PlayerRow, Checkbox} from ".";
+import {TimeAgo, PlayerRow, Switch} from ".";
 
 const playerSort = (a: Player, b: Player) => a.team === "Observer" ? 1 : b.team === "Observer" ? -1 : a.wins - a.losses > b.wins - b.losses ? -1 : 1;
 
@@ -178,7 +178,7 @@ export class ServerDetailsPage extends React.Component<Props, State>{
           <div><b>{autoPlural(`${this.state.server.playersCount} Player`)}</b></div>
         </div>
         <div className="container">
-          <Checkbox label="Hide Server" checked={isServerHidden} onChange={() => this.hideServer()}/><br/><br/>
+          <Switch label="Hide Server" description="Don't show in server list" checked={isServerHidden} onChange={() => this.hideServer()}/><br/><br/>
           <div className="content">
             <div>
               <h2>Info</h2><br/>

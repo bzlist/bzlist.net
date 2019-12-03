@@ -1,7 +1,7 @@
 import React from "react";
 
 import {storage, bzLoginURL, api} from "../lib";
-import {Checkbox} from "./Checkbox";
+import {Switch} from ".";
 
 interface State{
   callsign: string;
@@ -120,7 +120,10 @@ export class AccountPage extends React.Component<any, State>{
                 View <a href={`https://forums.bzflag.org/memberlist.php?mode=viewprofile&u=${this.state.bzid}`} target="_blank" rel="noopener noreferrer">forum profile</a>.<br/>
                 More features coming soon!
               </p>
-              <Checkbox label="Sync Settings" checked={storage.get("syncSettings") === "true"} onChange={(value: boolean) => storage.set("syncSettings", value.toString())}/><br/>
+              <Switch label="Sync Settings"
+                      description="Sync all of your settings across devices"
+                      checked={storage.get("syncSettings") === "true"}
+                      onChange={(value: boolean) => storage.set("syncSettings", value.toString())}/><br/>
               <button className="link" onClick={() => this.signout()}>Sign Out</button> • <button className="link" onClick={() => this.delete()}>Delete Account</button>
             </div>
           :
