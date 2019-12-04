@@ -111,6 +111,7 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  overflow: auto;
 
   @media screen and (max-width: $breakpoint-mobile){
     padding-top: 48px;

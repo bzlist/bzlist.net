@@ -32,6 +32,12 @@ export class Dropdown extends React.Component<Props, State>{
     window.removeEventListener("click", this.windowClick);
   }
 
+  componentWillReceiveProps(nextProps: Props): void{
+    if(nextProps.selected !== this.props.selected){
+      this.setState({label: nextProps.selected});
+    }
+  }
+
   windowClick = (): void =>{
     if(this.isOpen){
       this.setState({show: false});

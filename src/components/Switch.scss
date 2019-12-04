@@ -13,6 +13,10 @@
     align-items: center;
   }
 
+  & > small{
+    max-width: 330px;
+  }
+
   .switch__label{
     line-height: 20px;
   }

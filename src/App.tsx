@@ -88,6 +88,10 @@ class App extends React.Component<any, State>{
         }
       }
     }
+
+    if(settings.get("customScrollbars") !== "false"){
+      document.documentElement.classList.add("custom-scrollbars");
+    }
   }
 
   render(): JSX.Element{

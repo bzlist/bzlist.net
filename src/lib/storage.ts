@@ -79,10 +79,6 @@ export const cache = new Storage("cache_");
 export const settings = new Storage("setting_");
 
 settings.onChange = (key: string, value: string, sync: boolean = true): void => {
-  if(value === "false"){
-    settings.remove(key);
-  }
-
   if(storage.get("syncSettings") !== "true" || !sync){
     return;
   }

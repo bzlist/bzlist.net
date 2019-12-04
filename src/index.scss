@@ -15,6 +15,16 @@
 html{
   scroll-behavior: smooth;
 
+  &.custom-scrollbars{
+    ::-webkit-scrollbar{
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-thumb{
+      background-color: hsl(210, 5%, 50%);
+    }
+  }
+
   --bg: hsl(210, 5%, 98%);
   --bg-lighter: hsl(210, 5%, 100%);
   --bg-darker: hsl(210, 5%, 96%);

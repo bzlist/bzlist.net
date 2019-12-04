@@ -21,6 +21,12 @@ export class Switch extends React.Component<Props, State>{
     };
   }
 
+  componentWillReceiveProps(nextProps: Props): void{
+    if(nextProps.checked !== this.props.checked){
+      this.setState({checked: nextProps.checked});
+    }
+  }
+
   toggle(): void{
     this.props.onChange(!this.state.checked);
     this.setState({checked: !this.state.checked});

@@ -46,7 +46,7 @@ export class SettingsPage extends React.Component<any, State>{
         <h1>Settings</h1>
         <p>
           <Switch label="Compact Tables"
-                  description="Reduce the height of table rows"
+                  description="Reduce the height of table rows to fit more on the screen at once"
                   checked={settings.get("compactTables") === "true"}
                   onChange={(value: boolean) => this.set("compactTables", value.toString())}/><br/>
           <Switch label="Active Servers Only"
@@ -56,7 +56,11 @@ export class SettingsPage extends React.Component<any, State>{
           <Switch label="Ignore Online Observers"
                   description="Don't treat observers as players on the server list"
                   checked={settings.get("excludeObservers") === "true"}
-                  onChange={(value: boolean) => this.set("excludeObservers", value.toString())}/>
+                  onChange={(value: boolean) => this.set("excludeObservers", value.toString())}/><br/>
+          <Switch label="Custom Scrollbars"
+                  description="Use custom scrollbars instead of the default ones"
+                  checked={settings.get("customScrollbars") !== "false"}
+                  onChange={(value: boolean) => this.set("customScrollbars", value.toString())}/>
         </p>
         <span className="label">Theme</span>
         <Dropdown items={themes} selected={currentTheme} onChange={(value: string) => this.setTheme(value.toLowerCase())}/><br/>
