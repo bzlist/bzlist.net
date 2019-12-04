@@ -56,6 +56,8 @@ export class TimeAgo extends React.Component<Props, State>{
       time = `${Math.floor(value / MINUTE)} minutes ago`;
     }else if (value >= MINUTE){
       time = "a minute ago";
+    }else if (value >= 20){
+      time = "this minute";
     }
 
     this.setState({text: time});
