@@ -11,7 +11,7 @@ const ServerRow = ({server}: {server: Server}) => {
   }
 
   return (
-    <tr onClick={() => history.push(`/s/${server.address}/${server.port}`)} style={{fontWeight:playersCount > 0 ? "bold" : "inherit"}}>
+    <tr key={`${server.address}:${server.port}`} onClick={() => history.push(`/s/${server.address}/${server.port}`)} style={{fontWeight:playersCount > 0 ? "bold" : "inherit"}}>
       <td>{playersCount}</td>
       <td>{server.address}:{server.port}</td>
       <td><img src={`https://countryflags.io/${server.countryCode}/flat/32.png`} alt={server.countryCode} title={server.country}/></td>
@@ -141,7 +141,7 @@ export class HomePage extends React.Component<any, State>{
             </thead>
             <tbody>
               {this.getServers().map((server: Server) =>
-                <ServerRow key={`${server.address}:${server.port}`} server={server}/>
+                ServerRow({server})
               )}
             </tbody>
           </table>

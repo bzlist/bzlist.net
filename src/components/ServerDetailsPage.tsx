@@ -248,7 +248,7 @@ export class ServerDetailsPage extends React.Component<Props, State>{
               </thead>
                 <tbody>
                   {this.state.server.players.map((player: Player) =>
-                    <PlayerRow key={player.callsign} player={player} showServer={false}/>
+                    PlayerRow({player, showServer: false})
                   )}
                 </tbody>
               </table>

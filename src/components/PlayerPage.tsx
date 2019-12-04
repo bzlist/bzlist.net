@@ -8,7 +8,7 @@ import {Link} from "react-router-dom";
 export const PlayerRow = ({player, showServer = true}: {player: Player, showServer: boolean}) => {
   const serverTr = player.server && showServer ? <td><Link to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`}>{player.server}</Link></td> : null;
   return (
-    <tr>
+    <tr key={`${player.callsign}:${player.server}`}>
       <td><b>{player.callsign}</b> {player.motto ? `(${player.motto})` : ""}</td>
       <td>{player.team === "Observer" ? "" : player.wins - player.losses}</td>
       <td>{player.team}</td>
@@ -126,7 +126,7 @@ export class PlayerPage extends React.Component<any, State>{
               </tr>
             </thead>
             <tbody>
-              {this.getPlayers().map((player: Player) => <PlayerRow key={`${player.callsign}:${player.server}`} player={player} showServer={true}/>)}
+              {this.getPlayers().map((player: Player) => PlayerRow({player, showServer: true}))}
             </tbody>
           </table>
         );
