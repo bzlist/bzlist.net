@@ -73,15 +73,15 @@ h1{
   font-weight: 500;
   display: inline-block;
 
-  @media screen and (max-width: $breakpoint-mobile){
-    font-size: 30px;
+  @include mobile{
+    font-size: 36px;
   }
 }
 
 h2{
   font-size: 30px;
 
-  @media screen and (max-width: $breakpoint-mobile){
+  @include mobile{
     font-size: 26px;
   }
 }
@@ -182,7 +182,11 @@ a:hover svg{
   margin-top: 64px;
   line-height: 1.7;
 
-  @media screen and (max-width: $breakpoint-mobile){
+  h1{
+    line-height: 1.2;
+  }
+
+  @include mobile{
     width: 90vw;
     margin-top: 32px;
   }
@@ -191,7 +195,7 @@ a:hover svg{
 .container{
   padding: 28px 32px;
 
-  @media screen and (max-width: $breakpoint-mobile){
+  @include mobile{
     padding: 12px 8px;
   }
 }
@@ -212,7 +216,7 @@ a:hover svg{
     border-radius: $border-radius;
     flex: 1 0 450px;
 
-    @media screen and (max-width: $breakpoint-mobile){
+    @include mobile{
       flex-basis: 250px;
     }
 
@@ -235,7 +239,7 @@ table{
 tr{
   height: 36px;
 
-  @media screen and (max-width: $breakpoint-mobile){
+  @include mobile{
     height: 30px;
   }
 }
@@ -263,7 +267,7 @@ td, th{
     padding-right: 14px;
   }
 
-  @media screen and (max-width: $breakpoint-mobile){
+  @include mobile{
     padding: 0 6px;
 
     &:first-child{
@@ -289,19 +293,16 @@ td, th{
 }
 
 .header{
-  width: 85vw;
-  margin: 0 auto;
-  padding: 48px 0;
+  @extend .wrapper;
+
+  margin-bottom: 32px;
 
   div{
-    margin-top: 1em;
+    margin-top: 8px;
     font-size: 22px;
   }
 
-  @media screen and (max-width: $breakpoint-mobile){
-    width: 90vw;
-    padding: 24px 0;
-
+  @include mobile{
     div{
       font-size: 18px;
     }
@@ -318,7 +319,6 @@ textarea{
   color: var(--color-text);
   font-size: 14px;
   box-sizing: border-box;
-  // border: 1px solid var(--color-text);
   border: none;
   border-radius: $border-radius;
   box-shadow: $shadow;
@@ -330,36 +330,7 @@ textarea{
   }
 }
 
-.text-box{
-  height: 32px;
-  padding: 1px 4px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: stretch;
-  border: 1px solid var(--color-text);
-  border-radius: $border-radius;
-
-  input{
-    margin: 0 4px;
-    padding: 0;
-    background: transparent;
-    color: var(--color-text);
-    font-size: 14px;
-    box-sizing: border-box;
-    flex: 1 1 0;
-    border: none;
-    outline: none;
-    overflow: hidden;
-
-    &::placeholder{
-      color: var(--color-text);
-    }
-  }
-}
-
-@media screen and (max-width: $breakpoint-mobile){
+@include mobile{
   .mobile-hide{
     display: none !important;
   }

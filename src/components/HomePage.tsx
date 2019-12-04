@@ -2,16 +2,16 @@ import React from "react";
 
 import {cache, socket, verboseGameStyle, history, autoPlural, settings} from "../lib";
 import {Server, Team} from "../models";
-import {TimeAgo} from "./TimeAgo";
+import {TimeAgo} from ".";
 
-const ServerRow = ({server}: {server: Server}) => {
+const ServerRow = ({server}: {server: Server}): JSX.Element => {
   let playersCount = server.playersCount;
   if(settings.get("excludeObservers") === "true"){
     playersCount -= server.teams.filter((team: Team) => team.name === "Observer")[0].players;
   }
 
   return (
-    <tr key={`${server.address}:${server.port}`} onClick={() => history.push(`/s/${server.address}/${server.port}`)} style={{fontWeight:playersCount > 0 ? "bold" : "inherit"}}>
+    <tr key={`${server.address}:${server.port}`} onClick={() => history.push(`/s/${server.address}/${server.port}`)} style={{fontWeight: playersCount > 0 ? "bold" : "inherit"}}>
       <td>{playersCount}</td>
       <td>{server.address}:{server.port}</td>
       <td><img src={`https://countryflags.io/${server.countryCode}/flat/32.png`} alt={server.countryCode} title={server.country}/></td>

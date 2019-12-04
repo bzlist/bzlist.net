@@ -6,7 +6,7 @@
   display: flex;
   box-sizing: border-box;
 
-  @media screen and (max-width: $breakpoint-mobile){
+  @include mobile{
     height: 170px;
     padding: 12px 8px;
   }
@@ -19,7 +19,7 @@
     word-break: keep-all;
     align-self: flex-end;
 
-    @media screen and (max-width: $breakpoint-mobile){
+    @include mobile{
       font-size: 30px;
     }
   }
@@ -34,7 +34,7 @@
     display: inline-block;
     line-height: .9em;
 
-    @media screen and (max-width: $breakpoint-mobile){
+    @include mobile{
       margin-right: 22px;
     }
   }
@@ -62,7 +62,7 @@
   display: flex;
   flex-flow: row wrap;
 
-  @media screen and (max-width: $breakpoint-mobile){
+  @include mobile{
     padding: 0;
   }
 
@@ -75,7 +75,7 @@
     box-shadow: $shadow;
     border-radius: $border-radius;
 
-    @media screen and (max-width: $breakpoint-mobile){
+    @include mobile{
       margin: 0 0 22px 0;
       padding: 12px 16px;
     }

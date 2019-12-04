@@ -1,11 +1,11 @@
 import React from "react";
-
-import {Player} from "../models";
-import {cache, socket, autoPlural, settings} from "../lib";
-import {TimeAgo} from "./TimeAgo";
 import {Link} from "react-router-dom";
 
-export const PlayerRow = ({player, showServer = true}: {player: Player, showServer: boolean}) => {
+import {cache, socket, autoPlural, settings} from "../lib";
+import {Player} from "../models";
+import {TimeAgo} from ".";
+
+export const PlayerRow = ({player, showServer = true}: {player: Player, showServer: boolean}): JSX.Element => {
   const serverTr = player.server && showServer ? <td><Link to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`}>{player.server}</Link></td> : null;
   return (
     <tr key={`${player.callsign}:${player.server}`}>

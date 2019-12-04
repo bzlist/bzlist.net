@@ -3,5 +3,10 @@ $color-primary: hsl(203, 67%, 55%);
 $color-primary-light: hsl(191, 70%, 60%);
 $gradient-primary: linear-gradient(to right, $color-primary-light, $color-primary);
 $border-radius: 2px;
-// $shadow: 0 .6px 1.8px rgba(0, 0, 0, .08), 0 3.2px 7.2px rgba(0, 0, 0, .08);
 $shadow: 0 2px 12px rgba(0, 0, 0, .2);
+
+@mixin mobile{
+  @media only screen and (max-width: $breakpoint-mobile){
+    @content;
+  }
+}

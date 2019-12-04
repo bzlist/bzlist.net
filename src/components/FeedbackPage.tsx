@@ -34,17 +34,17 @@ export class FeedbackPage extends React.Component<any, State>{
   render(): JSX.Element{
     return (
       <div className="wrapper">
-        <h1>Feedback</h1><br/>
+        <h1>Feedback</h1>
         {storage.get("bzid") !== "" ?
-          <div>
+          <p>
             <textarea placeholder="Share your thoughts, ideas, or report a bug" value={this.state.feedback} onChange={(e) => this.setState({feedback: e.target.value})}></textarea><br/><br/>
             <button className="btn btn-primary" onClick={() => this.submit()}>Submit</button>
             {this.state.message !== "" ?
               <span>&nbsp;&nbsp;{this.state.message}</span>
             : null}
-          </div>
+          </p>
         :
-          <div>To prevent spam, you must be signed in to leave feedback.</div>
+          <p>To prevent spam, you must be signed in to leave feedback.</p>
         }
       </div>
     );

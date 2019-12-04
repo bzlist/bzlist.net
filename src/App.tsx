@@ -2,7 +2,17 @@ import React from "react";
 import {Router, Route, Switch, Link} from "react-router-dom";
 import "./App.scss";
 
-import {HomePage, PlayerPage, PrivacyPolicyPage, TermsOfServicePage, HelpPage, ServerDetailsPage, SettingsPage, AccountPage, FeedbackPage} from "./components";
+import {
+  HomePage,
+  PlayerPage,
+  PrivacyPolicyPage,
+  TermsOfServicePage,
+  HelpPage,
+  ServerDetailsPage,
+  SettingsPage,
+  AccountPage,
+  FeedbackPage
+} from "./components";
 import {settings, history, storage, api} from "./lib";
 
 interface State{
@@ -31,10 +41,10 @@ class App extends React.Component<any, State>{
         startTime = 0;
 
     touchsurface.addEventListener("touchstart", (e) => {
-        const touch = e.changedTouches[0];
-        startX = touch.pageX;
-        startY = touch.pageY;
-        startTime = new Date().getTime();
+      const touch = e.changedTouches[0];
+      startX = touch.pageX;
+      startY = touch.pageY;
+      startTime = new Date().getTime();
     });
 
     touchsurface.addEventListener("touchend", (e) => {
@@ -98,9 +108,7 @@ class App extends React.Component<any, State>{
     return (
       <Router history={history}>
         <div className="body">
-          {this.state.offline ?
-            <div className="offline">Currently offline.</div>
-          : null}
+          {this.state.offline ? <div className="offline">Currently offline.</div> : null}
           <div className="navbar">
             <input type="checkbox" id="drawer-toggle"/>
             <label htmlFor="drawer-toggle" className="btn icon hamburger"></label>
