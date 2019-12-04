@@ -56,6 +56,9 @@ h1, h2, h3{
 }
 
 h1{
+  background: $gradient-primary;
+  background-clip: text;
+  color: transparent;
   font-size: 44px;
   font-weight: 500;
   display: inline-block;
@@ -73,12 +76,6 @@ h2{
   }
 }
 
-h1, a, .link{
-  background: $gradient-primary;
-  background-clip: text;
-  color: transparent;
-}
-
 .link{
   margin: 0;
   padding: 0;
@@ -90,6 +87,7 @@ h1, a, .link{
 }
 
 a, .link{
+  color: $color-primary;
   text-decoration: none;
   cursor: pointer;
 }
