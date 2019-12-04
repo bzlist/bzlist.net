@@ -25,7 +25,7 @@ class App extends React.Component<any, State>{
     // swiping
     const touchsurface = document.documentElement,
           threshold = 100, // required min distance traveled to be considered swipe
-          allowedTime = 1000; // maximum time allowed to travel that distance
+          allowedTime = 300; // maximum time allowed to travel that distance
     let startX = 0,
         startY = 0,
         startTime = 0;
@@ -42,7 +42,7 @@ class App extends React.Component<any, State>{
       const elapsedTime = new Date().getTime() - startTime;
       const drawerToggle: any = document.querySelector("#drawer-toggle");
 
-      if(elapsedTime <= allowedTime && Math.abs(touch.pageY - startY) <= 100 && drawerToggle){
+      if(drawerToggle && elapsedTime <= allowedTime && Math.abs(touch.pageY - startY) <= 30){
         if(touch.pageX - startX >= threshold){
           drawerToggle.checked = true;
         }else if(touch.pageX + startX >= threshold){
