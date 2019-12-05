@@ -77,25 +77,27 @@ class App extends React.Component<any, State>{
     }
     document.documentElement.setAttribute("data-theme", currentTheme);
 
-    if(storage.get("syncSettings") === "true"){
-      const callsign = storage.get("callsign");
-      const token = storage.get("token");
+    const callsign = storage.get("callsign");
+    const token = storage.get("token");
+    if(storage.get("syncSettings") === "true" && callsign !== "" && token !== ""){
+      console.log("fetching settings");
+      const data = await api("users/settings", {callsign, token});
 
-      if(callsign !== "" && token !== ""){
-        console.log("fetching settings");
-        const data = await api("users/settings", {callsign, token});
+      if(!data){
+        this.setState({offline: true});
+      }else if(data.error){
+        console.error("error getting settings:", data.error);
+      }else{
+        settings.setData(data);
 
-        if(!data){
-          this.setState({offline: true});
-        }else if(data.error){
-          console.error("error getting settings:", data.error);
-        }else{
-          settings.setData(data);
-
-          if(data.theme && data.theme !== currentTheme){
-            document.documentElement.setAttribute("data-theme", data.theme);
-          }
+        if(data.theme && data.theme !== currentTheme){
+          document.documentElement.setAttribute("data-theme", data.theme);
         }
+      }
+    }else{
+      const data = await api("status", "GET");
+      if(!data || !data.online){
+        this.setState({offline: true});
       }
     }
 
