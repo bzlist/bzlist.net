@@ -77,11 +77,12 @@ class App extends React.Component<any, State>{
     }
     document.documentElement.setAttribute("data-theme", currentTheme);
 
-    const callsign = storage.get("callsign");
     const token = storage.get("token");
-    if(storage.get("syncSettings") === "true" && callsign !== "" && token !== ""){
+    if(storage.get("syncSettings") === "true" && token !== ""){
       console.log("fetching settings");
-      const data = await api("users/settings", {callsign, token});
+      const data = await api("users/settings", undefined, "GET", {
+        "Authorization": `Bearer ${token}`
+      });
 
       if(!data){
         this.setState({offline: true});
@@ -95,7 +96,7 @@ class App extends React.Component<any, State>{
         }
       }
     }else{
-      const data = await api("status", "GET");
+      const data = await api("status", undefined, "GET");
       if(!data || !data.online){
         this.setState({offline: true});
       }

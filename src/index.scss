@@ -153,14 +153,7 @@ a:hover, .link:hover{
   box-shadow: 0 0 8px $color-primary;
 
   &:hover{
-    background-color: darken($color-primary, 5%);
-    color: #FFF;
-    border-color: darken($color-primary, 5%);
-  }
-
-  &:active{
-    background-color: darken($color-primary, 10%);
-    border-color: darken($color-primary, 10%);
+    background: $gradient-primary;
   }
 }
 

@@ -14,10 +14,21 @@ export class AccountPage extends React.Component<any, State>{
   constructor(props: any){
     super(props);
 
+    const token = storage.get("token");
+    let callsign = "";
+    let bzid = "";
+
+    // load data from token
+    if(token !== ""){
+      const data = JSON.parse(window.atob(token.split(".")[1].replace("-", "+").replace("_", "/")));
+      callsign = data.callsign;
+      bzid = data.bzid;
+    }
+
     this.state = {
-      callsign: storage.get("callsign"),
-      token: storage.get("token"),
-      bzid: storage.get("bzid"),
+      callsign,
+      token,
+      bzid,
       error: ""
     };
   }
@@ -44,12 +55,11 @@ export class AccountPage extends React.Component<any, State>{
 
     if(data.token){
       this.setState({callsign, token: data.token});
-      storage.set("callsign", this.state.callsign);
       storage.set("token", this.state.token);
 
       this.checkToken();
 
-      console.log(`signed in as ${this.state.callsign} with token ${this.state.token}`);
+      console.log(`signed in as ${this.state.callsign}`);
       window.location.href = "/account";
     }
 
@@ -60,41 +70,35 @@ export class AccountPage extends React.Component<any, State>{
   }
 
   async checkToken(): Promise<void>{
-    if(this.state.callsign === "" || this.state.token === ""){
-      this.setState({bzid: "", error: ""});
+    if(!this.state.token || this.state.token === ""){
+      this.setState({callsign: "", bzid: "", error: ""});
       return;
     }
 
-    const data = await api("users/", {callsign: this.state.callsign, token: this.state.token});
+    const data = await api("users/", undefined, "GET", {
+      "Authorization": `Bearer ${this.state.token}`
+    });
 
-    if(data.error){
-      console.error("error checking token:", data.error);
-      this.setState({bzid: "", error: data.error});
+    if(!data || data.error){
+      if(data && data.error){
+        console.error("error checking token:", data.error);
+      }
+      this.setState({callsign: "", bzid: "", error: data && data.error ? data.error : ""});
       return;
     }
 
-    this.setState({bzid: data.bzid, error: ""});
-    storage.set("bzid", this.state.bzid);
+    this.setState({callsign: data.callsign, bzid: data.bzid, error: ""});
   }
 
   async signout(): Promise<void>{
-    const data = await api("users/token", {callsign: this.state.callsign, token: this.state.token}, "DELETE");
-
-    if(data.error){
-      console.error("error signing out:", data.error);
-      this.setState({error: data.error});
-      return;
-    }
-
     this.setState({callsign: "", token: "", bzid: ""});
-
-    storage.remove("callsign");
     storage.remove("token");
-    storage.remove("bzid");
   }
 
   async delete(): Promise<void>{
-    const data = await api("users/", {callsign: this.state.callsign, token: this.state.token}, "DELETE");
+    const data = await api("users/", undefined, "DELETE", {
+      "Authorization": `Bearer ${this.state.token}`
+    });
 
     if(data.error){
       console.error("error delete account:", data.error);
@@ -104,9 +108,7 @@ export class AccountPage extends React.Component<any, State>{
 
     this.setState({callsign: "", token: "", bzid: ""});
 
-    storage.remove("callsign");
     storage.remove("token");
-    storage.remove("bzid");
   }
 
   render(): JSX.Element{
@@ -141,7 +143,6 @@ export class AccountPage extends React.Component<any, State>{
           : null}
         </div>
       </div>
-
     );
   }
 }

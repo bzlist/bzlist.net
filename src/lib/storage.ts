@@ -83,9 +83,10 @@ settings.onChange = (key: string, value: string, sync: boolean = true): void => 
     return;
   }
 
-  const callsign = storage.get("callsign");
   const token = storage.get("token");
-  if(callsign !== "" && token !== ""){
-    api("users/settings", {callsign, token, settings: settings.json()}, "PATCH");
+  if(token !== ""){
+    api("users/settings", {settings: settings.json()}, "PATCH", {
+      "Authorization": `Bearer ${token}`
+    });
   }
 };
