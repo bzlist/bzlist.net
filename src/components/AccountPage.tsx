@@ -143,9 +143,7 @@ export class AccountPage extends React.Component<any, State>{
               <a className="btn btn-primary" href={bzLoginURL}>Sign In with BZFlag</a>
             </div>
           }
-          {this.state.error !== "" ?
-            <p className="no">Error: {this.state.error}</p>
-          : null}
+          {this.state.error !== "" && <p className="no">Error: {this.state.error}</p>}
         </div>
       </div>
     );

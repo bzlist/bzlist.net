@@ -6,11 +6,11 @@ import {Player} from "../models";
 import {TimeAgo} from ".";
 
 export const PlayerRow = ({player, showServer = true}: {player: Player, showServer: boolean}): JSX.Element => {
-  const serverTr = player.server && showServer ? <td><Link to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`}>{player.server}</Link></td> : null;
+  const serverTr = player.server && showServer && <td><Link to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`}>{player.server}</Link></td>;
   return (
     <tr key={`${player.callsign}:${player.server}`}>
-      <td><b>{player.callsign}</b> {player.motto ? `(${player.motto})` : ""}</td>
-      <td>{player.team === "Observer" ? "" : player.wins - player.losses}</td>
+      <td><b>{player.callsign}</b> {player.motto && `(${player.motto})`}</td>
+      <td>{player.team !== "Observer" && player.wins - player.losses}</td>
       <td>{player.team}</td>
       {serverTr}
     </tr>
@@ -88,12 +88,12 @@ export class PlayerPage extends React.Component<any, State>{
                 <h2>{player.callsign}</h2><br/>
                 <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
                   <tbody>
-                    {player.team !== "Observer" ?
+                    {player.team !== "Observer" &&
                       <tr>
                         <td>Score</td>
                         <td>{player.wins - player.losses}</td>
                       </tr>
-                    : null}
+                    }
                     <tr>
                       <td>Team</td>
                       <td>{player.team}</td>
@@ -102,12 +102,12 @@ export class PlayerPage extends React.Component<any, State>{
                       <td>Server</td>
                       <td><Link to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`}>{player.server}</Link></td>
                     </tr>
-                    {player.motto ?
+                    {player.motto &&
                       <tr>
                         <td>Motto</td>
                         <td>{player.motto}</td>
                       </tr>
-                    : null}
+                    }
                   </tbody>
                 </table>
               </div>

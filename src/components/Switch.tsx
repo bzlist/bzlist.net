@@ -41,7 +41,7 @@ export class Switch extends React.Component<Props, State>{
             <div className="switch__slider"></div>
           </div>
         </div>
-        {this.props.description ? <small>{this.props.description}.</small> : null}
+        {this.props.description && <small>{this.props.description}.</small>}
       </label>
     );
   }

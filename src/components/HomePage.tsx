@@ -140,9 +140,7 @@ export class HomePage extends React.Component<any, State>{
               </tr>
             </thead>
             <tbody>
-              {this.getServers().map((server: Server) =>
-                ServerRow({server})
-              )}
+              {this.getServers().map((server: Server) => ServerRow({server}))}
             </tbody>
           </table>
         );
@@ -182,17 +180,13 @@ export class HomePage extends React.Component<any, State>{
           {autoPlural(`${playerCount} player`)} and {autoPlural(`${observerCount} observer`)} online. Updated <TimeAgo timestamp={timestamp}/>.<br/><br/>
           {servers}
           <div className="btn-list">
-            {this.state.servers.length > this.state.serversToShow ?
+            {this.state.servers.length > this.state.serversToShow &&
               <button className="btn btn-primary" onClick={() => this.showMore()}>{this.state.serversToShow > 0 ? "Show All" : "Show Less"}</button>
-            : null}
-            {settings.getJson("hiddenServers", []).length > 0 ?
-              <button className="btn btn-outline" onClick={() => this.setState({showHidden: !this.state.showHidden})}>&nbsp;
-                {this.state.showHidden ? "Hide Hidden" : "Show Hidden"}
-              </button>
-            : null}
-            {this.state.serversToShow <= 0 ?
-              <button className="btn btn-outline" onClick={() => document.documentElement.scrollTop = 0}>Scroll to Top</button>
-            : null}
+            }
+            {settings.getJson("hiddenServers", []).length > 0 &&
+              <button className="btn btn-outline" onClick={() => this.setState({showHidden: !this.state.showHidden})}>{this.state.showHidden ? "Hide Hidden" : "Show Hidden"}</button>
+            }
+            {this.state.serversToShow <= 0 && <button className="btn btn-outline" onClick={() => document.documentElement.scrollTop = 0}>Scroll to Top</button>}
           </div>
         </div>
       </div>

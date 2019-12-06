@@ -235,25 +235,23 @@ export class ServerDetailsPage extends React.Component<Props, State>{
                 </tbody>
               </table>
             </div>
-            {this.state.server.playersCount > 0 ?
-            <div>
-              <h2>{autoPlural(`${playerCount} Player`)} and {autoPlural(`${observerCount} Observer`)}</h2><br/>
-              <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
-              <thead>
-                <tr>
-                  <th>Callsign</th>
-                  <th>Score</th>
-                  <th>Team</th>
-                </tr>
-              </thead>
-                <tbody>
-                  {this.state.server.players.map((player: Player) =>
-                    PlayerRow({player, showServer: false})
-                  )}
-                </tbody>
-              </table>
-            </div>
-            : null}
+            {this.state.server.playersCount > 0 &&
+              <div>
+                <h2>{autoPlural(`${playerCount} Player`)} and {autoPlural(`${observerCount} Observer`)}</h2><br/>
+                <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
+                <thead>
+                  <tr>
+                    <th>Callsign</th>
+                    <th>Score</th>
+                    <th>Team</th>
+                  </tr>
+                </thead>
+                  <tbody>
+                    {this.state.server.players.map((player: Player) => PlayerRow({player, showServer: false}))}
+                  </tbody>
+                </table>
+              </div>
+            }
             <div>
               <h2>{autoPlural(`${this.state.server.teams.length} Team`)}</h2><br/>
               <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
