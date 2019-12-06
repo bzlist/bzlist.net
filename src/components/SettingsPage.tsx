@@ -10,12 +10,18 @@ interface State{
 }
 
 export class SettingsPage extends React.Component<any, State>{
+  messageTimeout: any;
+
   constructor(props: any){
     super(props);
 
     this.state = {
       message: ""
     };
+  }
+
+  componentWillUnmount(): void{
+    clearTimeout(this.messageTimeout);
   }
 
   setTheme(value: string): void{
@@ -30,7 +36,9 @@ export class SettingsPage extends React.Component<any, State>{
 
   message(message: string): void{
     this.setState({message});
-    setTimeout(() => this.setState({message: ""}), 3000);
+
+    clearTimeout(this.messageTimeout);
+    this.messageTimeout = setTimeout(() => this.setState({message: ""}), 3000);
   }
 
   render(): JSX.Element{
@@ -43,8 +51,8 @@ export class SettingsPage extends React.Component<any, State>{
 
     return (
       <div className="wrapper">
-        <h1>Settings</h1>
-        <p>
+        <h1>Settings</h1><br/><br/>
+        <div>
           <Switch label="Compact Tables"
                   description="Reduce the height of table rows to fit more on the screen at once"
                   checked={settings.get("compactTables") === "true"}
@@ -61,7 +69,7 @@ export class SettingsPage extends React.Component<any, State>{
                   description="Use custom scrollbars instead of the default ones"
                   checked={settings.get("customScrollbars") !== "false"}
                   onChange={(value: boolean) => this.set("customScrollbars", value.toString())}/>
-        </p>
+        </div>
         <span className="label">Theme</span>
         <Dropdown items={themes} selected={currentTheme} onChange={(value: string) => this.setTheme(value.toLowerCase())}/><br/>
         <div className="btn-list">
