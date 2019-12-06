@@ -12,10 +12,10 @@
   "author": "The Noah (https://github.com/The-Noah)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bzlist/bzlist.net-react.git"
+    "url": "https://github.com/bzlist/bzlist.net.git"
   },
   "bugs": {
-    "url": "https://github.com/bzlist/bzlist.net-react/issues"
+    "url": "https://github.com/bzlist/bzlist.net/issues"
   },
   "private": true,
   "dependencies": {
