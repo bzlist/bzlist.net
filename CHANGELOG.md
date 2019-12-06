@@ -2,6 +2,23 @@
 
 This is an outline and does not contain every change. Check the commits for a full list of changes.
 
+## v0.10.0 - New Authentication (2019-12-5)
+
+### Added
+- Fade in animation to play dialog
+- Link to version release on GitHub
+- "this minute" to time ago
+- Custom scrollbars
+- Detect if API is offline
+- Custom icons
+
+### Changed
+- Primary button shadow is now colored
+- Navbar is now a gradient
+- Improved hamburger (mobile) menu
+- Improved table rendering performance
+- Using new authentication system
+
 ## v0.9.2 - Hide Servers and More Gradients (2019-11-29)
 
 ### Added
