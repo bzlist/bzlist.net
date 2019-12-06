@@ -78,6 +78,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: space-around;
+      z-index: 1;
       clip-path: circle(0 at 0 0);
       transition: all .15s ease-in-out;
 
