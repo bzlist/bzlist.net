@@ -104,7 +104,7 @@ class App extends React.Component<any, State>{
       }
     }
 
-    if(settings.get("customScrollbars") !== "false"){
+    if(settings.getBool(settings.CUSTOM_SCROLLBARS)){
       document.documentElement.classList.add("custom-scrollbars");
     }
   }

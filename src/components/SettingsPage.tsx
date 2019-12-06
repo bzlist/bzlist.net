@@ -1,6 +1,6 @@
 import React from "react";
 
-import {settings, cache} from "../lib";
+import {settings, cache, IBoolSetting} from "../lib";
 import {Dropdown, Switch} from ".";
 
 const themes = ["Light", "Dark", "Midnight"];
@@ -29,8 +29,8 @@ export class SettingsPage extends React.Component<any, State>{
     settings.set("theme", value);
   }
 
-  set(key: string, value: string): void{
-    settings.set(key, value);
+  set(key: IBoolSetting, value: boolean): void{
+    settings.setBool(key, value);
     this.message("Saved");
   }
 
@@ -55,20 +55,20 @@ export class SettingsPage extends React.Component<any, State>{
         <div>
           <Switch label="Compact Tables"
                   description="Reduce the height of table rows to fit more on the screen at once"
-                  checked={settings.get("compactTables") === "true"}
-                  onChange={(value: boolean) => this.set("compactTables", value.toString())}/><br/>
+                  checked={settings.getBool(settings.COMPACT_TABLES)}
+                  onChange={(value: boolean) => this.set(settings.COMPACT_TABLES, value)}/><br/>
           <Switch label="Active Servers Only"
                   description="Only get servers with at least 1 player or observer"
-                  checked={settings.get("onlyServersWithPlayers") === "true"}
-                  onChange={(value: boolean) => this.set("onlyServersWithPlayers", value.toString())}/><br/>
+                  checked={settings.getBool(settings.ONLY_SERVERS_WITH_PLAYERS)}
+                  onChange={(value: boolean) => this.set(settings.ONLY_SERVERS_WITH_PLAYERS, value)}/><br/>
           <Switch label="Ignore Online Observers"
                   description="Don't treat observers as players on the server list"
-                  checked={settings.get("excludeObservers") === "true"}
-                  onChange={(value: boolean) => this.set("excludeObservers", value.toString())}/><br/>
+                  checked={settings.getBool(settings.EXCLUDE_OBSERVERS)}
+                  onChange={(value: boolean) => this.set(settings.EXCLUDE_OBSERVERS, value)}/><br/>
           <Switch label="Custom Scrollbars"
                   description="Use custom scrollbars instead of the default ones"
-                  checked={settings.get("customScrollbars") !== "false"}
-                  onChange={(value: boolean) => this.set("customScrollbars", value.toString())}/>
+                  checked={settings.getBool(settings.CUSTOM_SCROLLBARS)}
+                  onChange={(value: boolean) => this.set(settings.CUSTOM_SCROLLBARS, value)}/>
         </div>
         <span className="label">Theme</span>
         <Dropdown items={themes} selected={currentTheme} onChange={(value: string) => this.setTheme(value.toLowerCase())}/><br/>

@@ -182,7 +182,7 @@ export class ServerDetailsPage extends React.Component<Props, State>{
           <div className="content">
             <div>
               <h2>Info</h2><br/>
-              <table className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
+              <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
                 <tbody>
                   <tr>
                     <th>Updated</th>
@@ -238,7 +238,7 @@ export class ServerDetailsPage extends React.Component<Props, State>{
             {this.state.server.playersCount > 0 ?
             <div>
               <h2>{autoPlural(`${playerCount} Player`)} and {autoPlural(`${observerCount} Observer`)}</h2><br/>
-              <table className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
+              <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
               <thead>
                 <tr>
                   <th>Callsign</th>
@@ -256,7 +256,7 @@ export class ServerDetailsPage extends React.Component<Props, State>{
             : null}
             <div>
               <h2>{autoPlural(`${this.state.server.teams.length} Team`)}</h2><br/>
-              <table className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
+              <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
               <thead>
                 <tr>
                   <th>Name</th>

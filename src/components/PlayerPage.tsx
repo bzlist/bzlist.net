@@ -86,7 +86,7 @@ export class PlayerPage extends React.Component<any, State>{
             {this.getPlayers().map((player: Player) =>
               <div key={`${player.callsign}:${player.server}`}>
                 <h2>{player.callsign}</h2><br/>
-                <table className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
+                <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
                   <tbody>
                     {player.team !== "Observer" ?
                       <tr>
@@ -116,7 +116,7 @@ export class PlayerPage extends React.Component<any, State>{
         );
       }else{
         table = (
-          <table className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
+          <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
             <thead>
               <tr>
                 <th onClick={() => this.sortBy("callsign", -1)}>Callsign</th>

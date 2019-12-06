@@ -6,7 +6,7 @@ import {TimeAgo} from ".";
 
 const ServerRow = ({server}: {server: Server}): JSX.Element => {
   let playersCount = server.playersCount;
-  if(settings.get("excludeObservers") === "true"){
+  if(settings.getBool(settings.EXCLUDE_OBSERVERS)){
     playersCount -= server.teams.filter((team: Team) => team.name === "Observer")[0].players;
   }
 
@@ -49,7 +49,7 @@ export class HomePage extends React.Component<any, State>{
       this.setState({servers: data});
       cache.set("servers", JSON.stringify(data));
     });
-    socket.emit("servers", {onlinePlayers: settings.get("onlyServersWithPlayers") === "true"});
+    socket.emit("servers", {onlinePlayers: settings.getBool(settings.ONLY_SERVERS_WITH_PLAYERS)});
 
     if(window.innerWidth <= 768){
       this.mobile = true;
@@ -129,7 +129,7 @@ export class HomePage extends React.Component<any, State>{
         );
       }else{
         servers = (
-          <table className={settings.get("compactTables") === "true" ? "table-compact" : ""}>
+          <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
             <thead>
               <tr>
                 <th onClick={() => this.sortBy("playersCount", 1)}>Players</th>
