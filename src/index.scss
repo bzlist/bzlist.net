@@ -289,6 +289,25 @@ td, th{
   }
 }
 
+.btn-list{
+  margin: 16px 0;
+
+  @include mobile{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+
+  & > .btn{
+    margin-right: 22px;
+
+    @include mobile{
+      margin: 0;
+      margin-bottom: 12px;
+    }
+  }
+}
+
 textarea{
   width: 100%;
   max-width: 400px;

@@ -159,8 +159,10 @@ export class PlayerPage extends React.Component<any, State>{
           <h2>{autoPlural(`${playerCount} Player`)} and {autoPlural(`${observerCount} Observer`)} Online</h2>
           Updated <TimeAgo timestamp={timestamp}/>.<br/><br/>
           {table}
-          <button className="btn btn-primary" onClick={() => this.setState({showObservers: !this.state.showObservers})} style={{margin:"22px 32px"}}>{!this.state.showObservers ? "Show Observers" : "Hide Observers"}</button>
-          <button className="btn btn-outline" onClick={() => document.documentElement.scrollTop = 0} style={{margin:"22px 0"}}>Scroll to Top</button>
+          <div className="btn-list">
+            <button className="btn btn-primary" onClick={() => this.setState({showObservers: !this.state.showObservers})}>{!this.state.showObservers ? "Show Observers" : "Hide Observers"}</button>
+            <button className="btn btn-outline" onClick={() => document.documentElement.scrollTop = 0}>Scroll to Top</button>
+          </div>
         </div>
       </div>
     );
