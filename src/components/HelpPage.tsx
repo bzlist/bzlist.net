@@ -21,6 +21,6 @@ export const HelpPage = (): JSX.Element => (
       <span className="label">Data doesn't seem to be updating.</span><br/>
       If the API had to restart (due to an error or update) then refreshing the page should fix it. If you continue to experience issues contact me.
     </p>
-    <p><small>Version <a href={`https://github.com/bzlist/bzlist.net/releases/tag/v${version}`} target="_blank" rel="noopener noreferrer">v{version}</a>.</small></p>
+    <p><small>Release version <a href={`https://github.com/bzlist/bzlist.net/releases/tag/v${version}`} target="_blank" rel="noopener noreferrer">v{version}</a> See <a href={`https://github.com/bzlist/bzlist.net/compare/v${version}...master`} target="_blank" rel="noopener noreferrer">what's new</a>.</small></p>
   </div>
 );
