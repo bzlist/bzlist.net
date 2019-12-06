@@ -20,9 +20,14 @@ export class AccountPage extends React.Component<any, State>{
 
     // load data from token
     if(token !== ""){
-      const data = JSON.parse(window.atob(token.split(".")[1].replace("-", "+").replace("_", "/")));
-      callsign = data.callsign;
-      bzid = data.bzid;
+      try{
+        const data = JSON.parse(window.atob(token.split(".")[1].replace("-", "+").replace("_", "/")));
+        callsign = data.callsign;
+        bzid = data.bzid;
+      }catch(err){
+        console.warn("token is not a valid format");
+        storage.remove("token");
+      }
     }
 
     this.state = {
