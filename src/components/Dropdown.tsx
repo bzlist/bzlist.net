@@ -60,15 +60,14 @@ export class Dropdown extends React.Component<Props, State>{
       <div>
         <div className="dropdown" onClick={() => this.setState({show: !this.state.show})}>
           <span className="dropdown__title">{this.state.label}</span>
-          {/* <span className="icon dropdown__caret">&#xE70D;</span> */}
           <span className="icon dropdown__caret">{Icon("dropdown")}</span>
         </div>
         {
-          this.state.show ? <div className="dropdown__content">
+          this.state.show && <div className="dropdown__content">
             {this.props.items.map((item: string) =>
               <div key={item} className="dropdown__option" onClick={() => this.select(item)}>{item}</div>
             )}
-          </div> : null
+          </div>
         }
       </div>
     );
