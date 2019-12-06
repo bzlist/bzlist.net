@@ -4,7 +4,7 @@ import "./ServerDetailsPage.scss";
 
 import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings} from "../lib";
 import {Server, Player, Team} from "../models";
-import {TimeAgo, PlayerRow, Switch} from ".";
+import {TimeAgo, PlayerRow, Switch, Icon} from ".";
 
 const playerSort = (a: Player, b: Player) => a.team === "Observer" ? 1 : b.team === "Observer" ? -1 : a.wins - a.losses > b.wins - b.losses ? -1 : 1;
 
@@ -140,7 +140,7 @@ export class ServerDetailsPage extends React.Component<Props, State>{
           <div>
             <div className="popup-header">
               <h3>Select Team</h3>
-              <div className="close"><button className="btn icon" onClick={() => this.setState({selectTeam: false})}>&#xE711;</button></div>
+              <div className="close"><button className="btn icon" onClick={() => this.setState({selectTeam: false})}>{Icon("close")}</button></div>
             </div>
             <div className="inner">
               {this.state.server.teams.map((team: Team) =>

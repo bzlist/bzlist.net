@@ -4,7 +4,6 @@ module.exports = {
     "build/*.html",
     "build/manifest.json",
     "build/static/**/!(*map*)",
-    "build/*.ttf",
     "build/images/servers/default.png",
     "build/favicon.ico"
   ],

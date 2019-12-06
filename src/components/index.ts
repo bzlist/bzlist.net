@@ -10,3 +10,4 @@ export * from "./Dropdown";
 export * from "./AccountPage";
 export * from "./FeedbackPage";
 export * from "./Switch";
+export * from "./Icon";

@@ -2,11 +2,6 @@
 
 @import "variables.scss";
 
-@font-face{
-  font-family: Icons;
-  src: url(/icons.ttf) format("truetype");
-}
-
 *{
   font-family: Montserrat, sans-serif;
   -webkit-tap-highlight-color: transparent;
@@ -86,6 +81,11 @@ h2{
   }
 }
 
+.icon svg{
+  position: relative;
+  top: 2px;
+}
+
 .link{
   margin: 0;
   padding: 0;
@@ -106,11 +106,6 @@ a:hover, .link:hover{
   background: $color-primary-light;
   background-clip: text;
   text-decoration: underline;
-}
-
-.icon{
-  font-family: Icons;
-  font-weight: normal;
 }
 
 .btn{
@@ -136,10 +131,6 @@ a:hover, .link:hover{
   text-decoration: none;
 }
 
-.btn svg{
-  fill: var(--color-text);
-}
-
 .btn.icon{
   min-width: 0;
   padding: 0 14px;
@@ -155,10 +146,6 @@ a:hover, .link:hover{
   &:hover{
     background: $gradient-primary;
   }
-}
-
-a:hover svg{
-  fill: lighten($color-primary, 10%);
 }
 
 .btn-outline{
