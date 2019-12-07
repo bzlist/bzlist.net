@@ -5,14 +5,9 @@ import {Server, Team} from "../models";
 import {TimeAgo} from ".";
 
 const ServerRow = ({server}: {server: Server}): JSX.Element => {
-  let playersCount = server.playersCount;
-  if(settings.getBool(settings.EXCLUDE_OBSERVERS)){
-    playersCount -= server.teams.filter((team: Team) => team.name === "Observer")[0].players;
-  }
-
   return (
-    <tr key={`${server.address}:${server.port}`} onClick={() => history.push(`/s/${server.address}/${server.port}`)} style={{fontWeight: playersCount > 0 ? "bold" : "inherit"}}>
-      <td>{playersCount}</td>
+    <tr key={`${server.address}:${server.port}`} onClick={() => history.push(`/s/${server.address}/${server.port}`)} style={{fontWeight: server.playersCount > 0 ? "bold" : "inherit"}}>
+      <td>{server.playersCount}</td>
       <td>{server.address}:{server.port}</td>
       <td><img src={`https://countryflags.io/${server.countryCode}/flat/32.png`} alt={server.countryCode} title={server.country}/></td>
       <td title={verboseGameStyle(server.configuration.gameStyle)}>{server.configuration.gameStyle}</td>
@@ -71,6 +66,13 @@ export class HomePage extends React.Component<any, State>{
 
   getServers(): Server[]{
     let servers = this.state.servers;
+
+    if(settings.getBool(settings.EXCLUDE_OBSERVERS)){
+      servers = servers.map((server: Server) => {
+        server.playersCount -= server.teams.filter((team: Team) => team.name === "Observer")[0].players;
+        return server;
+      });
+    }
 
     if(this.state.sort.startsWith("configuration.")){
       const sort = this.state.sort.replace("configuration.", "");
