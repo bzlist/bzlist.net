@@ -30,7 +30,7 @@ class Settings extends Storage{
 
       const token = storage.get("token");
       if(token !== ""){
-        api("users/settings", {settings: settings.json()}, "PATCH", {
+        api("users/settings", {settings: this.json()}, "PATCH", {
           "Authorization": `Bearer ${token}`
         });
       }
@@ -42,12 +42,14 @@ class Settings extends Storage{
     return value ? value === "true" : setting.defaultValue || false;
   }
 
-  setBool(setting: IBoolSetting, value: boolean): void{
+  setBool(setting: IBoolSetting, value: boolean, sync = true): void{
     if(value === (setting.defaultValue || false)){
-      return this.remove(setting.key);
+      this.remove(setting.key);
+      this.onChange(setting.key, value.toString(), sync);
+      return;
     }
 
-    this.set(setting.key, value.toString());
+    this.set(setting.key, value.toString(), sync);
   }
 }
 
