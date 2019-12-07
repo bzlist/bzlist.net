@@ -2,6 +2,26 @@
 
 This is an outline and does not contain every change. Check the commits for a full list of changes.
 
+## v0.10.1 - Fixes 🛠 (2019-12-6)
+
+### Added
+- "what's new" link to help page
+
+### Changed
+- Improved handling of boolean settings
+
+### Fixed
+- Icons rendering above mobile nav menu
+- List buttons spacing
+- Server titles from overflowing
+- Settings page errors and warnings
+- Warning in Dropdown and Switch components
+- Account page token parsing
+- Old urls in package.json
+- package.json name field
+- Settings not syncing properly
+- Servers with hidden observers being on top
+
 ## v0.10.0 - New Authentication (2019-12-5)
 
 ### Added
