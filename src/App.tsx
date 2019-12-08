@@ -15,7 +15,7 @@ import {
   IconDefs,
   Icon
 } from "./components";
-import {settings, history, storage, api} from "./lib";
+import {settings, history, storage, api, parseToken} from "./lib";
 
 interface State{
   offline: boolean;
@@ -110,6 +110,8 @@ class App extends React.Component<any, State>{
   }
 
   render(): JSX.Element{
+    const token = parseToken();
+
     return (
       <Router history={history}>
         <div className="body">
@@ -129,7 +131,13 @@ class App extends React.Component<any, State>{
               {Icon("github", false)}
             </a>
             <Link to="/settings" className="btn icon">{Icon("settings", false)}</Link>
-            <Link to="/account" className="btn icon">{Icon("account", false)}</Link>
+            <Link to="/account" className="btn icon">
+            {token && token.bzid ?
+              <img src={`https://forums.bzflag.org/download/file.php?avatar=${token.bzid}.png`} height="15"/>
+            :
+              Icon("account", false)
+            }
+            </Link>
           </div>
           <div style={{flex: 1}}>
             <Switch>

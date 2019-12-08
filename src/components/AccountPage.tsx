@@ -1,6 +1,6 @@
 import React from "react";
 
-import {storage, bzLoginURL, api} from "../lib";
+import {storage, bzLoginURL, api, parseToken} from "../lib";
 import {Switch} from ".";
 
 interface State{
@@ -20,13 +20,10 @@ export class AccountPage extends React.Component<any, State>{
 
     // load data from token
     if(token !== ""){
-      try{
-        const data = JSON.parse(window.atob(token.split(".")[1].replace("-", "+").replace("_", "/")));
-        callsign = data.callsign;
-        bzid = data.bzid;
-      }catch(err){
-        console.warn("token is not a valid format");
-        storage.remove("token");
+      const tokenData = parseToken();
+      if(tokenData){
+        callsign = tokenData.callsign;
+        bzid = tokenData.bzid;
       }
     }
 
@@ -122,6 +119,7 @@ export class AccountPage extends React.Component<any, State>{
         <div className="form">
           {this.state.bzid !== "" ?
             <div>
+              <img src={`https://forums.bzflag.org/download/file.php?avatar=${this.state.bzid}.png`} height="42" style={{marginRight: "16px"}}/>
               <h1>{this.state.callsign}</h1>
               <p>
                 View <a href={`https://forums.bzflag.org/memberlist.php?mode=viewprofile&u=${this.state.bzid}`} target="_blank" rel="noopener noreferrer">forum profile</a>.<br/>
