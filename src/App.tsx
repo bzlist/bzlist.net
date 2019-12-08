@@ -111,6 +111,7 @@ class App extends React.Component<any, State>{
 
   render(): JSX.Element{
     const token = parseToken();
+    console.log(token);
 
     return (
       <Router history={history}>
@@ -133,7 +134,7 @@ class App extends React.Component<any, State>{
             <Link to="/settings" className="btn icon">{Icon("settings", false)}</Link>
             <Link to="/account" className="btn icon">
             {token && token.bzid ?
-              <img src={`https://forums.bzflag.org/download/file.php?avatar=${token.bzid}.png`} height="15"/>
+              <img src={`https://forums.bzflag.org/download/file.php?avatar=${token.bzid}.png`} height="15" alt=""/>
             :
               Icon("account", false)
             }

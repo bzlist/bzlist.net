@@ -119,7 +119,7 @@ export class AccountPage extends React.Component<any, State>{
         <div className="form">
           {this.state.bzid !== "" ?
             <div>
-              <img src={`https://forums.bzflag.org/download/file.php?avatar=${this.state.bzid}.png`} height="42" style={{marginRight: "16px"}}/>
+              <img src={`https://forums.bzflag.org/download/file.php?avatar=${this.state.bzid}.png`} height="42" style={{marginRight: "16px"}} alt=""/>
               <h1>{this.state.callsign}</h1>
               <p>
                 View <a href={`https://forums.bzflag.org/memberlist.php?mode=viewprofile&u=${this.state.bzid}`} target="_blank" rel="noopener noreferrer">forum profile</a>.<br/>
