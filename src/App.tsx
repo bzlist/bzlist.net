@@ -111,7 +111,6 @@ class App extends React.Component<any, State>{
 
   render(): JSX.Element{
     const token = parseToken();
-    console.log(token);
 
     return (
       <Router history={history}>
