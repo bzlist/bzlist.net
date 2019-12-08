@@ -11,6 +11,8 @@ interface State{
 }
 
 export class AccountPage extends React.Component<any, State>{
+  tokenData: any = null;
+
   constructor(props: any){
     super(props);
 
@@ -20,10 +22,10 @@ export class AccountPage extends React.Component<any, State>{
 
     // load data from token
     if(token !== ""){
-      const tokenData = parseToken();
-      if(tokenData){
-        callsign = tokenData.callsign;
-        bzid = tokenData.bzid;
+      this.tokenData = parseToken();
+      if(this.tokenData){
+        callsign = this.tokenData.callsign;
+        bzid = this.tokenData.bzid;
       }
     }
 
@@ -116,33 +118,32 @@ export class AccountPage extends React.Component<any, State>{
   render(): JSX.Element{
     return (
       <div className="wrapper">
-        <div className="form">
-          {this.state.bzid !== "" ?
-            <div>
-              <img src={`https://forums.bzflag.org/download/file.php?avatar=${this.state.bzid}.png`} height="42" style={{marginRight: "16px"}} alt=""/>
-              <h1>{this.state.callsign}</h1>
-              <p>
-                View <a href={`https://forums.bzflag.org/memberlist.php?mode=viewprofile&u=${this.state.bzid}`} target="_blank" rel="noopener noreferrer">forum profile</a>.<br/>
-                More features coming soon!
-              </p>
-              <Switch label="Sync Settings"
-                      description="Sync all of your settings across devices"
-                      checked={storage.get("syncSettings") === "true"}
-                      onChange={(value: boolean) => storage.set("syncSettings", value.toString())}/><br/>
-              <button className="link" onClick={() => this.signout()}>Sign Out</button> • <button className="link" onClick={() => this.delete()}>Delete Account</button>
-            </div>
-          :
-            <div>
-              <h1>Account</h1>
-              <p>
-                Sign in with your <a href="https://forums.bzflag.org" target="_blank" rel="noopener noreferrer">BZFlag account</a> to sync your settigs across devices.
-                No password or extra information required.
-              </p>
-              <a className="btn btn-primary" href={bzLoginURL}>Sign In with BZFlag</a>
-            </div>
-          }
-          {this.state.error !== "" && <p className="no">Error: {this.state.error}</p>}
-        </div>
+        {this.state.bzid !== "" ?
+          <div>
+            <img src={`https://forums.bzflag.org/download/file.php?avatar=${this.state.bzid}.png`} height="42" style={{marginRight: "16px"}} alt=""/>
+            <h1>{this.state.callsign}</h1>
+            <p>
+              View <a href={`https://forums.bzflag.org/memberlist.php?mode=viewprofile&u=${this.state.bzid}`} target="_blank" rel="noopener noreferrer">forum profile</a>.<br/>
+              More features coming soon!<br/>
+              {Math.round((this.tokenData.exp - (Date.now() / 1000)) / 86400)} days until automatically logged out.
+            </p>
+            <Switch label="Sync Settings"
+                    description="Sync all of your settings across devices"
+                    checked={storage.get("syncSettings") === "true"}
+                    onChange={(value: boolean) => storage.set("syncSettings", value.toString())}/><br/>
+            <button className="link" onClick={() => this.signout()}>Sign Out</button> • <button className="link" onClick={() => this.delete()}>Delete Account</button>
+          </div>
+        :
+          <div>
+            <h1>Account</h1>
+            <p>
+              Sign in with your <a href="https://forums.bzflag.org" target="_blank" rel="noopener noreferrer">BZFlag account</a> to sync your settigs across devices.
+              No password or extra information required.
+            </p>
+            <a className="btn btn-primary" href={bzLoginURL}>Sign In with BZFlag</a>
+          </div>
+        }
+        {this.state.error !== "" && <p className="no">Error: {this.state.error}</p>}
       </div>
     );
   }
