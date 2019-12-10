@@ -133,7 +133,7 @@ class App extends React.Component<any, State>{
             <Link to="/settings" className="btn icon">{Icon("settings", false)}</Link>
             <Link to="/account" className="btn icon">
             {token && token.bzid ?
-              <img src={`https://forums.bzflag.org/download/file.php?avatar=${token.bzid}.png`} height="15" alt=""/>
+              <img src={`https://forums.bzflag.org/download/file.php?avatar=${token.bzid}.png`} height="15" alt="" style={{borderRadius: "2px"}}/>
             :
               Icon("account", false)
             }
