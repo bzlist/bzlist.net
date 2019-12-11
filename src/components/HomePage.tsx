@@ -65,7 +65,7 @@ export class HomePage extends React.Component<any, State>{
   }
 
   getServers(): Server[]{
-    let servers = this.state.servers;
+    let servers: Server[] = JSON.parse(JSON.stringify(this.state.servers));
 
     if(settings.getBool(settings.EXCLUDE_OBSERVERS)){
       servers = servers.map((server: Server) => {
