@@ -63,10 +63,14 @@ class App extends React.Component<any, State>{
       }
     });
 
-    history.listen(() => {
+    history.listen((location: any, action: string) => {
       const drawerToggle: any = document.querySelector("#drawer-toggle");
       if(drawerToggle){
         drawerToggle.checked = false;
+      }
+
+      if(action !== "POP"){
+        window.scrollTo(0, 0);
       }
     });
   }

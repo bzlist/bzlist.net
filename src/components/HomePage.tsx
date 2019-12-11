@@ -188,7 +188,7 @@ export class HomePage extends React.Component<any, State>{
             {settings.getJson("hiddenServers", []).length > 0 &&
               <button className="btn btn-outline" onClick={() => this.setState({showHidden: !this.state.showHidden})}>{this.state.showHidden ? "Hide Hidden" : "Show Hidden"}</button>
             }
-            {this.state.serversToShow <= 0 && <button className="btn btn-outline" onClick={() => document.documentElement.scrollTop = 0}>Scroll to Top</button>}
+            {this.state.serversToShow <= 0 && <button className="btn btn-outline" onClick={() => window.scrollTo({top: 0, behavior: "smooth"})}>Scroll to Top</button>}
           </div>
         </div>
       </div>

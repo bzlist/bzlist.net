@@ -161,7 +161,7 @@ export class PlayerPage extends React.Component<any, State>{
           {table}
           <div className="btn-list">
             <button className="btn btn-primary" onClick={() => this.setState({showObservers: !this.state.showObservers})}>{!this.state.showObservers ? "Show Observers" : "Hide Observers"}</button>
-            <button className="btn btn-outline" onClick={() => document.documentElement.scrollTop = 0}>Scroll to Top</button>
+            <button className="btn btn-outline" onClick={() => window.scrollTo({top: 0, behavior: "smooth"})}>Scroll to Top</button>
           </div>
         </div>
       </div>
