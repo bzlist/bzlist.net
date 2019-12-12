@@ -193,7 +193,7 @@ tr{
 }
 
 tr:hover{
-  background-color: var(--bg-lighter);
+  background: linear-gradient(to right, var(--bg-lighter), var(--bg-darker));
   box-shadow: $shadow;
 }
 

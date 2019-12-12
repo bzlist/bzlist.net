@@ -81,7 +81,7 @@
     }
 
     tr:hover{
-      background-color: var(--bg);
+      background: linear-gradient(to right, var(--bg), var(--bg-darker));
     }
   }
 }
