@@ -101,7 +101,9 @@ class App extends React.Component<any, State>{
           document.documentElement.setAttribute("data-theme", data.theme);
         }
       }
-    }else{
+    }
+
+    if(!this.state.offline){
       const data = await api("status", undefined, "GET");
       if(!data || !data.online){
         this.setState({offline: true});
