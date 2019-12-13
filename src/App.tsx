@@ -110,6 +110,18 @@ class App extends React.Component<any, State>{
       }
     }
 
+    if(token !== ""){
+      const tokenData = parseToken();
+      if(tokenData.exp - (Date.now() / 1000) <= 172800){
+        const data = await api("users/token/renew", undefined, "GET", {
+          "Authorization": `Bearer ${token}`
+        });
+        if(data.token){
+          storage.set("token", data.token);
+        }
+      }
+    }
+
     if(settings.getBool(settings.CUSTOM_SCROLLBARS)){
       document.documentElement.classList.add("custom-scrollbars");
     }
