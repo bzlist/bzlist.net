@@ -15,11 +15,11 @@ This is an outline and does not contain every change. Check the commits for a fu
 
 ### Changed
 - Removed gradient from navbar
-- Maded table hover a gradient
+- Made table hover a gradient
 - Get server status even if syncing settings
 
 ### Fixes
-- Player count going down when ingore observers is on
+- Player count going down when ignore observers is on
 
 ## v0.10.1 - Fixes 🛠 (2019-12-6)
 
