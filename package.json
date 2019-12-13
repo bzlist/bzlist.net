@@ -3,7 +3,7 @@
   "version": "0.10.2",
   "description": "BZList is an online service providing real-time BZFlag server information.",
   "homepage": "https://bzlist.net",
-  "license": "GPL-3.0",
+  "license": "MIT",
   "keywords": [
     "bzlist",
     "bzflag",
