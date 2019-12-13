@@ -122,11 +122,11 @@ export class ServerDetailsPage extends React.Component<Props, State>{
   }
 
   render(): JSX.Element{
-    if(!this.state.server || !this.state.server.players){
+    if(!this.state.server){
       const {address, port} = this.props.match.params;
       return (
         <div className="wrapper">
-          <h1>{address}:{port} isn't in the database :(</h1><br/>
+          <h1>{address}:{port} isn't in the database :(</h1><br/><br/>
           <Link to="/" className="btn btn-primary">Go Home</Link>
         </div>
       );
@@ -235,7 +235,7 @@ export class ServerDetailsPage extends React.Component<Props, State>{
                 </tbody>
               </table>
             </div>
-            {this.state.server.playersCount > 0 &&
+            {this.state.server.playersCount > 0 && this.state.server.players &&
               <div>
                 <h2>{autoPlural(`${playerCount} Player`)} and {autoPlural(`${observerCount} Observer`)}</h2><br/>
                 <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
