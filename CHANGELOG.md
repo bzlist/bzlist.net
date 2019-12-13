@@ -2,6 +2,25 @@
 
 This is an outline and does not contain every change. Check the commits for a full list of changes.
 
+## v0.10.2 (2019-12-13)
+
+> *Note: During the development of this version a lot of work went into backend performance which helps with frontend performance.*
+
+### Added
+- Account icon when signed in
+- Time until auto logout
+- Scroll to top when switching pages
+- Auto renew token
+- Social media card support (Open Graph protocol)
+
+### Changed
+- Removed gradient from navbar
+- Maded table hover a gradient
+- Get server status even if syncing settings
+
+### Fixes
+- Player count going down when ingore observers is on
+
 ## v0.10.1 - Fixes 🛠 (2019-12-6)
 
 ### Added
