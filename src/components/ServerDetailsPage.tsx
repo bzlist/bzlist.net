@@ -6,7 +6,7 @@ import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings} fro
 import {Server, Player, Team} from "../models";
 import {TimeAgo, PlayerRow, Switch, Icon} from ".";
 
-const playerSort = (a: Player, b: Player) => a.team === "Observer" ? 1 : b.team === "Observer" ? -1 : a.wins - a.losses > b.wins - b.losses ? -1 : 1;
+const playerSort = (a: Player, b: Player) => a.team === "Observer" ? 1 : b.team === "Observer" ? -1 : a.score > b.score ? -1 : 1;
 
 interface Params{
   address: string;
