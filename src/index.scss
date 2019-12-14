@@ -292,7 +292,7 @@ td, th{
 
   @include mobile{
     display: flex;
-    justify-content: space-around;
+    justify-content: left;
     flex-wrap: wrap;
   }
 
@@ -300,7 +300,6 @@ td, th{
     margin-right: 22px;
 
     @include mobile{
-      margin: 0;
       margin-bottom: 12px;
     }
   }
