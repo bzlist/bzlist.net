@@ -52,24 +52,22 @@ export class SettingsPage extends React.Component<any, State>{
     return (
       <div className="wrapper">
         <h1>Settings</h1><br/><br/>
-        <div>
-          <Switch label="Compact Tables"
-                  description="Reduce the height of table rows to fit more on the screen at once"
-                  checked={settings.getBool(settings.COMPACT_TABLES)}
-                  onChange={(value: boolean) => this.set(settings.COMPACT_TABLES, value)}/><br/>
-          <Switch label="Active Servers Only"
-                  description="Only get servers with at least 1 player or observer"
-                  checked={settings.getBool(settings.ONLY_SERVERS_WITH_PLAYERS)}
-                  onChange={(value: boolean) => this.set(settings.ONLY_SERVERS_WITH_PLAYERS, value)}/><br/>
-          <Switch label="Ignore Online Observers"
-                  description="Don't treat observers as players on the server list"
-                  checked={settings.getBool(settings.EXCLUDE_OBSERVERS)}
-                  onChange={(value: boolean) => this.set(settings.EXCLUDE_OBSERVERS, value)}/><br/>
-          <Switch label="Custom Scrollbars"
-                  description="Use custom scrollbars instead of the default ones"
-                  checked={settings.getBool(settings.CUSTOM_SCROLLBARS)}
-                  onChange={(value: boolean) => this.set(settings.CUSTOM_SCROLLBARS, value)}/>
-        </div>
+        <Switch label="Compact Tables"
+                description="Reduce the height of table rows to fit more on the screen at once"
+                checked={settings.getBool(settings.COMPACT_TABLES)}
+                onChange={(value: boolean) => this.set(settings.COMPACT_TABLES, value)}/><br/>
+        <Switch label="Active Servers Only"
+                description="Only get servers with at least 1 player or observer"
+                checked={settings.getBool(settings.ONLY_SERVERS_WITH_PLAYERS)}
+                onChange={(value: boolean) => this.set(settings.ONLY_SERVERS_WITH_PLAYERS, value)}/><br/>
+        <Switch label="Ignore Online Observers"
+                description="Don't treat observers as players on the server list"
+                checked={settings.getBool(settings.EXCLUDE_OBSERVERS)}
+                onChange={(value: boolean) => this.set(settings.EXCLUDE_OBSERVERS, value)}/><br/>
+        <Switch label="Custom Scrollbars"
+                description="Use custom scrollbars instead of the default ones"
+                checked={settings.getBool(settings.CUSTOM_SCROLLBARS)}
+                onChange={(value: boolean) => this.set(settings.CUSTOM_SCROLLBARS, value)}/><br/>
         <span className="label">Theme</span>
         <Dropdown items={themes} selected={currentTheme} onChange={(value: string) => this.setTheme(value.toLowerCase())}/><br/>
         <div className="btn-list">
