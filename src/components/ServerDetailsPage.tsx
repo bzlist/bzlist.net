@@ -263,10 +263,10 @@ export class ServerDetailsPage extends React.Component<Props, State>{
                 </tr>
               </thead>
                 <tbody>
-                  {this.state.server.teams.sort((a: Team, b: Team) => a.wins - a.losses > b.wins - b.losses ? -1 : 1).map((team: Team) =>
+                  {this.state.server.teams.sort((a: Team, b: Team) => a.score > b.score ? -1 : 1).map((team: Team) =>
                     <tr key={team.name}>
                       <td><b>{team.name}</b></td>
-                      <td>{team.name === "Observer" ? "" : team.wins - team.losses}</td>
+                      <td>{team.name === "Observer" ? "" : team.score}</td>
                       <td>{team.players} / {team.maxPlayers}</td>
                     </tr>
                   )}

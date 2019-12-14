@@ -10,7 +10,7 @@ export const PlayerRow = ({player, showServer = true}: {player: Player, showServ
   return (
     <tr key={`${player.callsign}:${player.server}`}>
       <td><b>{player.callsign}</b> {player.motto && `(${player.motto})`}</td>
-      <td>{player.team !== "Observer" && player.wins - player.losses}</td>
+      <td>{player.team !== "Observer" && player.score}</td>
       <td>{player.team}</td>
       {serverTr}
     </tr>
@@ -64,10 +64,9 @@ export class PlayerPage extends React.Component<any, State>{
   }
 
   getPlayers(): Player[]{
-    const players = this.state.players.map((player: Player) => {
-      player.score = player.wins - player.losses;
-      return player;
-    }).sort((a: Player, b: Player) => a.team === "Observer" ? 1 : b.team === "Observer" ? -1 : a[this.state.sort] > b[this.state.sort] ? -this.state.sortOrder : this.state.sortOrder);
+    const players = this.state.players.sort((a: Player, b: Player) =>
+      a.team === "Observer" ? 1 : b.team === "Observer" ? -1 : a[this.state.sort] > b[this.state.sort] ? -this.state.sortOrder : this.state.sortOrder
+    );
 
     if(!this.state.showObservers){
       return players.filter((player: Player) => player.team !== "Observer");
@@ -91,7 +90,7 @@ export class PlayerPage extends React.Component<any, State>{
                     {player.team !== "Observer" &&
                       <tr>
                         <td>Score</td>
-                        <td>{player.wins - player.losses}</td>
+                        <td>{player.score}</td>
                       </tr>
                     }
                     <tr>

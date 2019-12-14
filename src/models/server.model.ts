@@ -4,25 +4,26 @@ export interface Team{
   name: string;
   players: number;
   maxPlayers: number;
-  wins: number;
-  losses: number;
+  // wins: number;
+  // losses: number;
+  score: number;
 }
 
 interface Configuration{
   [index: string]: any;
   gameStyle: string;
-  timeLimit: number;
+  // timeLimit: number;
   maxShots: number;
   maxPlayers: number;
-  maxPlayerScore: number;
-  maxTeamScore: number;
+  // maxPlayerScore: number;
+  // maxTeamScore: number;
   superflags: boolean;
   jumping: boolean;
   ricochet: boolean;
   inertia: boolean;
   shaking: boolean;
-  antidoteFlags: boolean;
-  handicap: boolean;
+  // antidoteFlags: boolean;
+  // handicap: boolean;
   noTeamKills: boolean;
   dropBadFlags: DropBadFlags;
 }
@@ -38,12 +39,12 @@ export interface Server{
   port: number;
   ip: string;
   owner: string;
-  protocol: string;
+  // protocol: string;
   country: string;
   countryCode: string;
   timestamp: number;
   title: string;
-  online: boolean;
+  // online: boolean;
   teams: Array<Team>;
   players?: Array<Player>;
   playersCount: number;
