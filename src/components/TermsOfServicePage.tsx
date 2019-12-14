@@ -3,7 +3,7 @@ import React from "react";
 export const TermsOfServicePage = (): JSX.Element => (
   /* tslint:disable:max-line-length */
   <div className="wrapper">
-    <h1>BZList Terms of Service</h1><br/>
+    <h1>BZList Terms of Service</h1><br/><br/>
     <h2>1. Terms</h2>
     <p>By accessing the website at <a href="https://bzlist.net">https://bzlist.net</a>, you are agreeing to be bound by these terms of service, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws. If you do not agree with any of these terms, you are prohibited from using or accessing this site. The materials contained in this website are protected by applicable copyright and trademark law.</p>
     <h2>2. Use License</h2>
