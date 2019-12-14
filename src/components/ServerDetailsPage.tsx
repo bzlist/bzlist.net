@@ -267,7 +267,7 @@ export class ServerDetailsPage extends React.Component<Props, State>{
                     <tr key={team.name}>
                       <td><b>{team.name}</b></td>
                       <td>{team.name === "Observer" ? "" : team.wins - team.losses}</td>
-                      <td>{team.players}</td>
+                      <td>{team.players} / {team.maxPlayers}</td>
                     </tr>
                   )}
                 </tbody>
