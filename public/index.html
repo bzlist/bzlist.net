@@ -50,6 +50,106 @@
       <noscript style="position:absolute;bottom:24px">This application requires JavaScript.</noscript>
     </div>
   </div>
+  <canvas class="snow"></canvas>
+  <style>
+    .snow{
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+  </style>
+  <script>
+    window.addEventListener("DOMContentLoaded", function(){
+      const canvas = document.querySelector(".snow");
+      const ctx = canvas.getContext("2d");
+      const numFlakes = 30;
+      const flakes = [];
+
+      let windowW = window.innerWidth;
+      let windowH = window.innerHeight;
+
+      window.addEventListener("resize", function(){
+        windowW = window.innerWidth;
+        windowH = window.innerHeight;
+
+        canvas.width = windowW;
+        canvas.height = windowH;
+      }, false);
+
+      function Flake(x, y){
+        const maxWeight = 3;
+        const maxSpeed = 2;
+
+        this.x = x;
+        this.y = y;
+        this.r = randomBetween(0, 1);
+        this.a = randomBetween(0, Math.PI);
+        this.aStep = .01;
+
+        this.weight = randomBetween(1, maxWeight);
+        this.alpha = this.weight / maxWeight;
+        this.speed = (this.weight / maxWeight) * maxSpeed;
+
+        this.update = function(){
+          this.x += Math.cos(this.a) * this.r;
+          this.a += this.aStep;
+          this.y += this.speed;
+        };
+      }
+
+      let i = numFlakes;
+      while(i--){
+        const x = randomBetween(0, windowW, true);
+        const y = randomBetween(0, windowH, true);
+
+        const flake = new Flake(x, y);
+        flakes.push(flake);
+      }
+
+      canvas.width = windowW;
+      canvas.height = windowH;
+
+      function update(){
+        let i = flakes.length;
+
+        ctx.save();
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.clearRect(0, 0, windowW, windowH);
+        ctx.restore();
+
+        while(i--){
+          const flake = flakes[i];
+          flake.update();
+
+          ctx.beginPath();
+          ctx.arc(flake.x, flake.y, flake.weight, 0, 2 * Math.PI, false);
+          ctx.fillStyle = `rgba(200, 200, 200, ${flake.alpha})`;
+          ctx.fill();
+
+          if(flake.y > windowH){
+            flake.y = -flake.weight;
+          }
+        }
+
+        requestAnimationFrame(update);
+      }
+
+      update();
+
+      function randomBetween(min, max, round){
+        const num = Math.random() * (max - min + 1) + min;
+
+        if(round){
+          return Math.floor(num);
+        }else{
+          return num;
+        }
+      }
+    }, false);
+  </script>
   <!--
     This HTML file is a template.
     If you open it directly in the browser, you will see an empty page.
