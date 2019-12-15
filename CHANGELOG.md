@@ -1,6 +1,25 @@
 # Changelog
 
-This is an outline and does not contain every change. Check the commits for a full list of changes.
+This is an outline and does not contain every change. Check the commits for a full list of changes.\
+
+## v0.10.3 - Snow! ❄ (2019-12-15)
+
+> *Note: During the development of this version some unused data was removed from the API which required slight tweaks.*
+
+### Added
+- Max team size to server details
+- Snow effect!
+
+### Changed
+- Updated dependencies
+
+### Fixed
+- Typos in CHANGELOG
+- Wrong license in package.json
+- ServerDetailsPage always needing
+- Textarea not having border on focues
+- Heading space on Terms of Service page
+- Button list spacing
 
 ## v0.10.2 (2019-12-13)
 
