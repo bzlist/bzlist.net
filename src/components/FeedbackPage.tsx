@@ -1,6 +1,7 @@
 import React from "react";
 
 import {api, storage} from "../lib";
+import {Link} from "react-router-dom";
 
 interface State{
   feedback: string;
@@ -63,7 +64,7 @@ export class FeedbackPage extends React.Component<any, State>{
             {this.state.message !== "" && <span>&nbsp;&nbsp;{this.state.message}</span>}
           </p>
         :
-          <p>To prevent spam, you must be signed in to leave feedback.</p>
+          <p>To prevent spam, you must be <Link to="/account">signed in</Link> to leave feedback.</p>
         }
       </div>
     );
