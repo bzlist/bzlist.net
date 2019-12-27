@@ -121,6 +121,23 @@ export class ServerDetailsPage extends React.Component<Props, State>{
     settings.set("hiddenServers", JSON.stringify(hiddenServers));
   }
 
+  favoriteServer(): void{
+    if(!this.state.server){
+      return;
+    }
+
+    const server = `${this.state.server.address}:${this.state.server.port}`;
+    const favoriteServers = settings.getJson("favoriteServers", []);
+
+    if(favoriteServers.includes(server)){
+      favoriteServers.splice(favoriteServers.indexOf(server), 1);
+    }else{
+      favoriteServers.splice(favoriteServers.indexOf(server), 0, server);
+    }
+
+    settings.set("favoriteServers", JSON.stringify(favoriteServers));
+  }
+
   render(): JSX.Element{
     if(!this.state.server){
       const {address, port} = this.props.match.params;
@@ -163,6 +180,7 @@ export class ServerDetailsPage extends React.Component<Props, State>{
     }
 
     const isServerHidden = settings.getJson("hiddenServers", []).includes(`${this.state.server.address}:${this.state.server.port}`);
+    const isServerFavorite = settings.getJson("favoriteServers", []).includes(`${this.state.server.address}:${this.state.server.port}`);
 
     return (
       <div>
@@ -178,7 +196,8 @@ export class ServerDetailsPage extends React.Component<Props, State>{
           <div><b>{autoPlural(`${this.state.server.playersCount} Player`)}</b></div>
         </div>
         <div className="container">
-          <Switch label="Hide Server" description="Don't show in server list" checked={isServerHidden} onChange={() => this.hideServer()}/><br/><br/>
+          <Switch label="Hide Server" description="Don't show in server list" checked={isServerHidden} onChange={() => this.hideServer()}/><br/>
+          <Switch label="Favorite Server" description="Receive notification if active" checked={isServerFavorite} onChange={() => this.favoriteServer()}/><br/><br/>
           <div className="content">
             <div>
               <h2>Info</h2><br/>

@@ -20,6 +20,10 @@ class Settings extends Storage{
     key: "customScrollbars",
     defaultValue: true
   };
+  NOTIFICATIONS: IBoolSetting = {
+    key: "notifications",
+    defaultValue: true
+  };
 
   constructor(){
     super("setting_");

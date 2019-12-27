@@ -49,3 +49,35 @@ if(process.env.NODE_ENV === "production"){
   _bzLoginURL = "https://my.bzflag.org/weblogin.php?action=weblogin&url=http%3A%2F%2Flocalhost%3A3000%2Faccount%3Fusername%3D%25USERNAME%25%26token%3D%25TOKEN%25";
 }
 export const bzLoginURL = _bzLoginURL;
+
+export const notification = (title: string, body: string, tag: string, onclick: (this: Notification, event: Event) => void): void => {
+  if(!window.Notification){
+    return console.log("Browser does not support notifications");
+  }
+
+  if(Notification.permission === "denied"){
+    return console.log("User blocked notifications.");
+  }
+
+  const notify = () => {
+    const _notification = new Notification(title, {
+      body,
+      tag,
+      renotify: true,
+      icon: "/images/icon/512.png"
+    });
+    _notification.onclick = onclick;
+  };
+
+  if(Notification.permission === "granted"){
+    notify();
+  }else{
+    Notification.requestPermission().then((result) => {
+      if(result === "granted"){
+        notify();
+      }else{
+        console.log("User blocked notifications.");
+      }
+    });
+  }
+};

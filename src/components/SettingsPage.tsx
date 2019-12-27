@@ -68,6 +68,10 @@ export class SettingsPage extends React.Component<any, State>{
                 description="Use custom scrollbars instead of the default ones"
                 checked={settings.getBool(settings.CUSTOM_SCROLLBARS)}
                 onChange={(value: boolean) => this.set(settings.CUSTOM_SCROLLBARS, value)}/><br/>
+        <Switch label="Receive Notifications"
+                description="You will receive a notification if one of your favorite servers is online"
+                checked={settings.getBool(settings.NOTIFICATIONS)}
+                onChange={(value: boolean) => this.set(settings.NOTIFICATIONS, value)}/><br/>
         <span className="label">Theme</span>
         <Dropdown items={themes} selected={currentTheme} onChange={(value: string) => this.setTheme(value.toLowerCase())}/><br/>
         <div className="btn-list">

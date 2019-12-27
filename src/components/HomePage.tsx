@@ -1,6 +1,6 @@
 import React from "react";
 
-import {cache, socket, verboseGameStyle, history, autoPlural, settings} from "../lib";
+import {cache, socket, verboseGameStyle, history, autoPlural, settings, notification} from "../lib";
 import {Server, Team} from "../models";
 import {TimeAgo} from ".";
 
@@ -26,6 +26,7 @@ interface State{
 
 export class HomePage extends React.Component<any, State>{
   mobile = false;
+  firstData = true;
 
   constructor(props: any){
     super(props);
@@ -43,6 +44,28 @@ export class HomePage extends React.Component<any, State>{
     socket.on<Server[]>("servers", (data: Server[]) => {
       this.setState({servers: data});
       cache.set("servers", JSON.stringify(data));
+
+      if(!this.firstData && settings.getBool(settings.NOTIFICATIONS) && settings.getJson("favoriteServers", []) !== []){
+        data.forEach((server: Server) => {
+          if(!settings.getJson("favoriteServers", []).includes(`${server.address}:${server.port}`)){
+            return;
+          }
+
+          const observerTeam = server.teams.find((team: Team) => team.name === "Observer");
+          if(!observerTeam){
+            return;
+          }
+
+          const playerCount = server.playersCount - observerTeam.players;
+          if(playerCount > 1){
+            notification(`${server.title} has ${playerCount} players`, "", `${server.address}:${server.port}`, () => {
+              history.push(`/s/${server.address}/${server.port}`);
+            });
+          }
+        });
+      }
+
+      this.firstData = false;
     });
     socket.emit("servers", {onlinePlayers: settings.getBool(settings.ONLY_SERVERS_WITH_PLAYERS)});
 
