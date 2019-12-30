@@ -266,7 +266,7 @@ export class ServerDetailsPage extends React.Component<Props, State>{
                   </tr>
                 </thead>
                   <tbody>
-                    {this.state.server.players.map((player: Player) => PlayerRow({player, showServer: false}))}
+                    {this.state.server.players.map((player: Player) => <PlayerRow player={player} showServer={false}/>)}
                   </tbody>
                 </table>
               </div>

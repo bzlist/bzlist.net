@@ -1,20 +1,55 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-import {cache, socket, autoPlural, settings} from "../lib";
+import {cache, socket, autoPlural, settings, history, notification} from "../lib";
 import {Player} from "../models";
 import {TimeAgo} from ".";
+import {Icon} from "./Icon";
 
-export const PlayerRow = ({player, showServer = true}: {player: Player, showServer: boolean}): JSX.Element => {
-  const serverTr = player.server && showServer && <td><Link to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`}>{player.server}</Link></td>;
-  return (
-    <tr key={`${player.callsign}:${player.server}`}>
-      <td><b>{player.callsign}</b> {player.motto && `(${player.motto})`}</td>
-      <td>{player.team !== "Observer" && player.score}</td>
-      <td>{player.team}</td>
-      {serverTr}
-    </tr>
-  );
+const addFriend = (callsign: string): void => {
+  const friends = settings.getJson("friends", []);
+
+  if(friends.includes(callsign)){
+    friends.splice(friends.indexOf(callsign), 1);
+  }else{
+    friends.splice(friends.indexOf(callsign), 0, callsign);
+  }
+
+  settings.set("friends", JSON.stringify(friends));
+};
+
+export class PlayerRow extends React.Component<{player: Player | null, showServer: boolean}, {friend: boolean}>{
+  constructor(props: any){
+    super(props);
+
+    this.state = {
+      friend: false
+    };
+  }
+
+  // does not have return type JSX.Element to prevent "return null" from throwing an error
+  render(){
+    if(!this.props.player){
+      return null;
+    }
+
+    const player = this.props.player;
+    const serverTr = player.server && this.props.showServer && <td><Link to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`}>{player.server}</Link></td>;
+    const friendIcon = Icon("friend", settings.getJson("friends", []).includes(player.callsign), "url(#e)");
+
+    return (
+      <tr key={`${player.callsign}:${player.server}`}>
+        <td><b>{player.callsign}</b> {player.motto && `(${player.motto})`}</td>
+        <td>{player.team !== "Observer" && player.score}</td>
+        <td>{player.team}</td>
+        {serverTr}
+        <td><button className="btn icon" onClick={() => {
+          addFriend(player.callsign);
+          this.setState({friend: settings.getJson("friends", []).includes(player.callsign)});
+        }}>{friendIcon}</button></td>
+      </tr>
+    );
+  }
 };
 
 interface State{
@@ -26,6 +61,7 @@ interface State{
 
 export class PlayerPage extends React.Component<any, State>{
   mobile = false;
+  firstData = true;
 
   constructor(props: any){
     super(props);
@@ -42,6 +78,21 @@ export class PlayerPage extends React.Component<any, State>{
     socket.on<Player[]>("players", (data: Player[]) => {
       this.setState({players: data});
       cache.set("players", JSON.stringify(data));
+
+      // send notification(s) if any friends are online
+      if(!this.firstData && settings.getBool(settings.NOTIFICATIONS) && settings.getJson("friends", []) !== []){
+        data.forEach((player: Player) => {
+          if(!settings.getJson("friends", []).includes(player.callsign)){
+            return;
+          }
+
+          notification(`${player.callsign} is online`, "", player.callsign, () => {
+            history.push(`/s/${player.server.replace(":", "/")}`);
+          });
+        });
+      }
+
+      this.firstData = false;
     });
     socket.emit("players");
 
@@ -125,7 +176,7 @@ export class PlayerPage extends React.Component<any, State>{
               </tr>
             </thead>
             <tbody>
-              {this.getPlayers().map((player: Player) => PlayerRow({player, showServer: true}))}
+              {this.getPlayers().map((player: Player) => <PlayerRow player={player} showServer={true}/>)}
             </tbody>
           </table>
         );
