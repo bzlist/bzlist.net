@@ -50,7 +50,7 @@ export class PlayerRow extends React.Component<{player: Player | null, showServe
       </tr>
     );
   }
-};
+}
 
 interface State{
   players: Player[];
