@@ -38,7 +38,7 @@ export class PlayerRow extends React.Component<{player: Player | null, showServe
     const friendIcon = Icon("friend", settings.getJson("friends", []).includes(player.callsign), "url(#e)");
 
     return (
-      <tr key={`${player.callsign}:${player.server}`}>
+      <tr>
         <td><b>{player.callsign}</b> {player.motto && `(${player.motto})`}</td>
         <td>{player.team !== "Observer" && player.score}</td>
         <td>{player.team}</td>
@@ -176,7 +176,7 @@ export class PlayerPage extends React.Component<any, State>{
               </tr>
             </thead>
             <tbody>
-              {this.getPlayers().map((player: Player) => <PlayerRow player={player} showServer={true}/>)}
+              {this.getPlayers().map((player: Player) => <PlayerRow key={`${player.callsign}:${player.server}`} player={player} showServer={true}/>)}
             </tbody>
           </table>
         );
