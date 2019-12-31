@@ -24,6 +24,10 @@ class Settings extends Storage{
     key: "notifications",
     defaultValue: true
   };
+  FIREWORKS: IBoolSetting = {
+    key: "fireworks",
+    defaultValue: true
+  };
 
   constructor(){
     super("setting_");
