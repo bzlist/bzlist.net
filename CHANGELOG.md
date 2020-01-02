@@ -2,6 +2,18 @@
 
 This is an outline and does not contain every change. Check the commits for a full list of changes.\
 
+## v0.10.4 - Happy New Year! 🎆 (2020-1-2)
+
+### Added
+- Option to favorite servers
+- Sign in link on feedback page if not signed in
+- Option to friend players
+- Notifications if favorite server or friend is online
+- "Paradise Vally" server screenshot
+
+### Changed
+- Special effect from snow to fireworks
+
 ## v0.10.3 - Snow! ❄ (2019-12-15)
 
 > *Note: During the development of this version some unused data was removed from the API which required slight tweaks.*
