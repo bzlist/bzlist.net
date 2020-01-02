@@ -34,8 +34,9 @@ export class PlayerRow extends React.Component<{player: Player | null, showServe
     }
 
     const player = this.props.player;
+    const isFriend = settings.getJson("friends", []).includes(player.callsign);
     const serverTr = player.server && this.props.showServer && <td><Link to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`}>{player.server}</Link></td>;
-    const friendIcon = Icon("friend", settings.getJson("friends", []).includes(player.callsign), "url(#e)");
+    const friendIcon = Icon("friend", isFriend, "url(#e)");
 
     return (
       <tr>
@@ -46,7 +47,7 @@ export class PlayerRow extends React.Component<{player: Player | null, showServe
         <td><button className="btn icon" onClick={() => {
           addFriend(player.callsign);
           this.setState({friend: settings.getJson("friends", []).includes(player.callsign)});
-        }}>{friendIcon}</button></td>
+        }} title={isFriend ? "Remove friend" : "Add as friend"}>{friendIcon}</button></td>
       </tr>
     );
   }
