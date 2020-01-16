@@ -72,13 +72,6 @@ export class SettingsPage extends React.Component<any, State>{
                 description="You will receive a notification if one of your favorite servers is online"
                 checked={settings.getBool(settings.NOTIFICATIONS)}
                 onChange={(value: boolean) => this.set(settings.NOTIFICATIONS, value)}/><br/>
-        <Switch label="Fireworks"
-                description="Show fireworks for the new year"
-                checked={settings.getBool(settings.FIREWORKS)}
-                onChange={(value: boolean) => {
-                  this.set(settings.FIREWORKS, value);
-                  window.location.reload();
-                }}/><br/>
         <span className="label">Theme</span>
         <Dropdown items={themes} selected={currentTheme} onChange={(value: string) => this.setTheme(value.toLowerCase())}/><br/>
         <div className="btn-list">
