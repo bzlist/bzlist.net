@@ -183,7 +183,7 @@ class App extends React.Component<any, State>{
               <Link to="/terms-of-service">Terms of Service</Link> •&nbsp;
               <Link to="/privacy-policy">Privacy Policy</Link>
             </div>
-            <div className="copyright">Copyright &copy; 2019 The Noah</div>
+            <div className="copyright">Copyright © 2019-2020 The Noah</div>
           </footer>
         </div>
         {IconDefs()}
