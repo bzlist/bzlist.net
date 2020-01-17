@@ -15,7 +15,7 @@ import {
   IconDefs,
   Icon
 } from "./components";
-import {settings, history, storage, api, parseToken} from "./lib";
+import {settings, history, storage, api, parseToken, checkAuth, updateUserCache, user, userChanged} from "./lib";
 
 interface State{
   offline: boolean;
@@ -29,6 +29,8 @@ class App extends React.Component<any, State>{
       offline: false
     };
 
+    updateUserCache();
+    checkAuth();
     this.loadSettings();
 
     window.ononline = () => this.setState({offline: false});
@@ -75,6 +77,10 @@ class App extends React.Component<any, State>{
     });
   }
 
+  componentDidMount(): void{
+    userChanged.push(() => this.forceUpdate());
+  }
+
   async loadSettings(): Promise<void>{
     let currentTheme = settings.get("theme");
     if(currentTheme === ""){
@@ -116,8 +122,10 @@ class App extends React.Component<any, State>{
         const data = await api("users/token/renew", undefined, "GET", {
           "Authorization": `Bearer ${token}`
         });
+
         if(data.token){
           storage.set("token", data.token);
+          updateUserCache();
         }
       }
     }
@@ -128,8 +136,6 @@ class App extends React.Component<any, State>{
   }
 
   render(): JSX.Element{
-    const token = parseToken();
-
     return (
       <Router history={history}>
         <div className="body">
@@ -150,8 +156,8 @@ class App extends React.Component<any, State>{
             </a>
             <Link to="/settings" className="btn icon">{Icon("settings", false)}</Link>
             <Link to="/account" className="btn icon">
-            {token && token.bzid ?
-              <img src={`https://forums.bzflag.org/download/file.php?avatar=${token.bzid}.png`} height="15" alt="" style={{borderRadius: "2px"}}/>
+            {user.bzid !== "" ?
+              <img src={`https://forums.bzflag.org/download/file.php?avatar=${user.bzid}.png`} height="15" alt="" style={{borderRadius: "2px"}}/>
             :
               Icon("account", false)
             }
