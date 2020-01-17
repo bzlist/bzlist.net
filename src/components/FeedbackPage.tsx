@@ -1,12 +1,11 @@
 import React from "react";
 
-import {api, storage} from "../lib";
+import {api, storage, user} from "../lib";
 import {Link} from "react-router-dom";
 
 interface State{
   feedback: string;
   message: string;
-  authed: boolean;
 }
 
 export class FeedbackPage extends React.Component<any, State>{
@@ -15,39 +14,21 @@ export class FeedbackPage extends React.Component<any, State>{
 
     this.state = {
       feedback: "",
-      message: "",
-      authed: false
+      message: ""
     };
-
-    this.checkAuth();
-  }
-
-  async checkAuth(): Promise<void>{
-    const data = await api("users/", undefined, "GET", {
-      "Authorization": `Bearer ${storage.get("token")}`
-    });
-
-    if(!data || data.error){
-      if(data && data.error){
-        console.error("error checking token:", data.error);
-      }
-      return;
-    }
-
-    this.setState({authed: true});
   }
 
   async submit(): Promise<void>{
     const data = await api("feedback", {feedback: this.state.feedback}, "POST", {
       "Authorization": `Bearer ${storage.get("token")}`
     });
+
     if(!data){
-      return;
+      this.setState({message: `Unknown error`});
     }
 
     if(data.error){
-      this.setState({message: `Error: ${data.error}`});
-      return;
+      return this.setState({message: `Error: ${data.error}`});
     }
 
     this.setState({message: data.message});
@@ -57,7 +38,7 @@ export class FeedbackPage extends React.Component<any, State>{
     return (
       <div className="wrapper">
         <h1>Feedback</h1>
-        {this.state.authed ?
+        {user.bzid !== "" ?
           <p>
             <textarea placeholder="Share your thoughts, ideas, or report a bug" value={this.state.feedback} onChange={(e) => this.setState({feedback: e.target.value})}></textarea><br/><br/>
             <button className="btn btn-primary" onClick={() => this.submit()}>Submit</button>

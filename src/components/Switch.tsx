@@ -22,6 +22,7 @@ export class Switch extends React.Component<Props, State>{
   }
 
   componentDidUpdate(prevProps: Props): void{
+    // update state if props have changed
     if(prevProps.checked !== this.props.checked){
       this.setState({checked: this.props.checked});
     }

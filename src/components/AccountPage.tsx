@@ -8,8 +8,6 @@ interface State{
 }
 
 export class AccountPage extends React.Component<any, State>{
-  tokenData: any = null;
-
   constructor(props: any){
     super(props);
 
@@ -20,6 +18,7 @@ export class AccountPage extends React.Component<any, State>{
 
   componentDidMount(): void{
     const params: any = {};
+    // decode query params
     window.location.search.substring(1).split("&").forEach((param: string) => params[param.split("=")[0]] = decodeURIComponent(param.split("=")[1]).replace(/\+/g, " "));
     if(params.username && params.token){
       this.login(params.username, params.token);
@@ -27,6 +26,7 @@ export class AccountPage extends React.Component<any, State>{
   }
 
   async login(callsign: string, token: string): Promise<void>{
+    // skip login of trying sign in as same account and already logged in
     if(callsign === user.callsign && storage.get("token") !== ""){
       if(await checkAuth() === true){
         return;

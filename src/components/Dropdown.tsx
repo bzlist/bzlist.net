@@ -35,12 +35,14 @@ export class Dropdown extends React.Component<Props, State>{
   }
 
   componentDidUpdate(prevProps: Props): void{
+    // update state if props have changed
     if(prevProps.selected !== this.props.selected){
       this.setState({label: this.props.selected});
     }
   }
 
-  windowClick = (): void =>{
+  windowClick = (): void => {
+    // keep track if open, and if so close
     if(this.isOpen){
       this.setState({show: false});
       this.isOpen = false;

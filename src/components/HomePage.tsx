@@ -79,6 +79,7 @@ export class HomePage extends React.Component<any, State>{
   }
 
   sortBy(sort: string, sortOrder: number): void{
+    // invert sort order if sorting by same field
     if(this.state.sort === sort){
       sortOrder = -this.state.sortOrder;
     }
@@ -89,6 +90,10 @@ export class HomePage extends React.Component<any, State>{
 
   getServers(): Server[]{
     let servers: Server[] = JSON.parse(JSON.stringify(this.state.servers));
+
+    if(!this.state.showHidden){
+      servers = servers.filter((server) => !settings.getJson("hiddenServers", []).includes(`${server.address}:${server.port}`));
+    }
 
     if(settings.getBool(settings.EXCLUDE_OBSERVERS)){
       servers = servers.map((server: Server) => {
@@ -104,9 +109,6 @@ export class HomePage extends React.Component<any, State>{
       servers.sort((a: Server, b: Server) => a[this.state.sort] > b[this.state.sort] ? -this.state.sortOrder : this.state.sortOrder);
     }
 
-    if(!this.state.showHidden){
-      servers = servers.filter((server) => !settings.getJson("hiddenServers", []).includes(`${server.address}:${server.port}`));
-    }
     return servers.slice(0, this.state.serversToShow > 0 ? this.state.serversToShow : this.state.servers.length);
   }
 

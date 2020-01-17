@@ -27,8 +27,7 @@ export class PlayerRow extends React.Component<{player: Player | null, showServe
     };
   }
 
-  // does not have return type JSX.Element to prevent "return null" from throwing an error
-  render(){
+  render(): JSX.Element | null{
     if(!this.props.player){
       return null;
     }
@@ -107,6 +106,7 @@ export class PlayerPage extends React.Component<any, State>{
   }
 
   sortBy(sort: string, sortOrder: number){
+    // invert sort order if sorting by same field
     if(this.state.sort === sort){
       sortOrder = -this.state.sortOrder;
     }
@@ -116,13 +116,15 @@ export class PlayerPage extends React.Component<any, State>{
   }
 
   getPlayers(): Player[]{
-    const players = this.state.players.sort((a: Player, b: Player) =>
-      a.team === "Observer" ? 1 : b.team === "Observer" ? -1 : a[this.state.sort] > b[this.state.sort] ? -this.state.sortOrder : this.state.sortOrder
-    );
+    let players = JSON.parse(JSON.stringify(this.state.players));
 
     if(!this.state.showObservers){
-      return players.filter((player: Player) => player.team !== "Observer");
+      players = players.filter((player: Player) => player.team !== "Observer");
     }
+
+    players = players.sort((a: Player, b: Player) =>
+      a.team === "Observer" ? 1 : b.team === "Observer" ? -1 : a[this.state.sort] > b[this.state.sort] ? -this.state.sortOrder : this.state.sortOrder
+    );
 
     return players;
   }
