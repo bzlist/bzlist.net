@@ -2,6 +2,23 @@
 
 This is an outline and does not contain every change. Check the commits for a full list of changes.\
 
+## v0.10.5 (2020-1-18)
+
+### Added
+- Hover text to add friend button
+
+### Changed
+- Improved cards (CSS grid)
+- Minor tweaks
+- Slight speed boost
+- Updated splash screen author logo
+- Updated copyright
+- Shadows
+- Background adn navbar are now gradients
+
+### Removed
+- Fireworks effect
+
 ## v0.10.4 - Happy New Year! 🎆 (2020-1-2)
 
 ### Added
