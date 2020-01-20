@@ -18,7 +18,7 @@ const addFriend = (callsign: string): void => {
   settings.set("friends", JSON.stringify(friends));
 };
 
-export class PlayerRow extends React.Component<{player: Player | null, showServer: boolean}, {friend: boolean}>{
+export class PlayerRow extends React.PureComponent<{player: Player | null, showServer: boolean}, {friend: boolean}>{
   constructor(props: any){
     super(props);
 

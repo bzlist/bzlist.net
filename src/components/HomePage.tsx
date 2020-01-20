@@ -2,19 +2,55 @@ import React from "react";
 
 import {cache, socket, verboseGameStyle, history, autoPlural, settings, notification} from "../lib";
 import {Server, Team} from "../models";
-import {TimeAgo} from ".";
+import {TimeAgo, Icon} from ".";
 
-const ServerRow = ({server}: {server: Server}): JSX.Element => {
-  return (
-    <tr key={`${server.address}:${server.port}`} onClick={() => history.push(`/s/${server.address}/${server.port}`)} style={{fontWeight: server.playersCount > 0 ? "bold" : "inherit"}}>
-      <td>{server.playersCount}</td>
-      <td>{server.address}:{server.port}</td>
-      <td><img src={`https://countryflags.io/${server.countryCode}/flat/32.png`} alt={server.countryCode} title={server.country}/></td>
-      <td title={verboseGameStyle(server.configuration.gameStyle)}>{server.configuration.gameStyle}</td>
-      <td>{server.title}</td>
-    </tr>
-  );
+const favoriteServer = (server: string): void => {
+  const favoriteServers = settings.getJson("favoriteServers", []);
+
+  if(favoriteServers.includes(server)){
+    favoriteServers.splice(favoriteServers.indexOf(server), 1);
+  }else{
+    favoriteServers.splice(favoriteServers.indexOf(server), 0, server);
+  }
+
+  settings.set("favoriteServers", JSON.stringify(favoriteServers));
 };
+
+export class ServerRow extends React.PureComponent<{server: Server}, {favorite: boolean}>{
+  constructor(props: any){
+    super(props);
+
+    this.state = {
+      favorite: false
+    };
+  }
+
+  isFavorite(): boolean{
+    return settings.getJson("favoriteServers", []).includes(`${this.props.server.address}:${this.props.server.port}`);
+  }
+
+  onClick(): void{
+    history.push(`/s/${this.props.server.address}/${this.props.server.port}`);
+  }
+
+  render(): JSX.Element | null{
+    return (
+      <tr style={{fontWeight: this.props.server.playersCount > 0 ? "bold" : "inherit"}}>
+        <td onClick={() => this.onClick()}>{this.props.server.playersCount}</td>
+        <td onClick={() => this.onClick()}>{this.props.server.address}:{this.props.server.port}</td>
+        <td onClick={() => this.onClick()}>
+          <img src={`https://countryflags.io/${this.props.server.countryCode}/flat/32.png`} alt={this.props.server.countryCode} title={this.props.server.country}/>
+        </td>
+        <td onClick={() => this.onClick()} title={verboseGameStyle(this.props.server.configuration.gameStyle)}>{this.props.server.configuration.gameStyle}</td>
+        <td onClick={() => this.onClick()}>{this.props.server.title}</td>
+        <td><button className="btn icon" onClick={() => {
+          favoriteServer(`${this.props.server.address}:${this.props.server.port}`);
+          this.setState({favorite: this.isFavorite()});
+        }}>{Icon("heart", this.isFavorite(), "url(#e)")}</button></td>
+      </tr>
+    );
+  }
+}
 
 interface State{
   servers: Server[];
@@ -167,7 +203,7 @@ export class HomePage extends React.Component<any, State>{
               </tr>
             </thead>
             <tbody>
-              {this.getServers().map((server: Server) => ServerRow({server}))}
+              {this.getServers().map((server: Server) => <ServerRow key={`${server.address}:${server.port}`} server={server}/>)}
             </tbody>
           </table>
         );
