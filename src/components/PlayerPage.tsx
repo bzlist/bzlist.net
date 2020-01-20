@@ -18,13 +18,17 @@ const addFriend = (callsign: string): void => {
   settings.set("friends", JSON.stringify(friends));
 };
 
-export class PlayerRow extends React.PureComponent<{player: Player | null, showServer: boolean}, {friend: boolean}>{
+export class PlayerRow extends React.PureComponent<{player: Player, showServer: boolean}, {friend: boolean}>{
   constructor(props: any){
     super(props);
 
     this.state = {
       friend: false
     };
+  }
+
+  shouldComponentUpdate(nextProps: {player: Player, showServer: boolean}, nextState: {friend: boolean}): boolean{
+    return nextState.friend !== this.state.friend || nextProps.player.timestamp !== this.props.player.timestamp;
   }
 
   render(): JSX.Element | null{

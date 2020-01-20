@@ -13,11 +13,15 @@ export class ServerRow extends React.PureComponent<{server: Server}, {favorite: 
     };
   }
 
+  shouldComponentUpdate(nextProps: {server: Server}, nextState: {favorite: boolean}): boolean{
+    return nextState.favorite !== this.state.favorite || nextProps.server.timestamp !== this.props.server.timestamp;
+  }
+
   onClick(): void{
     history.push(`/s/${this.props.server.address}/${this.props.server.port}`);
   }
 
-  render(): JSX.Element | null{
+  render(): JSX.Element{
     return (
       <tr style={{fontWeight: this.props.server.playersCount > 0 ? "bold" : "inherit"}}>
         <td onClick={() => this.onClick()}>{this.props.server.playersCount}</td>
