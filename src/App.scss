@@ -24,14 +24,6 @@
     height: 28px;
   }
 
-  .btn{
-    font-size: 15px;
-
-    svg{
-      height: 15px;
-    }
-  }
-
   nav .btn{
     margin-right: 24px;
   }
@@ -47,7 +39,9 @@
     z-index: 99;
 
     .hamburger{
-      margin-right: 20px;
+      width: 24px;
+      height: 15px;
+      margin-right: 12px;
       display: block;
       z-index: 2;
 
