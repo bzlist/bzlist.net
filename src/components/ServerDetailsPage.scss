@@ -112,15 +112,16 @@
   }
 
   .close{
-    padding-top: 15px;
-    padding-right: 15px;
+    padding-top: 8px;
+    padding-right: 8px;
     position: absolute;
-    top: -4px;
+    top: 0;
     right: 0;
   }
 
   & > div{
-    width: 340px;
+    max-width: 90%;
+    width: 380px;
     min-height: 100px;
     background-color: var(--bg-lighter);
     position: relative;
@@ -135,13 +136,12 @@
 
   .inner{
     padding: 16px;
-    display: flex;
-    flex-flow: row wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-gap: .5rem;
 
     .btn{
-      margin: 2px;
       padding: 0 4px;
-      flex: 1 80px;
     }
   }
 }
