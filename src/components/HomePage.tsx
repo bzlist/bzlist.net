@@ -4,7 +4,7 @@ import {cache, socket, verboseGameStyle, history, autoPlural, settings, notifica
 import {Server, Team} from "../models";
 import {TimeAgo, Icon} from ".";
 
-export class ServerRow extends React.PureComponent<{server: Server}, {favorite: boolean}>{
+export class ServerRow extends React.Component<{server: Server}, {favorite: boolean}>{
   constructor(props: any){
     super(props);
 
