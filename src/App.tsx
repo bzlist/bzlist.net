@@ -13,7 +13,8 @@ import {
   AccountPage,
   FeedbackPage,
   IconDefs,
-  Icon
+  Icon,
+  ChangelogPage
 } from "./components";
 import {settings, history, storage, api, parseToken, checkAuth, updateUserCache, user, userChanged} from "./lib";
 
@@ -168,7 +169,8 @@ class App extends React.PureComponent<any, State>{
               <Route path="/players" component={PlayerPage}/>
               <Route path="/privacy-policy" component={PrivacyPolicyPage}/>
               <Route path="/terms-of-service" component={TermsOfServicePage}/>
-              <Route path="/Help" component={HelpPage}/>
+              <Route path="/help" component={HelpPage}/>
+              <Route path="/changelog" component={ChangelogPage}/>
               <Route path="/s/:address/:port" component={ServerDetailsPage}/>
               <Route path="/settings" component={SettingsPage}/>
               <Route path="/account" component={AccountPage}/>
@@ -181,7 +183,8 @@ class App extends React.PureComponent<any, State>{
               <a href="https://github.com/bzlist/bzlist.net" target="_blank" rel="noopener noreferrer">GitHub</a> •&nbsp;
               <a href="https://github.com/gosquared/flags/blob/master/LICENSE.txt" target="_blank" rel="noopener noreferrer">GoSquared's Flags License</a> •&nbsp;
               <Link to="/terms-of-service">Terms of Service</Link> •&nbsp;
-              <Link to="/privacy-policy">Privacy Policy</Link>
+              <Link to="/privacy-policy">Privacy Policy</Link> •&nbsp;
+              <Link to="/changelog">Changelog</Link>
             </div>
             <div className="copyright">Copyright © 2019-2020 The Noah</div>
           </footer>

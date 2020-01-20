@@ -1,6 +1,6 @@
 # Changelog
 
-This is an outline and does not contain every change. Check the commits for a full list of changes.\
+This is an outline and does not contain every change. Check the commits for a full list of changes.
 
 ## v0.10.5 (2020-1-18)
 
