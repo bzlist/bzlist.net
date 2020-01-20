@@ -266,7 +266,7 @@ td, th{
     background-color: var(--bg-lighter);
     display: block;
     box-shadow: $shadow;
-    border-radius: $border-radius;
+    border-radius: $border-radius-large;
 
     h2, td{
       word-break: break-word;

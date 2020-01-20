@@ -71,7 +71,7 @@
     padding: 16px 26px;
     background-color: var(--bg-lighter);
     box-shadow: $shadow;
-    border-radius: $border-radius;
+    border-radius: $border-radius-large;
 
     @include mobile{
       padding: 12px 16px;
@@ -126,7 +126,7 @@
     background-color: var(--bg-lighter);
     position: relative;
     box-shadow: $shadow;
-    border-radius: $border-radius;
+    border-radius: $border-radius-large;
   }
 
   .popup-header{
