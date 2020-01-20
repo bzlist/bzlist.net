@@ -31,6 +31,7 @@ export class ServerRow extends React.PureComponent<{server: Server}, {favorite: 
           favoriteServer(this.props.server);
           this.setState({favorite: isFavoriteServer(this.props.server)});
         }}>{Icon("heart", isFavoriteServer(this.props.server), "url(#e)")}</button></td>
+        <td><button className="btn icon btn-play" onClick={() => history.push(`/s/${this.props.server.address}/${this.props.server.port}?play`)} title="Play">&#9658;</button></td>
       </tr>
     );
   }
@@ -184,6 +185,7 @@ export class HomePage extends React.PureComponent<any, State>{
                 <th onClick={() => this.sortBy("country", -1)}>Country</th>
                 <th onClick={() => this.sortBy("configuration.gameStyle", -1)}>Game Style</th>
                 <th onClick={() => this.sortBy("title", -1)}>Title</th>
+                <th></th>
                 <th></th>
               </tr>
             </thead>

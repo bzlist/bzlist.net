@@ -45,9 +45,20 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
       }
     }
 
+    let selectTeam = false;
+    const params: any = {};
+    // decode query params
+    window.location.search.substring(1).split("&").forEach((param: string) => params[param.split("=")[0]] = decodeURIComponent(param.split("=")[1]).replace(/\+/g, " "));
+    if(params.play){
+      selectTeam = true;
+    }
+    // clean query params from URL
+    const url = window.location.toString();
+    window.history.replaceState({}, document.title, url.substring(0, url.indexOf("?")));
+
     this.state = {
       server,
-      selectTeam: false,
+      selectTeam,
       favorite: isFavoriteServer(server)
     };
 
@@ -193,7 +204,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
           <h1>{this.state.server.title}</h1>
         </div>
         <div className="server-header">
-          <div className="mobile-hide"><button className="play" onClick={() => this.setState({selectTeam: true})} title="Requires BZFlag Launcher">&#9658; Play</button></div>
+          <div className="mobile-hide"><button className="btn btn-play" onClick={() => this.setState({selectTeam: true})} title="Requires BZFlag Launcher">&#9658; Play</button></div>
           <div>
             <img src={`https://countryflags.io/${this.state.server.countryCode}/flat/32.png`} style={{"margin":"0 6px -10px 0"}} alt=""/>
             {this.state.server.country}

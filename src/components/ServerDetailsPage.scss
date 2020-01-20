@@ -50,23 +50,10 @@
       margin-right: 22px;
     }
   }
-}
 
-.play{
-  padding: 0 32px;
-  background-image: linear-gradient(to right, #60EE00, #30DD40);
-  color: #FFF;
-  font-size: 1.1em;
-  line-height: 38px;
-  text-transform: uppercase;
-  border: none;
-  border-radius: $border-radius;
-  box-shadow: $shadow;
-  outline: none;
-  cursor: pointer;
-
-  &:hover{
-    background-image: linear-gradient(to right, #79EE00, #5ADD20);
+  .btn-play{
+    line-height: 38px;
+    box-shadow: $shadow;
   }
 }
 

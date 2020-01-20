@@ -155,6 +155,19 @@ a:hover, .link:hover{
   }
 }
 
+.btn-play{
+  padding: 0 32px;
+  background-image: linear-gradient(to right, #60EE00, #30DD40);
+  color: #FFF;
+  font-size: 1.1em;
+  font-weight: normal;
+  text-transform: uppercase;
+
+  &:hover{
+    background-image: linear-gradient(to right, #79EE00, #5ADD20);
+  }
+}
+
 .wrapper{
   width: 85vw;
   margin: 0 auto;
@@ -230,8 +243,13 @@ td, th{
 }
 
 .table-compact tr,
-.table-compact img{
+.table-compact img,
+.table-compact .btn{
   height: 24px;
+}
+
+.table-compact .btn{
+  line-height: 24px;
 }
 
 .card-list{
