@@ -1,20 +1,8 @@
 import React from "react";
 
-import {cache, socket, verboseGameStyle, history, autoPlural, settings, notification} from "../lib";
+import {cache, socket, verboseGameStyle, history, autoPlural, settings, notification, favoriteServer, isFavoriteServer} from "../lib";
 import {Server, Team} from "../models";
 import {TimeAgo, Icon} from ".";
-
-const favoriteServer = (server: string): void => {
-  const favoriteServers = settings.getJson("favoriteServers", []);
-
-  if(favoriteServers.includes(server)){
-    favoriteServers.splice(favoriteServers.indexOf(server), 1);
-  }else{
-    favoriteServers.splice(favoriteServers.indexOf(server), 0, server);
-  }
-
-  settings.set("favoriteServers", JSON.stringify(favoriteServers));
-};
 
 export class ServerRow extends React.PureComponent<{server: Server}, {favorite: boolean}>{
   constructor(props: any){
@@ -23,10 +11,6 @@ export class ServerRow extends React.PureComponent<{server: Server}, {favorite: 
     this.state = {
       favorite: false
     };
-  }
-
-  isFavorite(): boolean{
-    return settings.getJson("favoriteServers", []).includes(`${this.props.server.address}:${this.props.server.port}`);
   }
 
   onClick(): void{
@@ -44,9 +28,9 @@ export class ServerRow extends React.PureComponent<{server: Server}, {favorite: 
         <td onClick={() => this.onClick()} title={verboseGameStyle(this.props.server.configuration.gameStyle)}>{this.props.server.configuration.gameStyle}</td>
         <td onClick={() => this.onClick()}>{this.props.server.title}</td>
         <td><button className="btn icon" onClick={() => {
-          favoriteServer(`${this.props.server.address}:${this.props.server.port}`);
-          this.setState({favorite: this.isFavorite()});
-        }}>{Icon("heart", this.isFavorite(), "url(#e)")}</button></td>
+          favoriteServer(this.props.server);
+          this.setState({favorite: isFavoriteServer(this.props.server)});
+        }}>{Icon("heart", isFavoriteServer(this.props.server), "url(#e)")}</button></td>
       </tr>
     );
   }

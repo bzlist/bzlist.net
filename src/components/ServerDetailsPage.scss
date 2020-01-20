@@ -5,6 +5,7 @@
   padding: 26px 36px;
   display: flex;
   box-sizing: border-box;
+  align-items: flex-end;
 
   @include mobile{
     height: 170px;
@@ -17,10 +18,21 @@
     font-weight: normal;
     text-shadow: 0 1px 8px #000;
     word-break: break-word;
-    align-self: flex-end;
 
     @include mobile{
       font-size: 30px;
+    }
+  }
+
+  & > .icon{
+    padding: 0 8px;
+
+    svg{
+      height: 30px;
+
+      @include mobile{
+        height: 22px;
+      }
     }
   }
 }

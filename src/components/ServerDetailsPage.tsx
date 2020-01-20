@@ -2,7 +2,7 @@ import React from "react";
 import {match, Link} from "react-router-dom";
 import "./ServerDetailsPage.scss";
 
-import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings} from "../lib";
+import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings, isFavoriteServer, favoriteServer} from "../lib";
 import {Server, Player, Team} from "../models";
 import {TimeAgo, PlayerRow, Switch, Icon} from ".";
 
@@ -20,6 +20,7 @@ interface Props{
 interface State{
   server: Server | null;
   selectTeam: boolean;
+  favorite: boolean;
 }
 
 export class ServerDetailsPage extends React.PureComponent<Props, State>{
@@ -46,7 +47,8 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
 
     this.state = {
       server,
-      selectTeam: false
+      selectTeam: false,
+      favorite: isFavoriteServer(server)
     };
 
     socket.on<Server>(`${this.address}:${this.port}`, (data: Server) => {
@@ -180,11 +182,14 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
     }
 
     const isServerHidden = settings.getJson("hiddenServers", []).includes(`${this.state.server.address}:${this.state.server.port}`);
-    const isServerFavorite = settings.getJson("favoriteServers", []).includes(`${this.state.server.address}:${this.state.server.port}`);
 
     return (
       <div>
         <div className="title" style={{background: `url(/images/servers/${this.state.server.address}_${this.state.server.port}.png), url(/images/servers/default.png) no-repeat center center`}}>
+          <button className="btn icon" onClick={() => {
+            favoriteServer(this.state.server as Server);
+            this.setState({favorite: isFavoriteServer(this.state.server)});
+          }}>{Icon("heart", isFavoriteServer(this.state.server), "url(#e)")}</button>
           <h1>{this.state.server.title}</h1>
         </div>
         <div className="server-header">
@@ -196,8 +201,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
           <div><b>{autoPlural(`${this.state.server.playersCount} Player`)}</b></div>
         </div>
         <div className="container">
-          <Switch label="Hide Server" description="Don't show in server list" checked={isServerHidden} onChange={() => this.hideServer()}/><br/>
-          <Switch label="Favorite Server" description="Receive notification if active" checked={isServerFavorite} onChange={() => this.favoriteServer()}/><br/><br/>
+          <Switch label="Hide Server" description="Don't show in server list" checked={isServerHidden} onChange={() => this.hideServer()}/><br/><br/>
           <div className="content">
             <div>
               <h2>Info</h2><br/>

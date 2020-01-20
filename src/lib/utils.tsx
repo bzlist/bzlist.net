@@ -1,6 +1,8 @@
 import React from "react";
 
 import {createBrowserHistory} from "history";
+import {settings} from ".";
+import {Server} from "../models";
 
 export const history = createBrowserHistory();
 
@@ -80,4 +82,29 @@ export const notification = (title: string, body: string, tag: string, onclick: 
       }
     });
   }
+};
+
+export const favoriteServer = (server: Server): void => {
+  if(!server){
+    return;
+  }
+
+  const address = `${server.address}:${server.port}`;
+  const favoriteServers = settings.getJson("favoriteServers", []);
+
+  if(favoriteServers.includes(address)){
+    favoriteServers.splice(favoriteServers.indexOf(address), 1);
+  }else{
+    favoriteServers.splice(favoriteServers.indexOf(address), 0, address);
+  }
+
+  settings.set("favoriteServers", JSON.stringify(favoriteServers));
+};
+
+export const isFavoriteServer = (server: Server | null): boolean => {
+  if(!server){
+    return false;
+  }
+
+  return settings.getJson("favoriteServers", []).includes(`${server.address}:${server.port}`);
 };
