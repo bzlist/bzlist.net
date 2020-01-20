@@ -176,6 +176,7 @@ export class PlayerPage extends React.PureComponent<any, State>{
                 <th onClick={() => this.sortBy("score", 1)}>Score</th>
                 <th onClick={() => this.sortBy("team", -1)}>Team</th>
                 <th onClick={() => this.sortBy("server", -1)}>Server</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>

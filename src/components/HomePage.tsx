@@ -184,6 +184,7 @@ export class HomePage extends React.PureComponent<any, State>{
                 <th onClick={() => this.sortBy("country", -1)}>Country</th>
                 <th onClick={() => this.sortBy("configuration.gameStyle", -1)}>Game Style</th>
                 <th onClick={() => this.sortBy("title", -1)}>Title</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
