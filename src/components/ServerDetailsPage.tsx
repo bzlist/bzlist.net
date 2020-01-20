@@ -63,10 +63,14 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
     };
 
     socket.on<Server>(`${this.address}:${this.port}`, (data: Server) => {
-      if(data.players){
+      if(data && data.players){
         data.players.sort(playerSort);
       }
       this.setState({server: data});
+
+      if(!data){
+        return;
+      }
 
       // update servers cache
       if(serversCache){
@@ -278,6 +282,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
                     <th>Callsign</th>
                     <th>Score</th>
                     <th>Team</th>
+                    <th></th>
                   </tr>
                 </thead>
                   <tbody>
