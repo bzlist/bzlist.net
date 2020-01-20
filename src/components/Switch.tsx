@@ -12,7 +12,7 @@ interface State{
   checked: boolean;
 }
 
-export class Switch extends React.Component<Props, State>{
+export class Switch extends React.PureComponent<Props, State>{
   constructor(props: Props){
     super(props);
 

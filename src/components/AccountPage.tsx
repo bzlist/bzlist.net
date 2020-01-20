@@ -7,7 +7,7 @@ interface State{
   error: string;
 }
 
-export class AccountPage extends React.Component<any, State>{
+export class AccountPage extends React.PureComponent<any, State>{
   constructor(props: any){
     super(props);
 

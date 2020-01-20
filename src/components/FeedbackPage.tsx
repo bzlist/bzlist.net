@@ -8,7 +8,7 @@ interface State{
   message: string;
 }
 
-export class FeedbackPage extends React.Component<any, State>{
+export class FeedbackPage extends React.PureComponent<any, State>{
   constructor(props: any){
     super(props);
 

@@ -9,7 +9,7 @@ interface State{
   message: string;
 }
 
-export class SettingsPage extends React.Component<any, State>{
+export class SettingsPage extends React.PureComponent<any, State>{
   messageTimeout: any;
 
   constructor(props: any){

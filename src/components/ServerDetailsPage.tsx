@@ -22,7 +22,7 @@ interface State{
   selectTeam: boolean;
 }
 
-export class ServerDetailsPage extends React.Component<Props, State>{
+export class ServerDetailsPage extends React.PureComponent<Props, State>{
   address = "";
   port = -1;
 

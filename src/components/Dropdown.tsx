@@ -14,7 +14,7 @@ interface State{
   label: string;
 }
 
-export class Dropdown extends React.Component<Props, State>{
+export class Dropdown extends React.PureComponent<Props, State>{
   isOpen = false;
 
   constructor(props: Props){

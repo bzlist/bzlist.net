@@ -59,7 +59,7 @@ interface State{
   showObservers: boolean;
 }
 
-export class PlayerPage extends React.Component<any, State>{
+export class PlayerPage extends React.PureComponent<any, State>{
   mobile = false;
   firstData = true;
 

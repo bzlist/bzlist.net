@@ -21,7 +21,7 @@ interface State{
   offline: boolean;
 }
 
-class App extends React.Component<any, State>{
+class App extends React.PureComponent<any, State>{
   constructor(props: any){
     super(props);
 

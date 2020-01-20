@@ -60,7 +60,7 @@ interface State{
   showHidden: boolean;
 }
 
-export class HomePage extends React.Component<any, State>{
+export class HomePage extends React.PureComponent<any, State>{
   mobile = false;
   firstData = true;
 

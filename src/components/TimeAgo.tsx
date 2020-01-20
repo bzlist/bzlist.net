@@ -13,7 +13,7 @@ interface State{
   text: string;
 }
 
-export class TimeAgo extends React.Component<Props, State>{
+export class TimeAgo extends React.PureComponent<Props, State>{
   timer: any;
 
   constructor(props: Props){
