@@ -24,6 +24,14 @@ class Settings extends Storage{
     key: "notifications",
     defaultValue: true
   };
+  SERVER_NOTIFICATIONS: IBoolSetting = {
+    key: "serverNotifications",
+    defaultValue: true
+  };
+  PLAYER_NOTIFICATIONS: IBoolSetting = {
+    key: "playerNotifications",
+    defaultValue: true
+  };
 
   constructor(){
     super("setting_");

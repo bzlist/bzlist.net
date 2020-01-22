@@ -84,7 +84,7 @@ export class PlayerPage extends React.PureComponent<any, State>{
       cache.set("players", JSON.stringify(data));
 
       // send notification(s) if any friends are online
-      if(!this.firstData && settings.getBool(settings.NOTIFICATIONS) && settings.getJson("friends", []) !== []){
+      if(!this.firstData && settings.getBool(settings.NOTIFICATIONS) && settings.getBool(settings.PLAYER_NOTIFICATIONS) && settings.getJson("friends", []) !== []){
         data.forEach((player: Player) => {
           if(!settings.getJson("friends", []).includes(player.callsign)){
             return;

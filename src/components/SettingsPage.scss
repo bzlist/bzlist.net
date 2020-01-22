@@ -1,0 +1,53 @@
+@import "../variables.scss";
+@import "../index.scss";
+
+.settings{
+  margin-top: 32px;
+  line-height: 1.7;
+  display: flex;
+
+  @include mobile{
+    width: 90vw;
+    margin: 0 auto;
+    flex-direction: column;
+  }
+
+  .settings__sidebar{
+    padding: 0 52px;
+    flex-basis: 340px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+
+    @include mobile{
+      padding: 0 0 32px 0;
+      flex-basis: auto;
+    }
+
+    .btn{
+      margin-top: 8px;
+      text-align: left;
+      position: relative;
+
+      &[data-selected=true]{
+        @extend .btn:hover;
+
+        &:after{
+          content: "";
+          width: 3px;
+          height: 18px;
+          background: $color-primary;
+          display: block;
+          position: absolute;
+          top: 6px;
+          left: 6px;
+          border-radius: $border-radius;
+        }
+      }
+    }
+  }
+
+  .settings__inner{
+    flex: 1;
+  }
+}

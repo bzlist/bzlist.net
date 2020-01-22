@@ -70,7 +70,7 @@ export class HomePage extends React.PureComponent<any, State>{
       this.setState({servers: data});
       cache.set("servers", JSON.stringify(data));
 
-      if(!this.firstData && settings.getBool(settings.NOTIFICATIONS) && settings.getJson("favoriteServers", []) !== []){
+      if(!this.firstData && settings.getBool(settings.NOTIFICATIONS) && settings.getBool(settings.SERVER_NOTIFICATIONS) && settings.getJson("favoriteServers", []) !== []){
         data.forEach((server: Server) => {
           if(!settings.getJson("favoriteServers", []).includes(`${server.address}:${server.port}`)){
             return;

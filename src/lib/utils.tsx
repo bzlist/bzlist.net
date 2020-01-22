@@ -84,6 +84,15 @@ export const notification = (title: string, body: string, tag: string, onclick: 
   }
 };
 
+export const notificationStatusText = (): string => {
+  if("Notification" in window){
+    const text = Notification.permission;
+    return text === "default" ? "not enabled" : text;
+  }
+
+  return "not supported";
+};
+
 export const favoriteServer = (server: Server): void => {
   if(!server){
     return;

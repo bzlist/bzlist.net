@@ -1,12 +1,16 @@
 import React from "react";
+import "./SettingsPage.scss";
 
-import {settings, cache, IBoolSetting} from "../lib";
+import {settings, cache, IBoolSetting, notificationStatusText} from "../lib";
 import {Dropdown, Switch} from ".";
 
 const themes = ["Light", "Dark", "Midnight"];
 
+const TABS = ["Appearance", "Notifications"];
+
 interface State{
   message: string;
+  tab: number;
 }
 
 export class SettingsPage extends React.PureComponent<any, State>{
@@ -16,7 +20,8 @@ export class SettingsPage extends React.PureComponent<any, State>{
     super(props);
 
     this.state = {
-      message: ""
+      message: "",
+      tab: 0
     };
   }
 
@@ -41,6 +46,10 @@ export class SettingsPage extends React.PureComponent<any, State>{
     this.messageTimeout = setTimeout(() => this.setState({message: ""}), 3000);
   }
 
+  setTab(index: number): void{
+    this.setState({tab: index});
+  }
+
   render(): JSX.Element{
     let currentTheme = settings.get("theme");
     if(currentTheme === ""){
@@ -50,34 +59,56 @@ export class SettingsPage extends React.PureComponent<any, State>{
     currentTheme = currentTheme[0].toUpperCase() + currentTheme.slice(1);
 
     return (
-      <div className="wrapper">
-        <h1>Settings</h1><br/><br/>
-        <Switch label="Compact Tables"
-                description="Reduce the height of table rows to fit more on the screen at once"
-                checked={settings.getBool(settings.COMPACT_TABLES)}
-                onChange={(value: boolean) => this.set(settings.COMPACT_TABLES, value)}/><br/>
-        <Switch label="Active Servers Only"
-                description="Only get servers with at least 1 player or observer"
-                checked={settings.getBool(settings.ONLY_SERVERS_WITH_PLAYERS)}
-                onChange={(value: boolean) => this.set(settings.ONLY_SERVERS_WITH_PLAYERS, value)}/><br/>
-        <Switch label="Ignore Online Observers"
-                description="Don't treat observers as players on the server list"
-                checked={settings.getBool(settings.EXCLUDE_OBSERVERS)}
-                onChange={(value: boolean) => this.set(settings.EXCLUDE_OBSERVERS, value)}/><br/>
-        <Switch label="Custom Scrollbars"
-                description="Use custom scrollbars instead of the default ones"
-                checked={settings.getBool(settings.CUSTOM_SCROLLBARS)}
-                onChange={(value: boolean) => this.set(settings.CUSTOM_SCROLLBARS, value)}/><br/>
-        <Switch label="Receive Notifications"
-                description="You will receive a notification if one of your favorite servers is online"
-                checked={settings.getBool(settings.NOTIFICATIONS)}
-                onChange={(value: boolean) => this.set(settings.NOTIFICATIONS, value)}/><br/>
-        <span className="label">Theme</span>
-        <Dropdown items={themes} selected={currentTheme} onChange={(value: string) => this.setTheme(value.toLowerCase())}/><br/>
-        <div className="btn-list">
-          <button className="btn btn-outline" onClick={() => {settings.clear();this.message("Settings cleared");}}>Reset</button>
-          <button className="btn btn-outline" onClick={() => {cache.clear();this.message("Cache cleared");}}>Clear Cache</button>
-          <b>{this.state.message}</b>
+      <div className="settings">
+        <div className="settings__sidebar">
+          <h2>Settings</h2><br/>
+          {TABS.map((tab: string, index: number) =>
+            <button key={tab} className="btn" onClick={() => this.setTab(index)} data-selected={this.state.tab === index}>{tab}</button>
+          )}
+        </div>
+        <div className="settings__inner">
+          <h1>{TABS[this.state.tab]}</h1><br/><br/>
+          {this.state.tab === 0 && <>
+            <Switch label="Compact Tables"
+                    description="Reduce the height of table rows to fit more on the screen at once"
+                    checked={settings.getBool(settings.COMPACT_TABLES)}
+                    onChange={(value: boolean) => this.set(settings.COMPACT_TABLES, value)}/><br/>
+            <Switch label="Active Servers Only"
+                    description="Only get servers with at least 1 player or observer"
+                    checked={settings.getBool(settings.ONLY_SERVERS_WITH_PLAYERS)}
+                    onChange={(value: boolean) => this.set(settings.ONLY_SERVERS_WITH_PLAYERS, value)}/><br/>
+            <Switch label="Ignore Online Observers"
+                    description="Don't treat observers as players on the server list"
+                    checked={settings.getBool(settings.EXCLUDE_OBSERVERS)}
+                    onChange={(value: boolean) => this.set(settings.EXCLUDE_OBSERVERS, value)}/><br/>
+            <Switch label="Custom Scrollbars"
+                    description="Use custom scrollbars instead of the default ones"
+                    checked={settings.getBool(settings.CUSTOM_SCROLLBARS)}
+                    onChange={(value: boolean) => this.set(settings.CUSTOM_SCROLLBARS, value)}/><br/>
+            <span className="label">Theme</span>
+            <Dropdown items={themes} selected={currentTheme} onChange={(value: string) => this.setTheme(value.toLowerCase())}/>
+          </>}
+          {this.state.tab === 1 && <>
+            <i>Notifications are {notificationStatusText()}.</i><br/><br/>
+            <Switch label="Receive Notifications"
+                    description="Any notifications"
+                    checked={settings.getBool(settings.NOTIFICATIONS)}
+                    onChange={(value: boolean) => this.set(settings.NOTIFICATIONS, value)}/><br/>
+            <Switch label="Favorite Servers"
+                    description="You will receive a notification if one of your favorite servers is online"
+                    checked={settings.getBool(settings.SERVER_NOTIFICATIONS)}
+                    onChange={(value: boolean) => this.set(settings.SERVER_NOTIFICATIONS, value)}/><br/>
+            <Switch label="Friends"
+                    description="You will receive a notification if one of your friends is online"
+                    checked={settings.getBool(settings.PLAYER_NOTIFICATIONS)}
+                    onChange={(value: boolean) => this.set(settings.PLAYER_NOTIFICATIONS, value)}/>
+          </>}
+          <br/><br/><br/>
+          <div className="btn-list">
+            <button className="btn btn-outline" onClick={() => {settings.clear();this.message("Settings cleared");}}>Reset</button>
+            <button className="btn btn-outline" onClick={() => {cache.clear();this.message("Cache cleared");}}>Clear Cache</button>
+            <b>{this.state.message}</b>
+          </div>
         </div>
       </div>
     );
