@@ -51,7 +51,7 @@ interface State{
 
 export class HomePage extends React.PureComponent<any, State>{
   mobile = false;
-  firstData = true;
+  firstData = false;
 
   constructor(props: any){
     super(props);

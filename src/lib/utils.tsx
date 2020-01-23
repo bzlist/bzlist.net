@@ -53,7 +53,7 @@ if(process.env.NODE_ENV === "production"){
 export const bzLoginURL = _bzLoginURL;
 
 export const notification = (title: string, body: string, tag: string, onclick: (this: Notification, event: Event) => void): void => {
-  if(!window.Notification){
+  if(!window.Notification || !("serviceWorker" in navigator) || !("PushManager" in window)){
     return console.log("Browser does not support notifications");
   }
 
@@ -61,14 +61,27 @@ export const notification = (title: string, body: string, tag: string, onclick: 
     return console.log("User blocked notifications.");
   }
 
-  const notify = () => {
-    const _notification = new Notification(title, {
-      body,
-      tag,
-      renotify: true,
-      icon: "/images/icon/512.png"
+  const notify = (): void => {
+    navigator.serviceWorker.ready.then((registration: ServiceWorkerRegistration) => {
+      registration.showNotification(title, {
+        body,
+        tag,
+        // renotify: true,
+        icon: "/images/icon/512.png",
+        vibrate: [200, 100, 200],
+        badge: "https://spyna.it/icons/android-icon-192x192.png",
+        actions: [
+          {
+            action: "join",
+            title: "Join"
+          },
+          {
+            action: "close",
+            title: "Close"
+          }
+        ]
+      });
     });
-    _notification.onclick = onclick;
   };
 
   if(Notification.permission === "granted"){
