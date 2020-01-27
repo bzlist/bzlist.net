@@ -1,7 +1,7 @@
 import React from "react";
 import "./SettingsPage.scss";
 
-import {settings, cache, IBoolSetting, notificationStatusText} from "../lib";
+import {settings, cache, IBoolSetting, notificationStatusText, user, storage} from "../lib";
 import {Dropdown, Switch} from ".";
 
 const themes = ["Light", "Dark", "Midnight"];
@@ -109,6 +109,7 @@ export class SettingsPage extends React.PureComponent<any, State>{
             <button className="btn btn-outline" onClick={() => {cache.clear();this.message("Cache cleared");}}>Clear Cache</button>
             <b>{this.state.message}</b>
           </div>
+          {user.bzid !== "" && storage.get("syncSettings") === "true" ? "Synced" : "Not synced"}.
         </div>
       </div>
     );
