@@ -13,8 +13,7 @@ import {
   AccountPage,
   FeedbackPage,
   IconDefs,
-  Icon,
-  ChangelogPage
+  Icon
 } from "./components";
 import {settings, history, storage, api, parseToken, checkAuth, updateUserCache, user, userChanged} from "./lib";
 
@@ -170,7 +169,6 @@ class App extends React.PureComponent<any, State>{
               <Route path="/privacy-policy" component={PrivacyPolicyPage}/>
               <Route path="/terms-of-service" component={TermsOfServicePage}/>
               <Route path="/help" component={HelpPage}/>
-              <Route path="/changelog" component={ChangelogPage}/>
               <Route path="/s/:address/:port" component={ServerDetailsPage}/>
               <Route path="/settings" component={SettingsPage}/>
               <Route path="/account" component={AccountPage}/>
