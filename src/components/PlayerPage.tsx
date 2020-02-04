@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 
 import {cache, socket, autoPlural, settings, history, notification} from "../lib";
 import {Player} from "../models";
-import {TimeAgo} from ".";
+import {TimeAgo, Search} from ".";
 import {Icon} from "./Icon";
 
 const addFriend = (callsign: string): void => {
@@ -61,6 +61,7 @@ interface State{
   sort: string;
   sortOrder: number;
   showObservers: boolean;
+  searchQuery: string;
 }
 
 export class PlayerPage extends React.PureComponent<any, State>{
@@ -76,7 +77,8 @@ export class PlayerPage extends React.PureComponent<any, State>{
       players: cache.getJson("players", []),
       sort,
       sortOrder,
-      showObservers: false
+      showObservers: false,
+      searchQuery: ""
     };
 
     socket.on<Player[]>("players", (data: Player[]) => {
@@ -120,9 +122,11 @@ export class PlayerPage extends React.PureComponent<any, State>{
   }
 
   getPlayers(): Player[]{
-    let players = JSON.parse(JSON.stringify(this.state.players));
+    let players: Player[] = JSON.parse(JSON.stringify(this.state.players));
 
-    if(!this.state.showObservers){
+    if(this.state.searchQuery !== ""){
+      players = players.filter((player) => player.callsign.toLowerCase().includes(this.state.searchQuery));
+    }else if(!this.state.showObservers){
       players = players.filter((player: Player) => player.team !== "Observer");
     }
 
@@ -211,7 +215,8 @@ export class PlayerPage extends React.PureComponent<any, State>{
       <div>
         <div className="header">
           <h1>Real-time BZFlag player stats</h1>
-          <div>With offline and mobile support</div>
+          <div>With offline and mobile support</div><br/>
+          <Search placeholder="Search by callsign" onValueChange={(value: string) => this.setState({searchQuery: value.toLowerCase()})}/>
         </div>
         <div className="container">
           <h2>{autoPlural(`${playerCount} Player`)} and {autoPlural(`${observerCount} Observer`)} Online</h2>

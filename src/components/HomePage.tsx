@@ -2,7 +2,7 @@ import React from "react";
 
 import {cache, socket, verboseGameStyle, history, autoPlural, settings, notification, favoriteServer, isFavoriteServer} from "../lib";
 import {Server, Team} from "../models";
-import {TimeAgo, Icon} from ".";
+import {TimeAgo, Icon, Search} from ".";
 
 export class ServerRow extends React.Component<{server: Server}, {favorite: boolean}>{
   constructor(props: any){
@@ -47,6 +47,7 @@ interface State{
   sortOrder: number;
   serversToShow: number;
   showHidden: boolean;
+  searchQuery: string;
 }
 
 export class HomePage extends React.PureComponent<any, State>{
@@ -63,7 +64,8 @@ export class HomePage extends React.PureComponent<any, State>{
       sort,
       sortOrder,
       serversToShow: 10,
-      showHidden: false
+      showHidden: false,
+      searchQuery: ""
     };
 
     socket.on<Server[]>("servers", (data: Server[]) => {
@@ -118,6 +120,10 @@ export class HomePage extends React.PureComponent<any, State>{
 
     if(!this.state.showHidden){
       servers = servers.filter((server) => !settings.getJson("hiddenServers", []).includes(`${server.address}:${server.port}`));
+    }
+
+    if(this.state.searchQuery !== ""){
+      servers = servers.filter((server) => server.title.toLowerCase().includes(this.state.searchQuery) || `${server.title.toLowerCase()}:${server.port}`.includes(this.state.searchQuery));
     }
 
     if(settings.getBool(settings.EXCLUDE_OBSERVERS)){
@@ -227,7 +233,8 @@ export class HomePage extends React.PureComponent<any, State>{
       <div>
         <div className="header">
           <h1>Real-time BZFlag server stats</h1>
-          <div>With offline and mobile support</div>
+          <div>With offline and mobile support</div><br/>
+          <Search placeholder="Search by title or address" onValueChange={(value: string) => this.setState({searchQuery: value.toLowerCase()})}/>
         </div>
         <div className="container">
           <h2>{this.state.servers.length} Public Servers Online</h2>

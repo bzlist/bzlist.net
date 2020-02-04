@@ -290,13 +290,13 @@ td, th{
 
   margin-bottom: 32px;
 
-  div{
+  & > div{
     margin-top: 8px;
     font-size: 22px;
   }
 
   @include mobile{
-    div{
+    & > div{
       font-size: 18px;
     }
   }

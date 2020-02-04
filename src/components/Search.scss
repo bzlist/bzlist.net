@@ -1,0 +1,47 @@
+@import "../variables.scss";
+
+.search-box{
+  height: 38px;
+  padding: 2px 14px;
+  background-color: var(--bg-lighter);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  box-shadow: $shadow;
+  border-radius: $border-radius;
+
+  input{
+    margin-right: 38px;
+    background: transparent;
+    color: var(--color-text);
+    font-size: 14px;
+    box-sizing: border-box;
+    flex: 1;
+    border: none;
+    outline: none;
+
+    &::placeholder{
+      color: var(--color-text);
+    }
+  }
+
+  .icon{
+    margin-top: -4px;
+    margin-right: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    path{
+      fill: $color-primary;
+    }
+  }
+
+  .btn{
+    position: absolute;
+    top: 2px;
+    bottom: 2px;
+    right: 2px;
+  }
+}

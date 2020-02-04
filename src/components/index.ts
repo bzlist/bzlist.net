@@ -12,3 +12,4 @@ export * from "./FeedbackPage";
 export * from "./Switch";
 export * from "./Icon";
 export * from "./ChangelogPage";
+export * from "./Search";
