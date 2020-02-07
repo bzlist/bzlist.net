@@ -123,7 +123,7 @@ export class HomePage extends React.PureComponent<any, State>{
     }
 
     if(this.state.searchQuery !== ""){
-      servers = servers.filter((server) => server.title.toLowerCase().includes(this.state.searchQuery) || `${server.title.toLowerCase()}:${server.port}`.includes(this.state.searchQuery));
+      servers = servers.filter((server) => server.title.toLowerCase().includes(this.state.searchQuery) || `${server.address.toLowerCase()}:${server.port}`.includes(this.state.searchQuery));
     }
 
     if(settings.getBool(settings.EXCLUDE_OBSERVERS)){
