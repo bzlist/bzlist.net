@@ -123,7 +123,9 @@ class App extends React.PureComponent<any, State>{
           "Authorization": `Bearer ${token}`
         });
 
-        if(data.token){
+        if(!data){
+          this.setState({offline: true});
+        }else if(data.token){
           storage.set("token", data.token);
           updateUserCache();
         }
