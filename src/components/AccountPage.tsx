@@ -80,7 +80,7 @@ export class AccountPage extends React.PureComponent<any, State>{
             <p>
               View <a href={`https://forums.bzflag.org/memberlist.php?mode=viewprofile&u=${user.bzid}`} target="_blank" rel="noopener noreferrer">forum profile</a>.<br/>
               More features coming soon!<br/>
-              {Math.round((user.exp - (Date.now() / 1000)) / 86400)} days until automatically logged out.
+              {Math.round((user.exp - (Date.now() / 1000)) / 3600)} hours until login expires.
             </p>
             <Switch label="Sync Settings"
                     description="Sync all of your settings across devices"

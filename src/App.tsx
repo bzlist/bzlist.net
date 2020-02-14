@@ -118,7 +118,7 @@ class App extends React.PureComponent<any, State>{
 
     if(token !== ""){
       const tokenData = parseToken();
-      if(tokenData.exp - (Date.now() / 1000) <= 172800){
+      if(tokenData.exp - (Date.now() / 1000) <= 43200){
         const data = await api("users/token/renew", undefined, "GET", {
           "Authorization": `Bearer ${token}`
         });
