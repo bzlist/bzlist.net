@@ -2,7 +2,7 @@ import React from "react";
 
 import {createBrowserHistory} from "history";
 import {settings} from ".";
-import {Server} from "../models";
+import {Server, Player} from "../models";
 
 export const history = createBrowserHistory();
 
@@ -117,3 +117,17 @@ export const isFavoriteServer = (server: Server | null): boolean => {
 
   return settings.getJson("favoriteServers", []).includes(`${server.address}:${server.port}`);
 };
+
+export const friendPlayer = (callsign: string): void => {
+  const friends = settings.getJson("friends", []);
+
+  if(friends.includes(callsign)){
+    friends.splice(friends.indexOf(callsign), 1);
+  }else{
+    friends.splice(friends.indexOf(callsign), 0, callsign);
+  }
+
+  settings.set("friends", JSON.stringify(friends));
+};
+
+export const isPlayerFriend = (callsign: string): boolean => settings.getJson("friends", []).includes(callsign);

@@ -1,22 +1,9 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-import {cache, socket, autoPlural, settings, history, notification} from "../lib";
+import {cache, socket, autoPlural, settings, history, notification, friendPlayer, isPlayerFriend} from "../lib";
 import {Player} from "../models";
-import {TimeAgo, Search} from ".";
-import {Icon} from "./Icon";
-
-const addFriend = (callsign: string): void => {
-  const friends = settings.getJson("friends", []);
-
-  if(friends.includes(callsign)){
-    friends.splice(friends.indexOf(callsign), 1);
-  }else{
-    friends.splice(friends.indexOf(callsign), 0, callsign);
-  }
-
-  settings.set("friends", JSON.stringify(friends));
-};
+import {TimeAgo, Search, Icon} from ".";
 
 export class PlayerRow extends React.Component<{player: Player, showServer: boolean}, {friend: boolean}>{
   constructor(props: any){
@@ -31,15 +18,9 @@ export class PlayerRow extends React.Component<{player: Player, showServer: bool
     return nextState.friend !== this.state.friend || nextProps.player.timestamp !== this.props.player.timestamp;
   }
 
-  render(): JSX.Element | null{
-    if(!this.props.player){
-      return null;
-    }
-
-    const player = this.props.player;
-    const isFriend = settings.getJson("friends", []).includes(player.callsign);
+  render(): JSX.Element{
+    const {player} = this.props;
     const serverTr = player.server && this.props.showServer && <td><Link to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`}>{player.server}</Link></td>;
-    const friendIcon = Icon("friend", isFriend, "url(#e)");
 
     return (
       <tr>
@@ -48,10 +29,63 @@ export class PlayerRow extends React.Component<{player: Player, showServer: bool
         <td>{player.team}</td>
         {serverTr}
         <td><button className="btn icon" onClick={() => {
-          addFriend(player.callsign);
+          friendPlayer(player.callsign);
           this.setState({friend: settings.getJson("friends", []).includes(player.callsign)});
-        }} title={isFriend ? "Remove friend" : "Add as friend"}>{friendIcon}</button></td>
+        }} title={isPlayerFriend(player.callsign) ? "Remove friend" : "Add as friend"}>{Icon("friend", isPlayerFriend(player.callsign), "url(#e)")}</button></td>
       </tr>
+    );
+  }
+}
+
+export class PlayerCard extends React.Component<{player: Player}, {friend: boolean}>{
+  constructor(props: any){
+    super(props);
+
+    this.state = {
+      friend: false
+    };
+  }
+
+  shouldComponentUpdate(nextProps: {player: Player}, nextState: {friend: boolean}): boolean{
+    return nextState.friend !== this.state.friend || nextProps.player.timestamp !== this.props.player.timestamp;
+  }
+
+  render(): JSX.Element{
+    return (
+      <div>
+        <h2>
+          <button className="btn icon" onClick={(e) => {
+            e.stopPropagation();
+            friendPlayer(this.props.player.callsign);
+            this.setState({friend: isPlayerFriend(this.props.player.callsign)});
+          }}>{Icon("friend", settings.getJson("friends", []).includes(this.props.player.callsign), "url(#e)")}</button>
+          {this.props.player.callsign}
+        </h2><br/>
+        <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
+          <tbody>
+            {this.props.player.team !== "Observer" &&
+              <tr>
+                <td>Score</td>
+                <td>{this.props.player.score}</td>
+              </tr>
+            }
+            <tr>
+              <td>Team</td>
+              <td>{this.props.player.team}</td>
+            </tr>
+            <tr>
+              <td>Server</td>
+              <td><Link to={`/s/${this.props.player.server.split(":")[0]}/${this.props.player.server.split(":")[1]}`}>{this.props.player.server}</Link></td>
+            </tr>
+            {this.props.player.motto &&
+              <tr>
+                <td>Motto</td>
+                <td>{this.props.player.motto}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
     );
   }
 }
@@ -144,35 +178,7 @@ export class PlayerPage extends React.PureComponent<any, State>{
       if(this.mobile){
         table = (
           <div className="card-list">
-            {this.getPlayers().map((player: Player) =>
-              <div key={`${player.callsign}:${player.server}`}>
-                <h2>{player.callsign}</h2><br/>
-                <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
-                  <tbody>
-                    {player.team !== "Observer" &&
-                      <tr>
-                        <td>Score</td>
-                        <td>{player.score}</td>
-                      </tr>
-                    }
-                    <tr>
-                      <td>Team</td>
-                      <td>{player.team}</td>
-                    </tr>
-                    <tr>
-                      <td>Server</td>
-                      <td><Link to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`}>{player.server}</Link></td>
-                    </tr>
-                    {player.motto &&
-                      <tr>
-                        <td>Motto</td>
-                        <td>{player.motto}</td>
-                      </tr>
-                    }
-                  </tbody>
-                </table>
-              </div>
-            )}
+            {this.getPlayers().map((player: Player) => <PlayerCard key={`${player.callsign}:${player.server}`} player={player}/>)}
           </div>
         );
       }else{
