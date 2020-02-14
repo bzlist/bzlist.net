@@ -275,6 +275,15 @@ td, th{
     img{
       margin-bottom: -3px;
     }
+
+    h2 > .icon{
+      margin-right: 8px;
+      padding: 0;
+
+      svg{
+        height: 22px;
+      }
+    }
   }
 }
 

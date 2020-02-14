@@ -138,23 +138,6 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
     settings.set("hiddenServers", JSON.stringify(hiddenServers));
   }
 
-  favoriteServer(): void{
-    if(!this.state.server){
-      return;
-    }
-
-    const server = `${this.state.server.address}:${this.state.server.port}`;
-    const favoriteServers = settings.getJson("favoriteServers", []);
-
-    if(favoriteServers.includes(server)){
-      favoriteServers.splice(favoriteServers.indexOf(server), 1);
-    }else{
-      favoriteServers.splice(favoriteServers.indexOf(server), 0, server);
-    }
-
-    settings.set("favoriteServers", JSON.stringify(favoriteServers));
-  }
-
   render(): JSX.Element{
     if(!this.state.server){
       const {address, port} = this.props.match.params;

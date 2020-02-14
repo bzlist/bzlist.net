@@ -41,6 +41,55 @@ export class ServerRow extends React.Component<{server: Server}, {favorite: bool
   }
 }
 
+class ServerCard extends React.Component<{server: Server}, {favorite: boolean}>{
+  constructor(props: any){
+    super(props);
+
+    this.state = {
+      favorite: false
+    };
+  }
+
+  shouldComponentUpdate(nextProps: {server: Server}, nextState: {favorite: boolean}): boolean{
+    return nextState.favorite !== this.state.favorite || nextProps.server.timestamp !== this.props.server.timestamp;
+  }
+
+  render(): JSX.Element{
+    return (
+      <div onClick={() => history.push(`/s/${this.props.server.address}/${this.props.server.port}`)}>
+        <h2>
+          <button className="btn icon" onClick={(e) => {
+            e.stopPropagation();
+            favoriteServer(this.props.server);
+            this.setState({favorite: isFavoriteServer(this.props.server)});
+          }}>{Icon("heart", isFavoriteServer(this.props.server), "url(#e)")}</button>
+          {this.props.server.title}
+        </h2><br/>
+        <table>
+          <tbody>
+            <tr>
+              <td>Players</td>
+              <td><b>{this.props.server.playersCount}</b></td>
+            </tr>
+            <tr>
+              <td>Server</td>
+              <td>{this.props.server.address}:{this.props.server.port}</td>
+            </tr>
+            <tr>
+              <td>Game Style</td>
+              <td>{verboseGameStyle(this.props.server.configuration.gameStyle)}</td>
+            </tr>
+            <tr>
+              <td>Country</td>
+              <td><img src={`https://countryflags.io/${this.props.server.countryCode}/flat/16.png`} title={this.props.server.country} alt=""/> {this.props.server.country}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+}
+
 interface State{
   servers: Server[];
   sort: string;
@@ -158,31 +207,7 @@ export class HomePage extends React.PureComponent<any, State>{
       if(this.mobile){
         servers = (
           <div className="card-list">
-            {this.getServers().map((server: Server) =>
-              <div key={`${server.address}:${server.port}`} onClick={() => history.push(`/s/${server.address}/${server.port}`)}>
-                <h2>{server.title}</h2><br/>
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>Players</td>
-                      <td><b>{server.playersCount}</b></td>
-                    </tr>
-                    <tr>
-                      <td>Server</td>
-                      <td>{server.address}:{server.port}</td>
-                    </tr>
-                    <tr>
-                      <td>Game Style</td>
-                      <td>{verboseGameStyle(server.configuration.gameStyle)}</td>
-                    </tr>
-                    <tr>
-                      <td>Country</td>
-                      <td><img src={`https://countryflags.io/${server.countryCode}/flat/16.png`} title={server.country} alt=""/> {server.country}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            )}
+            {this.getServers().map((server: Server) => <ServerCard key={`${server.address}:${server.port}`} server={server}/>)}
           </div>
         );
       }else{
