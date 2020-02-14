@@ -2,7 +2,7 @@ import React from "react";
 
 import {createBrowserHistory} from "history";
 import {settings} from ".";
-import {Server, Player} from "../models";
+import {Server} from "../models";
 
 export const history = createBrowserHistory();
 
