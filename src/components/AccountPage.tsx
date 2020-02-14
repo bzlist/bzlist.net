@@ -1,7 +1,23 @@
 import React from "react";
 
-import {storage, bzLoginURL, api, user, checkAuth, deleteAccount, signout, updateUserCache} from "../lib";
+import {storage, bzLoginURL, api, user, checkAuth, deleteAccount, signout, updateUserCache, settings} from "../lib";
 import {Switch} from ".";
+
+const fetchSettings = async (): Promise<void> => {
+  if(storage.get("syncSettings") !== "false" && storage.get("token") !== ""){
+    const data = await api("users/settings", undefined, "GET", {
+      "Authorization": `Bearer ${storage.get("token")}`
+    });
+
+    if(data && !data.error){
+      settings.setData(data);
+
+      if(data.theme){
+        document.documentElement.setAttribute("data-theme", data.theme);
+      }
+    }
+  }
+};
 
 interface State{
   error: string;
@@ -42,6 +58,7 @@ export class AccountPage extends React.PureComponent<any, State>{
       await checkAuth();
 
       console.log(`signed in as ${user.callsign}`);
+      fetchSettings();
       // clean query params from URL
       const url = window.location.toString();
       window.history.replaceState({}, document.title, url.substring(0, url.indexOf("?")));
@@ -67,8 +84,11 @@ export class AccountPage extends React.PureComponent<any, State>{
             </p>
             <Switch label="Sync Settings"
                     description="Sync all of your settings across devices"
-                    checked={storage.get("syncSettings") === "true"}
-                    onChange={(value: boolean) => storage.set("syncSettings", value.toString())}/><br/>
+                    checked={storage.get("syncSettings") !== "false"}
+                    onChange={async (value: boolean) => {
+                      storage.set("syncSettings", value.toString());
+                      fetchSettings();
+                    }}/><br/>
             <button className="link" onClick={() => signout()}>Sign Out</button> • <button className="link" onClick={() => deleteAccount()}>Delete Account</button>
           </div>
         :

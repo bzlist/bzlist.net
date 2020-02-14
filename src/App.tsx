@@ -90,7 +90,7 @@ class App extends React.PureComponent<any, State>{
     document.documentElement.setAttribute("data-theme", currentTheme);
 
     const token = storage.get("token");
-    if(storage.get("syncSettings") === "true" && token !== ""){
+    if(storage.get("syncSettings") !== "false" && token !== ""){
       console.log("fetching settings");
       const data = await api("users/settings", undefined, "GET", {
         "Authorization": `Bearer ${token}`

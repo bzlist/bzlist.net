@@ -36,7 +36,7 @@ class Settings extends Storage{
   constructor(){
     super("setting_");
     this.onChange = (key: string, value: string, sync: boolean = true): void => {
-      if(storage.get("syncSettings") !== "true" || !sync){
+      if(storage.get("syncSettings") === "false" || !sync){
         return;
       }
 

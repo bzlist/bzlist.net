@@ -109,7 +109,7 @@ export class SettingsPage extends React.PureComponent<any, State>{
             <button className="btn btn-outline" onClick={() => {cache.clear();this.message("Cache cleared");}}>Clear Cache</button>
             <b>{this.state.message}</b>
           </div>
-          {user.bzid !== "" && storage.get("syncSettings") === "true" ? "Synced" : "Not synced"}.
+          {user.bzid !== "" && storage.get("syncSettings") !== "false" ? "Synced" : "Not synced"}.
         </div>
       </div>
     );
