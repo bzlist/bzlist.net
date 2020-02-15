@@ -199,8 +199,8 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
           <div><b>{autoPlural(`${this.state.server.playersCount} Player`)}</b></div>
         </div>
         <div className="container">
-          <Switch label="Hide Server" description="Don't show in server list" checked={isServerHidden} onChange={() => this.hideServer()}/><br/><br/>
-          <div className="content">
+          <Switch label="Hide Server" description="Don't show in server list" checked={isServerHidden} onChange={() => this.hideServer()}/><br/>
+          <div className="card-list content">
             <div>
               <h2>Info</h2><br/>
               <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
