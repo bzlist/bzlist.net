@@ -18,9 +18,17 @@ export class SettingsPage extends React.PureComponent<any, State>{
   constructor(props: any){
     super(props);
 
+    let tab = 0;
+    for(let i = 0; i < TABS.length; i++){
+      if(history.location.pathname.endsWith(TABS[i].replace(/ /g, "").replace(/&/g, "-").toLowerCase())){
+        tab = i;
+        break;
+      }
+    }
+
     this.state = {
       message: "",
-      tab: 0
+      tab
     };
   }
 
@@ -47,6 +55,7 @@ export class SettingsPage extends React.PureComponent<any, State>{
 
   setTab(index: number): void{
     this.setState({tab: index});
+    history.push(`/settings/${TABS[index].replace(/ /g, "").replace(/&/g, "-").toLowerCase()}`);
   }
 
   render(): JSX.Element{
