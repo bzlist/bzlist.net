@@ -1,12 +1,11 @@
 import React from "react";
 import "./SettingsPage.scss";
 
-import {settings, cache, IBoolSetting, notificationStatusText, user, storage} from "../lib";
-import {Dropdown, Switch} from ".";
+import {settings, cache, IBoolSetting, notificationStatusText, user, storage, favoriteServer, friendPlayer, history} from "../lib";
+import {Dropdown, Switch, Icon} from ".";
 
 const themes = ["Light", "Dark", "Midnight"];
-
-const TABS = ["Appearance", "Notifications"];
+const TABS = ["Appearance", "Notifications", "Favorites & Friends"];
 
 interface State{
   message: string;
@@ -106,6 +105,47 @@ export class SettingsPage extends React.PureComponent<any, State>{
                     description="You will receive a notification if one of your friends is online"
                     checked={settings.getBool(settings.PLAYER_NOTIFICATIONS)}
                     onChange={(value: boolean) => this.set(settings.PLAYER_NOTIFICATIONS, value)}/>
+          </>}
+          {this.state.tab === 2 && <>
+            <h3>Favorite Servers</h3><br/>
+            <input type="text" placeholder="Add server by address" onKeyUp={(e) => {
+              if(e.keyCode === 13){
+                favoriteServer(e.currentTarget.value);
+                e.currentTarget.value = "";
+                this.forceUpdate();
+              }
+            }}/><br/><br/>
+            <div className="list">
+              {settings.getJson("favoriteServers", []).sort().map((server: string) =>
+                <div key={server} onClick={() => history.push(`/s/${server.split(":")[0]}/${server.split(":")[1]}`)}>
+                  <b>{server}</b>
+                  <button className="btn icon" onClick={(e) => {
+                    e.stopPropagation();
+                    favoriteServer(server);
+                    this.forceUpdate();
+                  }}>{Icon("close")}</button>
+                </div>
+              )}
+            </div><br/>
+            <h3>Friends</h3><br/>
+            <input type="text" placeholder="Add player by callsign" onKeyUp={(e) => {
+              if(e.keyCode === 13){
+                friendPlayer(e.currentTarget.value);
+                e.currentTarget.value = "";
+                this.forceUpdate();
+              }
+            }}/><br/><br/>
+            <div className="list">
+              {settings.getJson("friends", []).sort().map((callsign: string) =>
+                <div key={callsign}>
+                  <b>{callsign}</b>
+                  <button className="btn icon" onClick={() => {
+                    friendPlayer(callsign);
+                    this.forceUpdate();
+                  }}>{Icon("close")}</button>
+                </div>
+              )}
+            </div>
           </>}
           <br/><br/><br/>
           <div className="btn-list">

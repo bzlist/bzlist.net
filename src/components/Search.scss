@@ -13,17 +13,10 @@
 
   input{
     margin-right: 38px;
+    max-width: 100%;
     background: transparent;
-    color: var(--color-text);
-    font-size: 14px;
-    box-sizing: border-box;
     flex: 1;
-    border: none;
-    outline: none;
-
-    &::placeholder{
-      color: var(--color-text);
-    }
+    box-shadow: none;
   }
 
   .icon:first-child{

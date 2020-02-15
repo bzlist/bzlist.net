@@ -93,18 +93,18 @@ export const notificationStatusText = (): string => {
   return "not supported";
 };
 
-export const favoriteServer = (server: Server): void => {
-  if(!server){
+export const favoriteServer = (server: Server | string): void => {
+  if(server === undefined || server === null){
     return;
   }
 
-  const address = `${server.address}:${server.port}`;
+  const address = typeof(server) === "object" ? `${server.address}:${server.port}` : server;
   const favoriteServers = settings.getJson("favoriteServers", []);
 
   if(favoriteServers.includes(address)){
     favoriteServers.splice(favoriteServers.indexOf(address), 1);
   }else{
-    favoriteServers.splice(favoriteServers.indexOf(address), 0, address);
+    favoriteServers.push(address);
   }
 
   settings.set("favoriteServers", JSON.stringify(favoriteServers));
@@ -124,7 +124,7 @@ export const friendPlayer = (callsign: string): void => {
   if(friends.includes(callsign)){
     friends.splice(friends.indexOf(callsign), 1);
   }else{
-    friends.splice(friends.indexOf(callsign), 0, callsign);
+    friends.push(callsign);
   }
 
   settings.set("friends", JSON.stringify(friends));
