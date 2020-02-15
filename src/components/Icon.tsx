@@ -33,7 +33,7 @@ export const IconDefs = (): JSX.Element => (
         x2="0"
         y2="1">
         <stop offset="0" stopColor="hsl(191, 70%, 60%)"></stop>
-        <stop offset="1" stopColor="hsl(203, 67%, 55%)"></stop>
+        <stop offset="1" stopColor="hsl(210, 70%, 55%)"></stop>
       </linearGradient>
     </defs>
   </svg>

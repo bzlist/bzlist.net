@@ -1,13 +1,19 @@
 $breakpoint-mobile: 768px;
-$color-primary: hsl(203, 67%, 55%);
+$color-primary: hsl(210, 70%, 55%);
 $color-primary-light: hsl(191, 70%, 60%);
-$gradient-primary: linear-gradient(to right, $color-primary-light, $color-primary);
+$gradient-primary: linear-gradient(to left, $color-primary-light, $color-primary);
 $border-radius: 2px;
 $border-radius-large: 5px;
-$shadow: 0 2px 24px rgba(0, 0, 0, .1), 0 1px 4px rgba(0, 0, 0, .07);
+$shadow: 0 2px 24px rgba(0, 0, 0, .07), 0 1px 4px rgba(0, 0, 0, .07);
 
 @mixin mobile{
   @media only screen and (max-width: $breakpoint-mobile){
+    @content;
+  }
+}
+
+@mixin desktop{
+  @media only screen and (min-width: $breakpoint-mobile){
     @content;
   }
 }

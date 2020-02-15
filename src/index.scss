@@ -19,9 +19,9 @@ html{
     }
   }
 
-  --bg: hsl(210, 5%, 98%);
+  --bg: hsl(210, 5%, 97%);
   --bg-lighter: hsl(210, 5%, 100%);
-  --bg-darker: hsl(210, 5%, 96%);
+  --bg-darker: hsl(210, 5%, 95%);
   --color-hover: rgba(0, 0, 0, .05);
   --color-text-headings: hsl(210, 5%, 30%);
   --color-text: hsl(210, 5%, 40%);
@@ -49,7 +49,7 @@ body{
   margin: 0;
   padding: 0;
   color: var(--color-text);
-  background: linear-gradient(45deg, var(--bg), var(--bg-lighter));
+  background-color: var(--bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -109,10 +109,10 @@ a:hover, .link:hover{
 
 .btn{
   min-width: 70px;
-  padding: 0 18px;
+  padding: 2px 18px;
   background: transparent;
   color: var(--color-text);
-  font-size: 14px;
+  font-size: .9rem;
   font-weight: 500;
   line-height: 30px;
   display: inline-block;
@@ -138,8 +138,7 @@ a:hover, .link:hover{
   background: $gradient-primary;
   color: #FFF;
   font-weight: bold;
-  border: 1px solid $color-primary;
-  box-shadow: 0 0 8px $color-primary;
+  box-shadow: 0 1px 16px rgba($color-primary, .7);
 
   &:hover{
     background: $gradient-primary;
@@ -205,9 +204,11 @@ tr{
   }
 }
 
-tr:hover{
-  background: linear-gradient(to right, var(--bg-lighter), var(--bg-darker));
-  box-shadow: $shadow;
+@include desktop{
+  tr:hover{
+    background: linear-gradient(to right, var(--bg-lighter), var(--bg-darker));
+    box-shadow: $shadow;
+  }
 }
 
 th{
@@ -265,6 +266,12 @@ td, th{
     grid-gap: 1rem;
   }
 
+  @include desktop{
+    tr:hover{
+      background: linear-gradient(to right, var(--bg), var(--bg-darker));
+    }
+  }
+
   & > *{
     padding: 16px 26px;
     background-color: var(--bg-lighter);
@@ -278,7 +285,11 @@ td, th{
       padding: 12px 16px;
     }
 
-    h2, td{
+    h2{
+      word-break: break-word;
+    }
+
+    td{
       word-break: break-word;
     }
 
@@ -293,10 +304,6 @@ td, th{
       svg{
         height: 22px;
       }
-    }
-
-    tr:hover{
-      background: linear-gradient(to right, var(--bg), var(--bg-darker));
     }
 
     &:nth-child(2){

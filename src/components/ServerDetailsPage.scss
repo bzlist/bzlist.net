@@ -60,6 +60,10 @@
 div.content{
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
 
+  .players td{
+    word-break: normal;
+  }
+
   @include mobile{
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   }

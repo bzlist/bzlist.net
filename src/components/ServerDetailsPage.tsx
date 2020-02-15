@@ -257,7 +257,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
               </table>
             </div>
             {this.state.server.playersCount > 0 && this.state.server.players &&
-              <div>
+              <div className="players">
                 <h2>{autoPlural(`${playerCount} Player`)} and {autoPlural(`${observerCount} Observer`)}</h2><br/>
                 <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
                 <thead>
