@@ -271,7 +271,7 @@ td, th{
     display: block;
     box-shadow: $shadow;
     border-radius: $border-radius-large;
-    animation: slide-up calc(var(--animations) * .2s) forwards ease;
+    animation: slide-up calc(var(--animations) * .15s) forwards ease;
     opacity: calc(var(--animations) * -1 + 1);
 
     @include mobile{

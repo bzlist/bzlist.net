@@ -33,6 +33,8 @@ class App extends React.PureComponent<any, State>{
 
     this.drawerToggleRef = React.createRef<HTMLInputElement>();
 
+    document.documentElement.style.setProperty("--animations", settings.getBool(settings.DISABLE_ANIMATIONS) ? "0" : "1");
+
     updateUserCache();
     checkAuth();
     this.loadSettings();
@@ -108,6 +110,9 @@ class App extends React.PureComponent<any, State>{
         if(data.theme && data.theme !== currentTheme){
           document.documentElement.setAttribute("data-theme", data.theme);
         }
+        if(data.disableAnimations){
+          document.documentElement.style.setProperty("--animations", settings.getBool(settings.DISABLE_ANIMATIONS) ? "0" : "1");
+        }
       }
     }
 
@@ -137,7 +142,6 @@ class App extends React.PureComponent<any, State>{
     if(settings.getBool(settings.CUSTOM_SCROLLBARS)){
       document.documentElement.classList.add("custom-scrollbars");
     }
-    document.documentElement.style.setProperty("--animations", settings.getBool(settings.DISABLE_ANIMATIONS) ? "0" : "1");
   }
 
   render(): JSX.Element{
