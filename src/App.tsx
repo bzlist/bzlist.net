@@ -137,6 +137,7 @@ class App extends React.PureComponent<any, State>{
     if(settings.getBool(settings.CUSTOM_SCROLLBARS)){
       document.documentElement.classList.add("custom-scrollbars");
     }
+    document.documentElement.style.setProperty("--animations", settings.getBool(settings.DISABLE_ANIMATIONS) ? "0" : "1");
   }
 
   render(): JSX.Element{

@@ -32,10 +32,18 @@ class Settings extends Storage{
     key: "playerNotifications",
     defaultValue: true
   };
+  DISABLE_ANIMATIONS: IBoolSetting = {
+    key: "disableAnimations",
+    defaultValue: false
+  };
 
   constructor(){
     super("setting_");
     this.onChange = (key: string, value: string, sync: boolean = true): void => {
+      if(key === this.DISABLE_ANIMATIONS.key){
+        document.documentElement.style.setProperty("--animations", value !== "true" ? "1" : "0");
+      }
+
       if(storage.get("syncSettings") === "false" || !sync){
         return;
       }

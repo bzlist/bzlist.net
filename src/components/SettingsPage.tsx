@@ -85,6 +85,10 @@ export class SettingsPage extends React.PureComponent<any, State>{
                     description="Use custom scrollbars instead of the default ones"
                     checked={settings.getBool(settings.CUSTOM_SCROLLBARS)}
                     onChange={(value: boolean) => this.set(settings.CUSTOM_SCROLLBARS, value)}/><br/>
+            <Switch label="Disable Animations"
+                    description="Disable all animations"
+                    checked={settings.getBool(settings.DISABLE_ANIMATIONS)}
+                    onChange={(value: boolean) => this.set(settings.DISABLE_ANIMATIONS, value)}/><br/>
             <span className="label">Theme</span>
             <Dropdown items={themes} selected={currentTheme} onChange={(value: string) => this.setTheme(value.toLowerCase())}/>
           </>}

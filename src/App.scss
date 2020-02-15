@@ -89,7 +89,7 @@
         font-size: 20px;
         font-weight: normal;
         flex: 0;
-        opacity: 0;
+        opacity: calc(var(--animations) * -1 + 1);
       }
     }
 
@@ -98,7 +98,7 @@
         clip-path: circle(150vh at 0 0);
 
         .btn{
-          animation: slide-in .15s forwards ease;
+          animation: slide-in calc(var(--animations) * .15s) forwards ease;
 
           &:nth-child(2){
             animation-delay: .1s;
