@@ -131,3 +131,20 @@ export const friendPlayer = (callsign: string): void => {
 };
 
 export const isPlayerFriend = (callsign: string): boolean => settings.getJson("friends", []).includes(callsign);
+
+export const hideServer = (server: Server | null | string): void =>{
+  if(server === undefined || server === null){
+    return;
+  }
+
+  const address = typeof(server) === "object" ? `${server.address}:${server.port}` : server;
+  const hiddenServers = settings.getJson("hiddenServers", []);
+
+  if(hiddenServers.includes(address)){
+    hiddenServers.splice(hiddenServers.indexOf(address), 1);
+  }else{
+    hiddenServers.push(address);
+  }
+
+  settings.set("hiddenServers", JSON.stringify(hiddenServers));
+};

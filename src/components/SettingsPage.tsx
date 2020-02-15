@@ -1,7 +1,7 @@
 import React from "react";
 import "./SettingsPage.scss";
 
-import {settings, cache, IBoolSetting, notificationStatusText, user, storage, favoriteServer, friendPlayer, history} from "../lib";
+import {settings, cache, IBoolSetting, notificationStatusText, user, storage, favoriteServer, friendPlayer, history, hideServer} from "../lib";
 import {Dropdown, Switch, Icon} from ".";
 
 const themes = ["Light", "Dark", "Midnight"];
@@ -154,7 +154,27 @@ export class SettingsPage extends React.PureComponent<any, State>{
                   }}>{Icon("close")}</button>
                 </div>
               )}
-            </div>
+            </div><br/>
+            <h3>Hidden Servers</h3><br/>
+            <input type="text" placeholder="Add server by address" onKeyUp={(e) => {
+              if(e.keyCode === 13){
+                hideServer(e.currentTarget.value);
+                e.currentTarget.value = "";
+                this.forceUpdate();
+              }
+            }}/><br/><br/>
+            <div className="list">
+              {settings.getJson("hiddenServers", []).sort().map((server: string) =>
+                <div key={server} onClick={() => history.push(`/s/${server.split(":")[0]}/${server.split(":")[1]}`)}>
+                  <b>{server}</b>
+                  <button className="btn icon" onClick={(e) => {
+                    e.stopPropagation();
+                    hideServer(server);
+                    this.forceUpdate();
+                  }}>{Icon("close")}</button>
+                </div>
+              )}
+            </div><br/>
           </>}
           <br/><br/><br/>
           <div className="btn-list">

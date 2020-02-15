@@ -2,7 +2,7 @@ import React from "react";
 import {match, Link} from "react-router-dom";
 import "./ServerDetailsPage.scss";
 
-import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings, isFavoriteServer, favoriteServer} from "../lib";
+import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings, isFavoriteServer, favoriteServer, hideServer} from "../lib";
 import {Server, Player, Team} from "../models";
 import {TimeAgo, PlayerRow, Switch, Icon} from ".";
 
@@ -121,23 +121,6 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
     this.setState({selectTeam: false});
   }
 
-  hideServer(): void{
-    if(!this.state.server){
-      return;
-    }
-
-    const server = `${this.state.server.address}:${this.state.server.port}`;
-    const hiddenServers = settings.getJson("hiddenServers", []);
-
-    if(hiddenServers.includes(server)){
-      hiddenServers.splice(hiddenServers.indexOf(server), 1);
-    }else{
-      hiddenServers.splice(hiddenServers.indexOf(server), 0, server);
-    }
-
-    settings.set("hiddenServers", JSON.stringify(hiddenServers));
-  }
-
   render(): JSX.Element{
     if(!this.state.server){
       const {address, port} = this.props.match.params;
@@ -199,7 +182,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
           <div><b>{autoPlural(`${this.state.server.playersCount} Player`)}</b></div>
         </div>
         <div className="container">
-          <Switch label="Hide Server" description="Don't show in server list" checked={isServerHidden} onChange={() => this.hideServer()}/><br/>
+          <Switch label="Hide Server" description="Don't show in server list" checked={isServerHidden} onChange={() => hideServer(this.state.server)}/><br/>
           <div className="card-list content">
             <div>
               <h2>Info</h2><br/>
