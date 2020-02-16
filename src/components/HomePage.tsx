@@ -11,11 +11,13 @@ interface State{
   serversToShow: number;
   showHidden: boolean;
   searchQuery: string;
+  infoServer: Server | null;
 }
 
 export class HomePage extends React.PureComponent<any, State>{
   mobile = false;
   firstData = true;
+  infoPopoutRef: React.RefObject<HTMLDivElement>;
 
   constructor(props: any){
     super(props);
@@ -28,8 +30,11 @@ export class HomePage extends React.PureComponent<any, State>{
       sortOrder,
       serversToShow: 10,
       showHidden: false,
-      searchQuery: ""
+      searchQuery: "",
+      infoServer: null
     };
+
+    this.infoPopoutRef = React.createRef<HTMLDivElement>();
 
     socket.on<Server[]>("servers", (data: Server[]) => {
       this.setState({servers: data});
@@ -61,6 +66,14 @@ export class HomePage extends React.PureComponent<any, State>{
 
     if(window.innerWidth <= 768){
       this.mobile = true;
+    }
+
+    if(settings.getBool(settings.INFO_CARDS)){
+      window.onmousemove = (e: MouseEvent) => {
+        if(this.state.infoServer && !(e.target as HTMLElement).parentElement?.getAttribute("data-server")){
+          this.setState({infoServer: null});
+        }
+      };
     }
   }
 
@@ -139,7 +152,29 @@ export class HomePage extends React.PureComponent<any, State>{
               </tr>
             </thead>
             <tbody>
-              {this.getServers().map((server: Server) => <ServerRow key={`${server.address}:${server.port}`} server={server}/>)}
+              {this.getServers().map((server: Server) => <ServerRow key={`${server.address}:${server.port}`} server={server} onMouseMove={!settings.getBool(settings.INFO_CARDS) ? undefined : (e) => {
+                if(this.state.infoServer?.address !== server.address || this.state.infoServer.port !== server.port){
+                  this.setState({infoServer: server});
+                }
+                if(!this.infoPopoutRef.current){
+                  return;
+                }
+
+                const pos = {
+                  x: e.pageX + 12,
+                  y: e.pageY + 12
+                };
+
+                if(pos.x + this.infoPopoutRef.current.offsetWidth >= window.innerWidth){
+                  pos.x = pos.x - this.infoPopoutRef.current.offsetWidth - 12;
+                }
+                if(pos.y + this.infoPopoutRef.current.offsetHeight >= window.innerHeight){
+                  pos.y = pos.y - this.infoPopoutRef.current.offsetHeight - 12;
+                }
+
+                this.infoPopoutRef.current.style.left = `${pos.x}px`;
+                this.infoPopoutRef.current.style.top = `${pos.y}px`;
+              }}/>)}
             </tbody>
           </table>
         );
@@ -189,6 +224,29 @@ export class HomePage extends React.PureComponent<any, State>{
             {this.state.serversToShow <= 0 && <button className="btn btn-outline" onClick={() => window.scrollTo({top: 0, behavior: "smooth"})}>Scroll to Top</button>}
           </div>
         </div>
+        {this.state.infoServer && <div className="info-popout" ref={this.infoPopoutRef}>
+          <h2>{this.state.infoServer.title}</h2>
+          <small>Owner: {this.state.infoServer.owner}</small><br/><br/>
+          <h3>{autoPlural(`${this.state.infoServer.playersCount} Player`)} - {autoPlural(`${this.state.infoServer.teams.length} Team`)}</h3><br/>
+          <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Score</th>
+              <th>Players</th>
+            </tr>
+          </thead>
+            <tbody>
+              {this.state.infoServer.teams.sort((a: Team, b: Team) => a.score > b.score ? -1 : 1).map((team: Team) =>
+                <tr key={team.name}>
+                  <td><b>{team.name}</b></td>
+                  <td>{team.name === "Observer" ? "" : team.score}</td>
+                  <td>{team.players} / {team.maxPlayers}</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>}
       </div>
     );
   }

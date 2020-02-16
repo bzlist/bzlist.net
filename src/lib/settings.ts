@@ -36,6 +36,10 @@ class Settings extends Storage{
     key: "disableAnimations",
     defaultValue: false
   };
+  INFO_CARDS: IBoolSetting = {
+    key: "infoCards",
+    defaultValue: false
+  };
 
   constructor(){
     super("setting_");

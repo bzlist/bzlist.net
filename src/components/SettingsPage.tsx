@@ -97,6 +97,10 @@ export class SettingsPage extends React.PureComponent<any, State>{
                     description="Disable all animations"
                     checked={settings.getBool(settings.DISABLE_ANIMATIONS)}
                     onChange={(value: boolean) => this.set(settings.DISABLE_ANIMATIONS, value)}/><br/>
+            <Switch label="Experimental Info Cards"
+                    description="Show experimental info cards when mousing over a server"
+                    checked={settings.getBool(settings.INFO_CARDS)}
+                    onChange={(value: boolean) => this.set(settings.INFO_CARDS, value)}/><br/>
             <span className="label">Theme</span>
             <Dropdown items={themes} selected={currentTheme} onChange={(value: string) => this.setTheme(value.toLowerCase())}/>
           </>}

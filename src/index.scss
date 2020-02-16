@@ -434,6 +434,15 @@ input[type=text]{
   }
 }
 
+.info-popout{
+  max-width: 500px;
+  padding: 16px 26px;
+  background-color: var(--bg-lighter);
+  position: absolute;
+  box-shadow: $shadow;
+  border-radius: $border-radius-large;
+}
+
 @include mobile{
   .mobile-hide{
     display: none !important;
