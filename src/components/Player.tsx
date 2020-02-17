@@ -33,7 +33,7 @@ export class PlayerRow extends PlayerBase{
         <td><button className="btn icon" onClick={() => {
           friendPlayer(player.callsign);
           this.setState({friend: settings.getJson("friends", []).includes(player.callsign)});
-        }} title={isPlayerFriend(player.callsign) ? "Remove friend" : "Add as friend"}>{Icon("friend", isPlayerFriend(player.callsign), "url(#e)")}</button></td>
+        }} title={isPlayerFriend(player.callsign) ? "Remove friend" : "Add as friend"}>{Icon("friend", isPlayerFriend(player.callsign), "url(#a)")}</button></td>
       </tr>
     );
   }
@@ -48,7 +48,7 @@ export class PlayerCard extends PlayerBase{
             e.stopPropagation();
             friendPlayer(this.props.player.callsign);
             this.setState({friend: isPlayerFriend(this.props.player.callsign)});
-          }}>{Icon("friend", settings.getJson("friends", []).includes(this.props.player.callsign), "url(#e)")}</button>
+          }}>{Icon("friend", settings.getJson("friends", []).includes(this.props.player.callsign), "url(#a)")}</button>
           {this.props.player.callsign}
         </h2><br/>
         <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>

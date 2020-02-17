@@ -170,7 +170,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
           <button className="btn icon" onClick={() => {
             favoriteServer(this.state.server as Server);
             this.setState({favorite: isFavoriteServer(this.state.server)});
-          }}>{Icon("heart", isFavoriteServer(this.state.server), "url(#e)")}</button>
+          }}>{Icon("heart", isFavoriteServer(this.state.server), "url(#a)")}</button>
           <h1>{this.state.server.title}</h1>
         </div>
         <div className="server-header">

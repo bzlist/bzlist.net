@@ -12,7 +12,6 @@ import {
   SettingsPage,
   AccountPage,
   FeedbackPage,
-  IconDefs,
   Icon
 } from "./components";
 import {settings, history, storage, api, parseToken, checkAuth, updateUserCache, user, userChanged} from "./lib";
@@ -152,7 +151,7 @@ class App extends React.PureComponent<any, State>{
           <div className="navbar">
             <input type="checkbox" id="drawer-toggle" ref={this.drawerToggleRef}/>
             <label htmlFor="drawer-toggle" className="btn icon hamburger"></label>
-            <Link to="/" className="logo"><svg viewBox="0 0 12.79 3.175" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"><defs><linearGradient id="a"><stop stopColor="#6f15af" offset="0"/><stop stopColor="#19a9d2" offset="1"/></linearGradient><linearGradient id="b" x1="69.57" x2="69.83" y1="47" y2="43.83" gradientTransform="translate(-204.6 -137.6) scale(3.163)" gradientUnits="userSpaceOnUse" xlinkHref="#a"/><linearGradient id="c" x1="226" x2="230" y1="180.5" y2="168.5" gradientTransform="matrix(1 0 0 .9999 -222 -168.5)" gradientUnits="userSpaceOnUse" xlinkHref="#a"/></defs><path transform="translate(-.355) scale(.2646)" d="M33.19.996a.67.67 0 00-.494.201.643.643 0 00-.201.47c0 .187.067.348.2.482a.67.67 0 00.495.2.675.675 0 00.496-.2.675.675 0 00.201-.497.6.6 0 00-.2-.455.675.675 0 00-.497-.2zm-17.72.563v.857h6.119l-6.213 7.834v.684h7.686v-.858h-6.359l6.199-7.834V1.56zm9.539 0v9.375h6.24v-.858h-5.25V1.558zm18.01.79v1.54h-1.258v.804h1.258v4.258c0 .652.18 1.157.537 1.514.357.357.865.535 1.525.535.286 0 .558-.04.817-.12.267-.09.49-.215.67-.376l-.335-.683a1.408 1.408 0 01-.482.27 1.69 1.69 0 01-.562.093c-.393 0-.696-.108-.91-.322-.206-.223-.31-.546-.31-.965V4.694h2.144v-.805H43.97V2.35zm-4.637 1.487c-.875 0-1.558.187-2.049.562-.491.375-.736.856-.736 1.445 0 .473.12.844.361 1.111.25.268.55.46.898.576.349.107.808.215 1.38.323.428.071.772.146 1.03.226.26.072.473.184.643.336.17.143.254.343.254.602a.972.972 0 01-.469.857c-.303.196-.777.295-1.42.295-.482 0-.946-.072-1.393-.215a3.709 3.709 0 01-1.11-.576l-.429.75c.295.25.701.46 1.22.629.526.16 1.074.242 1.645.242.911 0 1.62-.178 2.13-.535.517-.366.777-.859.777-1.475 0-.455-.12-.811-.362-1.07s-.532-.442-.87-.549c-.34-.107-.79-.215-1.353-.322-.455-.08-.813-.155-1.072-.227-.259-.08-.477-.2-.656-.361-.17-.16-.254-.377-.254-.645 0-.348.152-.627.455-.841.313-.215.772-.323 1.38-.323.803 0 1.495.2 2.075.602l.414-.762c-.294-.196-.667-.352-1.123-.469a5.148 5.148 0 00-1.367-.187zm-5.672.052v7.045h.951V3.888z" fill="url(#b)"/><path transform="translate(.265 .264) scale(.2206)" d="M5 .001c-.554 0-1 .446-1 1s.446 1 1 1h1c.554 0 1 .446 1 1s-.446 1-1 1H4c-.554 0-1 .446-1 1s.446 1 1 1h3c.554 0 1 .446 1 1 0 .553-.446 1-1 1H3c-.554 0-1 .445-1 1 0 .553.446 1 1 1h1.008c.55 0 .992.442.992.999 0 .557-.442 1-.992 1 0 0 4.6-.002 4.668-.004A3.5 3.5 0 0012 8.5l-.07-.701a3.503 3.503 0 00-.983-1.797A3.5 3.5 0 0012 3.5l-.07-.701a3.501 3.501 0 00-3.518-2.8H8.41zm-5 5C0 5.557.443 6 1 6c.557 0 1-.443 1-1 0-.557-.443-1-1-1-.557 0-1 .443-1 1z" fill="url(#c)"/></svg></Link>
+            <Link to="/" className="logo">{Icon("logo", true, "url(#a)")}BZList</Link>
             <span style={{flex: 1}}></span>
             <a className="btn btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSdHA0q3MjVvRMNozwkUFv4dMDhIA-YFCSyt-97P3Afvsdv1zQ/viewform?usp=sf_link" target="_blank" rel="noopener noreferrer">Survey</a>
             <span style={{flex: 1}}></span>
@@ -195,7 +194,6 @@ class App extends React.PureComponent<any, State>{
             <div className="copyright">Copyright © 2019-2020 The Noah</div>
           </footer>
         </div>
-        {IconDefs()}
       </Router>
     );
   }

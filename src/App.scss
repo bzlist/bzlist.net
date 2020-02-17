@@ -20,8 +20,22 @@
     opacity: 0;
   }
 
-  .logo, .logo svg{
-    height: 28px;
+  .logo{
+    color: var(--color-text-headings);
+    font-size: 26px;
+    display: flex;
+    align-items: center;
+
+    &:hover{
+      background: none;
+      text-decoration: none;
+    }
+
+    svg{
+      height: 38px;
+      margin-top: -4px;
+      margin-right: 8px;
+    }
   }
 
   nav .btn{
@@ -37,7 +51,7 @@
     .hamburger{
       width: 24px;
       height: 15px;
-      margin-right: 12px;
+      margin-right: 10px;
       display: block;
       z-index: 2;
 
@@ -57,8 +71,13 @@
       }
     }
 
-    .logo, .logo svg{
-      height: 22px;
+    .logo{
+      font-size: 20px;
+
+      svg{
+        height: 26px;
+        margin-right: 4px;
+      }
     }
 
     .btn-primary{
@@ -120,8 +139,8 @@
       }
     }
 
-    .icon{
-      padding: 0 8px;
+    .btn.icon{
+      padding: 0 10px;
     }
   }
 }

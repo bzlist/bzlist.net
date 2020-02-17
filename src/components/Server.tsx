@@ -37,7 +37,7 @@ export class ServerRow extends ServerBase{
           e.stopPropagation();
           favoriteServer(this.props.server);
           this.setState({favorite: isFavoriteServer(this.props.server)});
-        }}>{Icon("heart", isFavoriteServer(this.props.server), "url(#e)")}</button></td>
+        }}>{Icon("heart", isFavoriteServer(this.props.server), "url(#a)")}</button></td>
         <td><button className="btn icon btn-play" onClick={(e) => {
           e.stopPropagation();
           this.onClick("?play");
@@ -56,7 +56,7 @@ export class ServerCard extends ServerBase{
             e.stopPropagation();
             favoriteServer(this.props.server);
             this.setState({favorite: isFavoriteServer(this.props.server)});
-          }}>{Icon("heart", isFavoriteServer(this.props.server), "url(#e)")}</button>
+          }}>{Icon("heart", isFavoriteServer(this.props.server), "url(#a)")}</button>
           {this.props.server.title}
         </h2><br/>
         <table>
