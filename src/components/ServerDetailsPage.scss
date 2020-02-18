@@ -8,7 +8,7 @@
   align-items: flex-end;
 
   @include mobile{
-    height: 170px;
+    height: 150px;
     padding: 12px 8px;
   }
 
@@ -16,38 +16,45 @@
     color: #EEE;
     font-size: 38px;
     font-weight: normal;
-    text-shadow: 0 1px 8px #000;
+    text-shadow: 0 0 6px #000, 0 0 12px #000;
     word-break: break-word;
 
     @include mobile{
-      font-size: 30px;
-    }
-  }
-
-  & > .icon{
-    padding: 0 8px;
-
-    svg{
-      height: 30px;
-
-      @include mobile{
-        height: 22px;
-      }
+      font-size: 24px;
     }
   }
 }
 
 .server-header{
-  height: 32px;
   padding: 8px 18px;
+  display: flex;
+  align-items: center;
 
-  div{
-    margin-right: 48px;
-    display: inline-block;
-    line-height: .9em;
+  & > div{
+    margin-right: 32px;
+    display: flex;
+    align-items: center;
+
+    &:last-child{
+      margin-right: 0;
+    }
 
     @include mobile{
-      margin-right: 22px;
+      margin-right: 16px;
+
+      & > .icon{
+        padding: 0 12px;
+      }
+    }
+
+    & > .icon{
+      height: 38px;
+      display: flex;
+
+      svg{
+        height: 20px;
+        top: 0;
+      }
     }
   }
 
@@ -66,6 +73,10 @@ div.content{
 
   @include mobile{
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+
+    & > * h2{
+      font-size: 24px;
+    }
   }
 }
 

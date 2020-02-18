@@ -167,16 +167,18 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
     return (
       <div>
         <div className="title" style={{background: `url(/images/servers/${this.state.server.address}_${this.state.server.port}.png), url(/images/servers/default.png) no-repeat center center`}}>
-          <button className="btn icon" onClick={() => {
-            favoriteServer(this.state.server as Server);
-            this.setState({favorite: isFavoriteServer(this.state.server)});
-          }}>{Icon("heart", isFavoriteServer(this.state.server), "url(#a)")}</button>
           <h1>{this.state.server.title}</h1>
         </div>
         <div className="server-header">
           <div className="mobile-hide"><button className="btn btn-play" onClick={() => this.setState({selectTeam: true})} title="Requires BZFlag Launcher">&#9658; Play</button></div>
           <div>
-            <img src={`https://countryflags.io/${this.state.server.countryCode}/flat/32.png`} style={{"margin":"0 6px -10px 0"}} alt=""/>
+            <button className="btn icon" onClick={() => {
+              favoriteServer(this.state.server as Server);
+              this.setState({favorite: isFavoriteServer(this.state.server)});
+            }}>{Icon("heart", isFavoriteServer(this.state.server), "url(#a)")}</button>
+          </div>
+          <div>
+            <img src={`https://countryflags.io/${this.state.server.countryCode}/flat/32.png`} style={{margin:"0 6px 0 0"}} alt=""/>
             {this.state.server.country}
           </div>
           <div><b>{autoPlural(`${this.state.server.playersCount} Player`)}</b></div>
@@ -185,7 +187,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
           <Switch label="Hide Server" description="Don't show in server list" checked={isServerHidden} onChange={() => hideServer(this.state.server)}/><br/>
           <div className="card-list content">
             <div>
-              <h2>Info</h2><br/>
+              <h2>Info</h2>
               <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
                 <tbody>
                   <tr>
@@ -241,7 +243,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
             </div>
             {this.state.server.playersCount > 0 && this.state.server.players &&
               <div className="players">
-                <h2>{autoPlural(`${playerCount} Player`)} and {autoPlural(`${observerCount} Observer`)}</h2><br/>
+                <h2>{autoPlural(`${playerCount} Player`)} and {autoPlural(`${observerCount} Observer`)}</h2>
                 <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
                 <thead>
                   <tr>
@@ -258,7 +260,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
               </div>
             }
             <div>
-              <h2>{autoPlural(`${this.state.server.teams.length} Team`)}</h2><br/>
+              <h2>{autoPlural(`${this.state.server.teams.length} Team`)}</h2>
               <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
               <thead>
                 <tr>

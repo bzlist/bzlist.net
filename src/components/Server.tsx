@@ -58,7 +58,7 @@ export class ServerCard extends ServerBase{
             this.setState({favorite: isFavoriteServer(this.props.server)});
           }}>{Icon("heart", isFavoriteServer(this.props.server), "url(#a)")}</button>
           {this.props.server.title}
-        </h2><br/>
+        </h2>
         <table>
           <tbody>
             <tr>
@@ -72,10 +72,6 @@ export class ServerCard extends ServerBase{
             <tr>
               <td>Game Style</td>
               <td>{verboseGameStyle(this.props.server.configuration.gameStyle)}</td>
-            </tr>
-            <tr>
-              <td>Country</td>
-              <td><img src={`https://countryflags.io/${this.props.server.countryCode}/flat/16.png`} title={this.props.server.country} alt=""/> {this.props.server.country}</td>
             </tr>
           </tbody>
         </table>

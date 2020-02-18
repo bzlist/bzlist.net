@@ -68,7 +68,7 @@ h1{
   display: inline-block;
 
   @include mobile{
-    font-size: 36px;
+    font-size: 32px;
   }
 }
 
@@ -76,7 +76,7 @@ h2{
   font-size: 30px;
 
   @include mobile{
-    font-size: 26px;
+    font-size: 24px;
   }
 }
 
@@ -287,6 +287,22 @@ td, th{
 
     h2{
       word-break: break-word;
+
+      @include mobile{
+        margin-bottom: 8px;
+        font-size: 20px;
+        line-height: 1;
+      }
+
+      & > .icon{
+        margin-right: 6px;
+        padding: 0;
+        background: none;
+
+        svg{
+          height: 18px;
+        }
+      }
     }
 
     td{
@@ -295,15 +311,6 @@ td, th{
 
     img{
       margin-bottom: -3px;
-    }
-
-    h2 > .icon{
-      margin-right: 8px;
-      padding: 0;
-
-      svg{
-        height: 22px;
-      }
     }
 
     &:nth-child(2){

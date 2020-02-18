@@ -50,7 +50,7 @@ export class PlayerCard extends PlayerBase{
             this.setState({friend: isPlayerFriend(this.props.player.callsign)});
           }}>{Icon("friend", settings.getJson("friends", []).includes(this.props.player.callsign), "url(#a)")}</button>
           {this.props.player.callsign}
-        </h2><br/>
+        </h2>
         <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
           <tbody>
             {this.props.player.team !== "Observer" &&
@@ -59,10 +59,6 @@ export class PlayerCard extends PlayerBase{
                 <td>{this.props.player.score}</td>
               </tr>
             }
-            <tr>
-              <td>Team</td>
-              <td>{this.props.player.team}</td>
-            </tr>
             <tr>
               <td>Server</td>
               <td><Link to={`/s/${this.props.player.server.split(":")[0]}/${this.props.player.server.split(":")[1]}`}>{this.props.player.server}</Link></td>
