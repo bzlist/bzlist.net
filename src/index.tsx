@@ -7,6 +7,15 @@ import App from "./App";
 
 ReactDOM.render(<BrowserRouter><App/></BrowserRouter>, document.getElementById("root"));
 
+const devtools = () => {};
+devtools.toString = () => {
+  console.log("%cHang On!", "font-size: 56px");
+  console.log("%cThis place is dangerous, unless you understand exactly what you are doing, close this window and stay safe.", "font-size: 20px");
+  console.log("%cIf you do understand what you are doing, you should come help out! https://github.com/bzlist/bzlist.net", "font-size: 20px");
+};
+
+console.log("%c", devtools);
+
 // register service worker
 if(process.env.NODE_ENV === "production" && "serviceWorker" in navigator){
   window.addEventListener("load", () => {
