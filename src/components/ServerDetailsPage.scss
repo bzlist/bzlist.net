@@ -39,16 +39,16 @@
     display: flex;
     align-items: center;
 
-    &:last-child{
-      margin-right: 0;
-    }
-
     @include mobile{
       margin-right: 10px;
 
       & > .icon{
         padding: 0 12px;
       }
+    }
+
+    &:last-child{
+      margin-right: 0;
     }
 
     & > .icon{
@@ -120,7 +120,7 @@ div.content{
     right: 0;
   }
 
-  & > div{
+  .popup__container{
     max-width: 90%;
     width: 380px;
     min-height: 100px;
@@ -130,12 +130,12 @@ div.content{
     border-radius: $border-radius-large;
   }
 
-  .popup-header{
+  .popup__header{
     padding: 16px;
     text-align: center;
   }
 
-  .inner{
+  .popup__inner{
     padding: 16px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));

@@ -137,12 +137,12 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
       playPopup = (
         <div className="play-popup">
           <span className="overlay" onClick={() => this.setState({selectTeam: false})}></span>
-          <div>
-            <div className="popup-header">
+          <div className="popup__container">
+            <div className="popup__header">
               <h3>Select Team</h3>
               <div className="close"><button className="btn icon" onClick={() => this.setState({selectTeam: false})}>{Icon("close")}</button></div>
             </div>
-            <div className="inner">
+            <div className="popup__inner">
               {this.state.server.teams.map((team: Team) =>
                 <button key={team.name} className="btn btn-outline" onClick={() => this.joinTeam(team.name)}>{autoPlural(`${team.players} ${team.name}`)}</button>
               )}
