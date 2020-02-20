@@ -177,8 +177,11 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
               this.setState({favorite: isFavoriteServer(this.state.server)});
             }}>{Icon("heart", isFavoriteServer(this.state.server), "url(#a)")}</button>
           </div>
+          {"share" in navigator && <div>
+            <button className="btn icon" onClick={() => (navigator as any).share({url: window.location.href, title: this.state.server?.title})}>{Icon("share", false)}</button>
+          </div>}
           <div>
-            <img src={`https://countryflags.io/${this.state.server.countryCode}/flat/32.png`} style={{margin:"0 6px 0 0"}} alt=""/>
+            <img src={`https://countryflags.io/${this.state.server.countryCode}/flat/32.png`} style={{margin:"0 4px 0 0"}} alt=""/>
             {this.state.server.country}
           </div>
           <div><b>{autoPlural(`${this.state.server.playersCount} Player`)}</b></div>

@@ -30,6 +30,10 @@
   display: flex;
   align-items: center;
 
+  @include mobile{
+    padding: 2px;
+  }
+
   & > div{
     margin-right: 32px;
     display: flex;
@@ -40,7 +44,7 @@
     }
 
     @include mobile{
-      margin-right: 16px;
+      margin-right: 10px;
 
       & > .icon{
         padding: 0 12px;
