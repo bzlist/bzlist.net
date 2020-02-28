@@ -313,12 +313,10 @@ td, th{
       margin-bottom: -3px;
     }
 
-    &:nth-child(2){
-      animation-delay: .1s;
-    }
-
-    &:nth-child(3){
-      animation-delay: .15s;
+    @for $i from 2 through 3{
+      &:nth-child(#{$i}){
+        animation-delay: (.05s * $i);
+      }
     }
   }
 }
@@ -408,16 +406,14 @@ textarea{
       flex: 1;
     }
 
-    &:nth-child(2){
-      animation-delay: .05s;
+    @for $i from 2 through 6{
+      &:nth-child(#{$i}){
+        animation-delay: (.025s * $i);
+      }
     }
 
-    &:nth-child(3){
-      animation-delay: .1s;
-    }
-
-    &:nth-child(n+4){
-      animation-delay: .15s;
+    &:nth-child(n+7){
+      animation-delay: .2s;
     }
   }
 }
@@ -459,23 +455,23 @@ input[type=text]{
 @keyframes slide-in{
   0%{
     opacity: 0;
-    transform: translateX(-100px);
+    transform: translate3d(-100px, 0, 0);
   }
 
   100%{
     opacity: 1;
-    transform: translateX(0);
+    transform: none;
   }
 }
 
 @keyframes slide-up{
   0%{
     opacity: 0;
-    transform: translateY(100px);
+    transform: translate3d(0, 100px, 0);
   }
 
   100%{
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
 }
