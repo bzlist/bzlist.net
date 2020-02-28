@@ -15,7 +15,7 @@ html{
     }
 
     ::-webkit-scrollbar-thumb{
-      background-color: hsl(210, 5%, 50%);
+      background: linear-gradient(45deg, hsl(210, 5%, 20%), hsl(210, 5%, 40%));
     }
   }
 
@@ -162,7 +162,7 @@ a:hover, .link:hover{
   text-transform: uppercase;
 
   &:hover{
-    background-image: linear-gradient(to right, #79EE00, #5ADD20);
+    background-image: linear-gradient(to right, #79FF00, #55DD40);
   }
 }
 
@@ -442,9 +442,9 @@ input[type=text]{
 }
 
 .info-popout{
-  max-width: 500px;
+  width: 600px;
   padding: 16px 26px;
-  background-color: var(--bg-lighter);
+  background: linear-gradient(45deg, var(--bg-darker), var(--bg));
   position: absolute;
   box-shadow: $shadow;
   border-radius: $border-radius-large;
