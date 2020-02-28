@@ -106,7 +106,7 @@ export class HomePage extends React.PureComponent<any, State>{
     }
 
     for(const element of document.querySelectorAll("th")){
-      if(element.innerHTML.indexOf(" ") > -1){
+      if(element.innerHTML.indexOf(" ") === element.innerHTML.length - 2){
         element.innerHTML = element.innerHTML.slice(0, -2);
       }
     }
