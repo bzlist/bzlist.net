@@ -40,25 +40,27 @@ export class HomePage extends React.PureComponent<any, State>{
       this.setState({servers: data});
       cache.set("servers", JSON.stringify(data));
 
-      if(!this.firstData && settings.getBool(settings.NOTIFICATIONS) && settings.getBool(settings.SERVER_NOTIFICATIONS) && settings.getJson("favoriteServers", []) !== []){
-        data.forEach((server: Server) => {
-          if(!settings.getJson("favoriteServers", []).includes(`${server.address}:${server.port}`)){
-            return;
-          }
+      data.forEach((server: Server) => {
+        const observerTeam = server.teams.find((team: Team) => team.name === "Observer");
+        if(!observerTeam){
+          return;
+        }
 
-          const observerTeam = server.teams.find((team: Team) => team.name === "Observer");
-          if(!observerTeam){
-            return;
-          }
+        const playerCount = server.playersCount - observerTeam.players;
+        if(playerCount >= 1){
+          new Image().src = `/images/servers/${server.address}_${server.port}.png`;
 
-          const playerCount = server.playersCount - observerTeam.players;
-          if(playerCount > 1){
+          if(!this.firstData &&
+             playerCount >= 2 &&
+             settings.getBool(settings.NOTIFICATIONS) &&
+             settings.getBool(settings.SERVER_NOTIFICATIONS) &&
+             settings.getJson("favoriteServers", []).includes(`${server.address}:${server.port}`)){
             notification(`${server.title} has ${playerCount} players`, "", `${server.address}:${server.port}`, () => {
               history.push(`/s/${server.address}/${server.port}`);
             });
           }
-        });
-      }
+        }
+      });
 
       this.firstData = false;
     });
@@ -75,6 +77,10 @@ export class HomePage extends React.PureComponent<any, State>{
         }
       };
     }
+  }
+
+  componentDidMount(): void{
+    new Image().src = "/images/servers/default.png";
   }
 
   componentWillUnmount(): void{
