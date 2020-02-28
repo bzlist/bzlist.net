@@ -2,7 +2,7 @@ import React from "react";
 import {match, Link} from "react-router-dom";
 import "./ServerDetailsPage.scss";
 
-import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings, isFavoriteServer, favoriteServer, hideServer} from "../lib";
+import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings, isFavoriteServer, favoriteServer, hideServer, api} from "../lib";
 import {Server, Player, Team} from "../models";
 import {TimeAgo, PlayerRow, Switch, Icon} from ".";
 
@@ -26,6 +26,9 @@ interface State{
 export class ServerDetailsPage extends React.PureComponent<Props, State>{
   address = "";
   port = -1;
+  server: Server | null = null;
+  serversCache: Server[];
+  playersCache: Player[];
 
   constructor(props: Props){
     super(props);
@@ -34,14 +37,13 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
     this.port = +this.props.match.params.port;
 
     // get cache
-    const serversCache: Server[] = cache.getJson("servers", []);
-    const playersCache: Player[] = cache.getJson("players", []);
+    this.serversCache = cache.getJson("servers", []);
+    this.playersCache = cache.getJson("players", []);
 
-    let server = null;
-    if(serversCache && playersCache){
-      server = serversCache.filter((_server: Server) => _server.address === this.address && _server.port === this.port)[0];
-      if(server){
-        server.players = playersCache.filter((player: Player) => player.server === `${this.address}:${this.port}`).sort(playerSort);
+    if(this.serversCache && this.playersCache){
+      this.server = this.serversCache.filter((_server: Server) => _server.address === this.address && _server.port === this.port)[0];
+      if(this.server){
+        this.server.players = this.playersCache.filter((player: Player) => player.server === `${this.address}:${this.port}`).sort(playerSort);
       }
     }
 
@@ -57,59 +59,68 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
     window.history.replaceState({}, document.title, url.substring(0, url.indexOf("?")));
 
     this.state = {
-      server,
+      server: this.server,
       selectTeam,
-      favorite: isFavoriteServer(server)
+      favorite: isFavoriteServer(this.server)
     };
 
-    socket.on<Server>(`${this.address}:${this.port}`, (data: Server) => {
-      if(data && data.players){
-        data.players.sort(playerSort);
-      }
-      this.setState({server: data});
+    this.handleData = this.handleData.bind(this);
 
-      if(!data){
-        return;
-      }
+    if(settings.getBool(settings.DISABLE_REALTIME_DATA)){
+      api(`servers/${this.address}/${this.port}`, undefined, "GET").then(this.handleData);
+      return;
+    }
 
-      // update servers cache
-      if(serversCache){
-        server = serversCache.filter((_server: Server) => _server.address === data.address && _server.port === data.port)[0];
-        if(server){
-          const serverIndex = serversCache.indexOf(server);
-          server = {...data};
-          delete server.players;
-
-          serversCache[serverIndex] = server;
-          cache.set("servers", JSON.stringify(serversCache));
-        }
-      }
-
-      // update players cache
-      if(playersCache && data.players){
-        let players = data.players.map((player: Player) => {
-          player.server = `${data.address}:${data.port}`;
-          player.timestamp = data.timestamp;
-
-          return player;
-        });
-
-        for(let i = 0; i < playersCache.length; i++){
-          if(playersCache[i].server === `${data.address}:${data.port}`){
-            playersCache.splice(i, 1);
-            i--;
-          }
-        }
-
-        players = players.concat(playersCache);
-        cache.set("players", JSON.stringify(players));
-      }
-    });
+    socket.on<Server>(`${this.address}:${this.port}`, this.handleData);
     socket.emit("server", {address: this.address, port: this.port});
   }
 
   componentWillUnmount(): void{
     socket.off(`${this.address}:${this.port}`);
+  }
+
+  handleData(data: Server): void{
+    if(data && data.players){
+      data.players.sort(playerSort);
+    }
+    this.setState({server: data});
+
+    if(!data){
+      return;
+    }
+
+    // update servers cache
+    if(this.serversCache){
+      this.server = this.serversCache.filter((_server: Server) => _server.address === data.address && _server.port === data.port)[0];
+      if(this.server){
+        const serverIndex = this.serversCache.indexOf(this.server);
+        this.server = {...data};
+        delete this.server.players;
+
+        this.serversCache[serverIndex] = this.server;
+        cache.set("servers", JSON.stringify(this.serversCache));
+      }
+    }
+
+    // update players cache
+    if(this.playersCache && data.players){
+      let players = data.players.map((player: Player) => {
+        player.server = `${data.address}:${data.port}`;
+        player.timestamp = data.timestamp;
+
+        return player;
+      });
+
+      for(let i = 0; i < this.playersCache.length; i++){
+        if(this.playersCache[i].server === `${data.address}:${data.port}`){
+          this.playersCache.splice(i, 1);
+          i--;
+        }
+      }
+
+      players = players.concat(this.playersCache);
+      cache.set("players", JSON.stringify(players));
+    }
   }
 
   joinTeam(team: string): void{

@@ -1,6 +1,6 @@
 import React from "react";
 
-import {cache, socket, autoPlural, settings, history, notification} from "../lib";
+import {cache, socket, autoPlural, settings, history, notification, api} from "../lib";
 import {Player} from "../models";
 import {TimeAgo, Search, PlayerRow, PlayerCard} from ".";
 
@@ -29,34 +29,43 @@ export class PlayerPage extends React.PureComponent<any, State>{
       searchQuery: ""
     };
 
-    socket.on<Player[]>("players", (data: Player[]) => {
-      this.setState({players: data});
-      cache.set("players", JSON.stringify(data));
-
-      // send notification(s) if any friends are online
-      if(!this.firstData && settings.getBool(settings.NOTIFICATIONS) && settings.getBool(settings.PLAYER_NOTIFICATIONS) && settings.getJson("friends", []) !== []){
-        data.forEach((player: Player) => {
-          if(!settings.getJson("friends", []).includes(player.callsign)){
-            return;
-          }
-
-          notification(`${player.callsign} is online`, "", player.callsign, () => {
-            history.push(`/s/${player.server.replace(":", "/")}`);
-          });
-        });
-      }
-
-      this.firstData = false;
-    });
-    socket.emit("players");
-
     if(window.innerWidth <= 768){
       this.mobile = true;
     }
+
+    this.handleData = this.handleData.bind(this);
+
+    if(settings.getBool(settings.DISABLE_REALTIME_DATA)){
+      api("players", undefined, "GET").then(this.handleData);
+      return;
+    }
+
+    socket.on<Player[]>("players", this.handleData);
+    socket.emit("players");
   }
 
   componentWillUnmount(): void{
     socket.off("players");
+  }
+
+  handleData(data: Player[]): void{
+    this.setState({players: data});
+    cache.set("players", JSON.stringify(data));
+
+    // send notification(s) if any friends are online
+    if(!this.firstData && settings.getBool(settings.NOTIFICATIONS) && settings.getBool(settings.PLAYER_NOTIFICATIONS) && settings.getJson("friends", []) !== []){
+      data.forEach((player: Player) => {
+        if(!settings.getJson("friends", []).includes(player.callsign)){
+          return;
+        }
+
+        notification(`${player.callsign} is online`, "", player.callsign, () => {
+          history.push(`/s/${player.server.replace(":", "/")}`);
+        });
+      });
+    }
+
+    this.firstData = false;
   }
 
   sortBy(sort: string, sortOrder: number){

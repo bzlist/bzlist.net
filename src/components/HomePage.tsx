@@ -1,6 +1,6 @@
 import React from "react";
 
-import {cache, socket, history, autoPlural, settings, notification} from "../lib";
+import {cache, socket, history, autoPlural, settings, notification, api} from "../lib";
 import {Server, Team} from "../models";
 import {TimeAgo, Search, ServerRow, ServerCard} from ".";
 
@@ -36,36 +36,6 @@ export class HomePage extends React.PureComponent<any, State>{
 
     this.infoPopoutRef = React.createRef<HTMLDivElement>();
 
-    socket.on<Server[]>("servers", (data: Server[]) => {
-      this.setState({servers: data});
-      cache.set("servers", JSON.stringify(data));
-
-      data.forEach((server: Server) => {
-        const observerTeam = server.teams.find((team: Team) => team.name === "Observer");
-        if(!observerTeam){
-          return;
-        }
-
-        const playerCount = server.playersCount - observerTeam.players;
-        if(playerCount >= 1){
-          new Image().src = `/images/servers/${server.address}_${server.port}.png`;
-
-          if(!this.firstData &&
-             playerCount >= 2 &&
-             settings.getBool(settings.NOTIFICATIONS) &&
-             settings.getBool(settings.SERVER_NOTIFICATIONS) &&
-             settings.getJson("favoriteServers", []).includes(`${server.address}:${server.port}`)){
-            notification(`${server.title} has ${playerCount} players`, "", `${server.address}:${server.port}`, () => {
-              history.push(`/s/${server.address}/${server.port}`);
-            });
-          }
-        }
-      });
-
-      this.firstData = false;
-    });
-    socket.emit("servers", {onlinePlayers: settings.getBool(settings.ONLY_SERVERS_WITH_PLAYERS)});
-
     if(window.innerWidth <= 768){
       this.mobile = true;
     }
@@ -77,6 +47,16 @@ export class HomePage extends React.PureComponent<any, State>{
         }
       };
     }
+
+    this.handleData = this.handleData.bind(this);
+
+    if(settings.getBool(settings.DISABLE_REALTIME_DATA)){
+      api("servers", undefined, "GET").then(this.handleData);
+      return;
+    }
+
+    socket.on<Server[]>("servers", this.handleData);
+    socket.emit("servers", {onlinePlayers: settings.getBool(settings.ONLY_SERVERS_WITH_PLAYERS)});
   }
 
   componentDidMount(): void{
@@ -85,6 +65,35 @@ export class HomePage extends React.PureComponent<any, State>{
 
   componentWillUnmount(): void{
     socket.off("servers");
+  }
+
+  handleData(data: Server[]): void{
+    this.setState({servers: data});
+    cache.set("servers", JSON.stringify(data));
+
+    data.forEach((server: Server) => {
+      const observerTeam = server.teams.find((team: Team) => team.name === "Observer");
+      if(!observerTeam){
+        return;
+      }
+
+      const playerCount = server.playersCount - observerTeam.players;
+      if(playerCount >= 1){
+        new Image().src = `/images/servers/${server.address}_${server.port}.png`;
+
+        if(!this.firstData &&
+           playerCount >= 2 &&
+           settings.getBool(settings.NOTIFICATIONS) &&
+           settings.getBool(settings.SERVER_NOTIFICATIONS) &&
+           settings.getJson("favoriteServers", []).includes(`${server.address}:${server.port}`)){
+          notification(`${server.title} has ${playerCount} players`, "", `${server.address}:${server.port}`, () => {
+            history.push(`/s/${server.address}/${server.port}`);
+          });
+        }
+      }
+    });
+
+    this.firstData = false;
   }
 
   sortBy(sort: string, sortOrder: number): void{

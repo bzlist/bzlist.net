@@ -5,7 +5,7 @@ import {settings, cache, IBoolSetting, notificationStatusText, user, storage, fa
 import {Dropdown, Switch, Icon} from ".";
 
 const themes = ["Light", "Dark", "Midnight"];
-const TABS = ["Appearance", "Notifications", "Favorites & Friends"];
+const TABS = ["Appearance", "Notifications", "Favorites & Friends", "Other"];
 
 interface State{
   message: string;
@@ -179,6 +179,12 @@ export class SettingsPage extends React.PureComponent<any, State>{
                 </div>
               )}
             </div><br/>
+          </>}
+          {this.state.tab === 3 && <>
+            <Switch label="Disable Real-time Data"
+                    description="Don't use real-time data (may save data)"
+                    checked={settings.getBool(settings.DISABLE_REALTIME_DATA)}
+                    onChange={(value: boolean) => this.set(settings.DISABLE_REALTIME_DATA, value)}/>
           </>}
           <br/><br/><br/>
           <div className="btn-list">
