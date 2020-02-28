@@ -69,7 +69,10 @@ class App extends React.PureComponent<any, State>{
       }
     });
 
+    this.setPageTitle(history.location.pathname);
     history.listen((location: any, action: string) => {
+      this.setPageTitle(location.pathname);
+
       if(this.drawerToggleRef.current){
         this.drawerToggleRef.current.checked = false;
       }
@@ -141,6 +144,11 @@ class App extends React.PureComponent<any, State>{
     if(settings.getBool(settings.CUSTOM_SCROLLBARS)){
       document.documentElement.classList.add("custom-scrollbars");
     }
+  }
+
+  setPageTitle(pathname: string): void{
+    const path = pathname.slice(1);
+    document.title = path === "" ? "BZList" : `${path[0].toUpperCase()}${path.slice(1, path.indexOf("/") === -1 ? undefined : path.indexOf("/"))} - BZList`;
   }
 
   render(): JSX.Element{

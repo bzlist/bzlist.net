@@ -89,6 +89,8 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
       return;
     }
 
+    document.title = `${data.title} - BZList`;
+
     // update servers cache
     if(this.serversCache){
       this.server = this.serversCache.filter((_server: Server) => _server.address === data.address && _server.port === data.port)[0];
