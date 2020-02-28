@@ -121,7 +121,7 @@ export class SettingsPage extends React.PureComponent<any, State>{
           </>}
           {this.state.tab === 2 && <>
             <h3>Favorite Servers</h3><br/>
-            <input type="text" placeholder="Add server by address" onKeyUp={(e) => {
+            <input type="text" placeholder="Add server by host:port" onKeyUp={(e) => {
               if(e.keyCode === 13){
                 favoriteServer(e.currentTarget.value);
                 e.currentTarget.value = "";
@@ -160,7 +160,7 @@ export class SettingsPage extends React.PureComponent<any, State>{
               )}
             </div><br/>
             <h3>Hidden Servers</h3><br/>
-            <input type="text" placeholder="Add server by address" onKeyUp={(e) => {
+            <input type="text" placeholder="Add server by host:port" onKeyUp={(e) => {
               if(e.keyCode === 13){
                 hideServer(e.currentTarget.value);
                 e.currentTarget.value = "";
