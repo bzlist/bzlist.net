@@ -1,7 +1,7 @@
 import React from "react";
-
-import {api, storage, user} from "../lib";
 import {Link} from "react-router-dom";
+
+import {api, storage, user} from "../../lib";
 
 interface State{
   feedback: string;

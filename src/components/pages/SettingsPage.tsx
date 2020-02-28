@@ -1,8 +1,8 @@
 import React from "react";
 import "./SettingsPage.scss";
 
-import {settings, cache, IBoolSetting, notificationStatusText, user, storage, favoriteServer, friendPlayer, history, hideServer} from "../lib";
-import {Dropdown, Switch, Icon} from ".";
+import {settings, cache, IBoolSetting, notificationStatusText, user, storage, favoriteServer, friendPlayer, history, hideServer} from "../../lib";
+import {Dropdown, Switch, Icon} from "..";
 
 const themes = ["Light", "Dark", "Midnight"];
 const TABS = ["Appearance", "Notifications", "Favorites & Friends", "Other"];

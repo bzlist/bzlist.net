@@ -2,9 +2,9 @@ import React from "react";
 import {match, Link} from "react-router-dom";
 import "./ServerDetailsPage.scss";
 
-import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings, isFavoriteServer, favoriteServer, hideServer, api} from "../lib";
-import {Server, Player, Team} from "../models";
-import {TimeAgo, PlayerRow, Switch, Icon, playerSort} from ".";
+import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings, isFavoriteServer, favoriteServer, hideServer, api} from "../../lib";
+import {Server, Player, Team} from "../../models";
+import {TimeAgo, PlayerRow, Switch, Icon, playerSort} from "..";
 
 interface Params{
   address: string;

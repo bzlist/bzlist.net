@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-import {version} from "../../package.json";
+import {version} from "../../../package.json";
 
 export const HelpPage = (): JSX.Element => (
   <div className="wrapper">
