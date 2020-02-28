@@ -4,6 +4,8 @@ import {cache, socket, autoPlural, settings, history, notification, api} from ".
 import {Player} from "../models";
 import {TimeAgo, Search, PlayerRow, PlayerCard} from ".";
 
+const SORT_INDEXES = ["callsign", "score", "team", "server"];
+
 interface State{
   players: Player[];
   sort: string;
@@ -19,12 +21,10 @@ export class PlayerPage extends React.PureComponent<any, State>{
   constructor(props: any){
     super(props);
 
-    const {sort, sortOrder} = settings.getJson("playerSort", {sort: "score", sortOrder: 1});
-
     this.state = {
       players: cache.getJson("players", []),
-      sort,
-      sortOrder,
+      sort: "",
+      sortOrder: 0,
       showObservers: false,
       searchQuery: ""
     };
@@ -42,6 +42,11 @@ export class PlayerPage extends React.PureComponent<any, State>{
 
     socket.on<Player[]>("players", this.handleData);
     socket.emit("players");
+  }
+
+  componentDidMount(): void{
+    const {sort, sortOrder} = settings.getJson("playerSort", {sort: "score", sortOrder: 1});
+    this.sortBy(sort, sortOrder, document.querySelectorAll("th")[SORT_INDEXES.indexOf(sort)] as HTMLElement);
   }
 
   componentWillUnmount(): void{
@@ -68,11 +73,18 @@ export class PlayerPage extends React.PureComponent<any, State>{
     this.firstData = false;
   }
 
-  sortBy(sort: string, sortOrder: number){
+  sortBy(sort: string, sortOrder: number, target: HTMLElement){
     // invert sort order if sorting by same field
     if(this.state.sort === sort){
       sortOrder = -this.state.sortOrder;
     }
+
+    for(const element of document.querySelectorAll("th")){
+      if(element.innerHTML.indexOf(" ") > -1){
+        element.innerHTML = element.innerHTML.slice(0, -2);
+      }
+    }
+    target.innerHTML += ` ${sortOrder < 0 ? "&#8593;" : "&#8595;"}`;
 
     this.setState({sort, sortOrder});
     settings.set("playerSort", JSON.stringify({sort, sortOrder}));
@@ -109,10 +121,10 @@ export class PlayerPage extends React.PureComponent<any, State>{
           <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
             <thead>
               <tr>
-                <th onClick={() => this.sortBy("callsign", -1)}>Callsign</th>
-                <th onClick={() => this.sortBy("score", 1)}>Score</th>
-                <th onClick={() => this.sortBy("team", -1)}>Team</th>
-                <th onClick={() => this.sortBy("server", -1)}>Server</th>
+                <th onClick={(e) => this.sortBy("callsign", -1, e.currentTarget)}>Callsign</th>
+                <th onClick={(e) => this.sortBy("score", 1, e.currentTarget)}>Score</th>
+                <th onClick={(e) => this.sortBy("team", -1, e.currentTarget)}>Team</th>
+                <th onClick={(e) => this.sortBy("server", -1, e.currentTarget)}>Server</th>
                 <th></th>
               </tr>
             </thead>

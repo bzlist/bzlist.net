@@ -4,6 +4,8 @@ import {cache, socket, history, autoPlural, settings, notification, api} from ".
 import {Server, Team, Player} from "../models";
 import {TimeAgo, Search, ServerRow, ServerCard, PlayerRow, playerSort} from ".";
 
+const SORT_INDEXES = ["playersCount", "address", "country", "configuration.gameStyle", "title"];
+
 interface State{
   servers: Server[];
   sort: string;
@@ -22,12 +24,10 @@ export class HomePage extends React.PureComponent<any, State>{
   constructor(props: any){
     super(props);
 
-    const {sort, sortOrder} = settings.getJson("serverSort", {sort: "playersCount", sortOrder: 1});
-
     this.state = {
       servers: cache.getJson("servers", []),
-      sort,
-      sortOrder,
+      sort: "",
+      sortOrder: 0,
       serversToShow: 10,
       showHidden: false,
       searchQuery: "",
@@ -61,6 +61,9 @@ export class HomePage extends React.PureComponent<any, State>{
 
   componentDidMount(): void{
     new Image().src = "/images/servers/default.png";
+
+    const {sort, sortOrder} = settings.getJson("serverSort", {sort: "playersCount", sortOrder: 1});
+    this.sortBy(sort, sortOrder, document.querySelectorAll("th")[SORT_INDEXES.indexOf(sort)] as HTMLElement);
   }
 
   componentWillUnmount(): void{
@@ -96,11 +99,18 @@ export class HomePage extends React.PureComponent<any, State>{
     this.firstData = false;
   }
 
-  sortBy(sort: string, sortOrder: number): void{
+  sortBy(sort: string, sortOrder: number, target: HTMLElement): void{
     // invert sort order if sorting by same field
     if(this.state.sort === sort){
       sortOrder = -this.state.sortOrder;
     }
+
+    for(const element of document.querySelectorAll("th")){
+      if(element.innerHTML.indexOf(" ") > -1){
+        element.innerHTML = element.innerHTML.slice(0, -2);
+      }
+    }
+    target.innerHTML += ` ${sortOrder < 0 ? "&#8593;" : "&#8595;"}`;
 
     this.setState({sort, sortOrder});
     settings.set("serverSort", JSON.stringify({sort, sortOrder}));
@@ -157,11 +167,11 @@ export class HomePage extends React.PureComponent<any, State>{
           <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
             <thead>
               <tr>
-                <th onClick={() => this.sortBy("playersCount", 1)}>Players</th>
-                <th onClick={() => this.sortBy("address", -1)}>Address</th>
-                <th onClick={() => this.sortBy("country", -1)}>Country</th>
-                <th onClick={() => this.sortBy("configuration.gameStyle", -1)}>Game Style</th>
-                <th onClick={() => this.sortBy("title", -1)}>Title</th>
+                <th onClick={(e) => this.sortBy("playersCount", 1, e.currentTarget)}>Players</th>
+                <th onClick={(e) => this.sortBy("address", -1, e.currentTarget)}>Address</th>
+                <th onClick={(e) => this.sortBy("country", -1, e.currentTarget)}>Country</th>
+                <th onClick={(e) => this.sortBy("configuration.gameStyle", -1, e.currentTarget)}>Game Style</th>
+                <th onClick={(e) => this.sortBy("title", -1, e.currentTarget)}>Title</th>
                 <th></th>
                 <th></th>
               </tr>
