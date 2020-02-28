@@ -438,12 +438,18 @@ input[type=text]{
 }
 
 .info-popout{
-  width: 600px;
+  max-width: 800px;
   padding: 16px 26px;
   background: linear-gradient(45deg, var(--bg-darker), var(--bg));
   position: absolute;
+  top: 0;
+  left: 0;
   box-shadow: $shadow;
   border-radius: $border-radius-large;
+
+  & > div:last-child{
+    display: flex;
+  }
 }
 
 @include mobile{

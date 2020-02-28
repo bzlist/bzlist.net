@@ -1,8 +1,8 @@
 import React from "react";
 
 import {cache, socket, history, autoPlural, settings, notification, api} from "../lib";
-import {Server, Team} from "../models";
-import {TimeAgo, Search, ServerRow, ServerCard} from ".";
+import {Server, Team, Player} from "../models";
+import {TimeAgo, Search, ServerRow, ServerCard, PlayerRow, playerSort} from ".";
 
 interface State{
   servers: Server[];
@@ -187,8 +187,7 @@ export class HomePage extends React.PureComponent<any, State>{
                   pos.y = pos.y - this.infoPopoutRef.current.offsetHeight - 12;
                 }
 
-                this.infoPopoutRef.current.style.left = `${pos.x}px`;
-                this.infoPopoutRef.current.style.top = `${pos.y}px`;
+                this.infoPopoutRef.current.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0)`;
               }}/>)}
             </tbody>
           </table>
@@ -243,24 +242,43 @@ export class HomePage extends React.PureComponent<any, State>{
           <h2>{this.state.infoServer.title}</h2>
           <small>Owner: {this.state.infoServer.owner}</small><br/><br/>
           <h3>{autoPlural(`${this.state.infoServer.playersCount} Player`)} - {autoPlural(`${this.state.infoServer.teams.length} Team`)}</h3><br/>
-          <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Score</th>
-              <th>Players</th>
-            </tr>
-          </thead>
-            <tbody>
-              {this.state.infoServer.teams.sort((a: Team, b: Team) => a.score > b.score ? -1 : 1).map((team: Team) =>
-                <tr key={team.name}>
-                  <td><b>{team.name}</b></td>
-                  <td>{team.name === "Observer" ? "" : team.score}</td>
-                  <td>{team.players} / {team.maxPlayers}</td>
+          <div>
+            {this.state.infoServer.playersCount > 0 && this.state.infoServer.players && <>
+              <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
+              <thead>
+                <tr>
+                  <th>Callsign</th>
+                  <th>Score</th>
+                  <th>Team</th>
+                  <th></th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+                <tbody>
+                  {this.state.infoServer.players.sort(playerSort).map((player: Player) =>
+                    <PlayerRow key={`${player.callsign}:${player.server}`} player={player} showServer={false} showFriend={false}/>
+                  )}
+                </tbody>
+              </table>
+            </>}
+            <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Score</th>
+                <th>Players</th>
+              </tr>
+            </thead>
+              <tbody>
+                {this.state.infoServer.teams.sort((a: Team, b: Team) => a.score > b.score ? -1 : 1).map((team: Team) =>
+                  <tr key={team.name}>
+                    <td><b>{team.name}</b></td>
+                    <td>{team.name === "Observer" ? "" : team.score}</td>
+                    <td>{team.players} / {team.maxPlayers}</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>}
       </div>
     );

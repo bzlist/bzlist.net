@@ -4,9 +4,7 @@ import "./ServerDetailsPage.scss";
 
 import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings, isFavoriteServer, favoriteServer, hideServer, api} from "../lib";
 import {Server, Player, Team} from "../models";
-import {TimeAgo, PlayerRow, Switch, Icon} from ".";
-
-const playerSort = (a: Player, b: Player) => a.team === "Observer" ? 1 : b.team === "Observer" ? -1 : a.score > b.score ? -1 : 1;
+import {TimeAgo, PlayerRow, Switch, Icon, playerSort} from ".";
 
 interface Params{
   address: string;

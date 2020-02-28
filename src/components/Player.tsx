@@ -5,7 +5,13 @@ import {settings, friendPlayer, isPlayerFriend} from "../lib";
 import {Player} from "../models";
 import {Icon} from ".";
 
-class PlayerBase extends React.Component<{player: Player, showServer?: boolean}, {friend: boolean}>{
+export const playerSort = (a: Player, b: Player) => a.team === "Observer" ? 1 : b.team === "Observer" ? -1 : a.score > b.score ? -1 : 1;
+
+class PlayerBase extends React.Component<{player: Player, showServer?: boolean, showFriend: boolean}, {friend: boolean}>{
+  static defaultProps = {
+    showFriend: true
+  };
+
   constructor(props: any){
     super(props);
 
@@ -14,7 +20,7 @@ class PlayerBase extends React.Component<{player: Player, showServer?: boolean},
     };
   }
 
-  shouldComponentUpdate(nextProps: {player: Player, showServer: boolean}, nextState: {friend: boolean}): boolean{
+  shouldComponentUpdate(nextProps: {player: Player, showServer: boolean, showFriend: boolean}, nextState: {friend: boolean}): boolean{
     return nextState.friend !== this.state.friend || nextProps.player.timestamp !== this.props.player.timestamp;
   }
 }
@@ -30,10 +36,12 @@ export class PlayerRow extends PlayerBase{
         <td>{player.team !== "Observer" && player.score}</td>
         <td>{player.team}</td>
         {serverTr}
-        <td><button className="btn icon" onClick={() => {
-          friendPlayer(player.callsign);
-          this.setState({friend: settings.getJson("friends", []).includes(player.callsign)});
-        }} title={isPlayerFriend(player.callsign) ? "Remove friend" : "Add as friend"}>{Icon("friend", isPlayerFriend(player.callsign), "url(#a)")}</button></td>
+        {this.props.showFriend &&
+          <td><button className="btn icon" onClick={() => {
+            friendPlayer(player.callsign);
+            this.setState({friend: settings.getJson("friends", []).includes(player.callsign)});
+          }} title={isPlayerFriend(player.callsign) ? "Remove friend" : "Add as friend"}>{Icon("friend", isPlayerFriend(player.callsign), "url(#a)")}</button></td>
+        }
       </tr>
     );
   }
