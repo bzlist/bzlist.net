@@ -1,8 +1,8 @@
 import React from "react";
 
-import {cache, socket, history, autoPlural, settings, notification, api} from "../../lib";
-import {Server, Team, Player} from "../../models";
-import {TimeAgo, Search, ServerRow, ServerCard, PlayerRow, playerSort} from "..";
+import {cache, socket, history, autoPlural, settings, notification, api} from "lib";
+import {Server, Team, Player} from "models";
+import {TimeAgo, Search, ServerRow, ServerCard, PlayerRow, playerSort} from "components";
 
 const SORT_INDEXES = ["playersCount", "address", "country", "configuration.gameStyle", "title"];
 

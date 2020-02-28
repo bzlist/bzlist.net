@@ -1,8 +1,8 @@
 import React from "react";
 
-import {verboseGameStyle, history, favoriteServer, isFavoriteServer} from "../lib";
-import {Server} from "../models";
-import {Icon} from ".";
+import {verboseGameStyle, history, favoriteServer, isFavoriteServer} from "lib";
+import {Server} from "models";
+import {Icon} from "components";
 
 class ServerBase extends React.Component<{server: Server, onMouseMove?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void}, {favorite: boolean}>{
   constructor(props: any){

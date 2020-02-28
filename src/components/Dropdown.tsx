@@ -1,7 +1,7 @@
 import React from "react";
 import "./Dropdown.scss";
 
-import {Icon} from ".";
+import {Icon} from "components";
 
 interface Props{
   items: string[];

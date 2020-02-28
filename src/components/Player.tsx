@@ -1,9 +1,9 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-import {settings, friendPlayer, isPlayerFriend} from "../lib";
-import {Player} from "../models";
-import {Icon} from ".";
+import {settings, friendPlayer, isPlayerFriend} from "lib";
+import {Player} from "models";
+import {Icon} from "components";
 
 export const playerSort = (a: Player, b: Player) => a.team === "Observer" ? 1 : b.team === "Observer" ? -1 : a.score > b.score ? -1 : 1;
 

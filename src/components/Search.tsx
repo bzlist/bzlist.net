@@ -1,7 +1,7 @@
 import React from "react";
 import "./Search.scss";
 
-import {Icon} from ".";
+import {Icon} from "components";
 
 interface Props{
   placeholder: string;

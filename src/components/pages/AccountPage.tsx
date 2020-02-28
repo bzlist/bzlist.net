@@ -1,7 +1,7 @@
 import React from "react";
 
-import {storage, bzLoginURL, api, user, checkAuth, deleteAccount, signout, updateUserCache, settings} from "../../lib";
-import {Switch} from "..";
+import {storage, bzLoginURL, api, user, checkAuth, deleteAccount, signout, updateUserCache, settings} from "lib";
+import {Switch} from "components";
 
 const fetchSettings = async (): Promise<void> => {
   if(storage.get("syncSettings") !== "false" && storage.get("token") !== ""){

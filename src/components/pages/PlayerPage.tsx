@@ -1,8 +1,8 @@
 import React from "react";
 
-import {cache, socket, autoPlural, settings, history, notification, api} from "../../lib";
-import {Player} from "../../models";
-import {TimeAgo, Search, PlayerRow, PlayerCard} from "..";
+import {cache, socket, autoPlural, settings, history, notification, api} from "lib";
+import {Player} from "models";
+import {TimeAgo, Search, PlayerRow, PlayerCard} from "components";
 
 const SORT_INDEXES = ["callsign", "score", "team", "server"];
 
