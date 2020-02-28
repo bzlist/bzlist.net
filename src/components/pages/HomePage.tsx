@@ -134,6 +134,7 @@ export class HomePage extends React.PureComponent<any, State>{
       });
     }
 
+    servers.sort((a: Server, b: Server) => `${a.address}:${a.port}` > `${b.address}:${b.port}` ? 1 : -1);
     if(this.state.sort.startsWith("configuration.")){
       const sort = this.state.sort.replace("configuration.", "");
       servers.sort((a: Server, b: Server) => a.configuration[sort] > b.configuration[sort] ? -this.state.sortOrder : this.state.sortOrder);
