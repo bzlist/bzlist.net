@@ -9,7 +9,7 @@ class ServerBase extends React.Component<{server: Server, onMouseMove?: (e: Reac
     super(props);
 
     this.state = {
-      favorite: false
+      favorite: isFavoriteServer(this.props.server)
     };
   }
 
@@ -37,7 +37,7 @@ export class ServerRow extends ServerBase{
           e.stopPropagation();
           favoriteServer(this.props.server);
           this.setState({favorite: isFavoriteServer(this.props.server)});
-        }}>{Icon("heart", isFavoriteServer(this.props.server), "url(#a)")}</button></td>
+        }}>{Icon("heart", this.state.favorite, "url(#a)")}</button></td>
         <td><button className="btn icon btn-play" onClick={(e) => {
           e.stopPropagation();
           this.onClick("?play");

@@ -16,7 +16,7 @@ class PlayerBase extends React.Component<{player: Player, showServer?: boolean, 
     super(props);
 
     this.state = {
-      friend: false
+      friend: isPlayerFriend(this.props.player.callsign)
     };
   }
 
@@ -39,8 +39,8 @@ export class PlayerRow extends PlayerBase{
         {this.props.showFriend &&
           <td><button className="btn icon" onClick={() => {
             friendPlayer(player.callsign);
-            this.setState({friend: settings.getJson("friends", []).includes(player.callsign)});
-          }} title={isPlayerFriend(player.callsign) ? "Remove friend" : "Add as friend"}>{Icon("friend", isPlayerFriend(player.callsign), "url(#a)")}</button></td>
+            this.setState({friend: isPlayerFriend(player.callsign)});
+          }} title={this.state.friend ? "Remove friend" : "Add as friend"}>{Icon("friend", this.state.friend, "url(#a)")}</button></td>
         }
       </tr>
     );
