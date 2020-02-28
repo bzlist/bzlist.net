@@ -24,6 +24,10 @@
       flex-basis: auto;
     }
 
+    h2{
+      margin-bottom: 20px;
+    }
+
     .btn{
       margin-top: 8px;
       text-align: left;
@@ -41,6 +45,14 @@
 
     @include mobile{
       padding-right: 0;
+    }
+
+    h1, h3, input[type=text], .switch:not(:last-child), .list:not(:last-child){
+      margin-bottom: 1em;
+    }
+
+    .btn-list{
+      margin-top: 64px;
     }
   }
 }
