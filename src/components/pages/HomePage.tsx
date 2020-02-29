@@ -17,9 +17,10 @@ interface State{
 }
 
 export class HomePage extends React.PureComponent<any, State>{
-  mobile = false;
+  mobile = window.innerWidth <= 768;
   firstData = true;
-  infoPopoutRef: React.RefObject<HTMLDivElement>;
+  infoPopoutRef = React.createRef<HTMLDivElement>();
+  tableHeaders = React.createRef<HTMLTableRowElement>();
 
   constructor(props: any){
     super(props);
@@ -33,12 +34,6 @@ export class HomePage extends React.PureComponent<any, State>{
       searchQuery: "",
       infoServer: null
     };
-
-    this.infoPopoutRef = React.createRef<HTMLDivElement>();
-
-    if(window.innerWidth <= 768){
-      this.mobile = true;
-    }
 
     if(settings.getBool(settings.INFO_CARDS)){
       window.onmousemove = (e: MouseEvent) => {
@@ -63,7 +58,14 @@ export class HomePage extends React.PureComponent<any, State>{
     new Image().src = "/images/servers/default.png";
 
     const {sort, sortOrder} = settings.getJson("serverSort", {sort: "playersCount", sortOrder: 1});
-    this.sortBy(sort, sortOrder, document.querySelectorAll("th")[SORT_INDEXES.indexOf(sort)] as HTMLElement);
+    this.sortBy(sort, sortOrder, this.tableHeaders.current?.children[SORT_INDEXES.indexOf(sort)] as HTMLElement);
+
+    window.onresize = (): void => {
+      if(this.mobile !== (window.innerWidth <= 768)){
+        this.mobile = window.innerWidth <= 768;
+        this.forceUpdate();
+      }
+    };
   }
 
   componentWillUnmount(): void{
@@ -105,12 +107,14 @@ export class HomePage extends React.PureComponent<any, State>{
       sortOrder = -this.state.sortOrder;
     }
 
-    for(const element of document.querySelectorAll("th")){
+    for(const element of this.tableHeaders.current?.children ?? []){
       if(element.innerHTML.indexOf(" ") === element.innerHTML.length - 2){
         element.innerHTML = element.innerHTML.slice(0, -2);
       }
     }
-    target.innerHTML += ` ${sortOrder < 0 ? "&#8593;" : "&#8595;"}`;
+    if(target){
+      target.innerHTML += ` ${sortOrder < 0 ? "&#8593;" : "&#8595;"}`;
+    }
 
     this.setState({sort, sortOrder});
     settings.set("serverSort", JSON.stringify({sort, sortOrder}));
@@ -167,7 +171,7 @@ export class HomePage extends React.PureComponent<any, State>{
         servers = (
           <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
             <thead>
-              <tr>
+              <tr ref={this.tableHeaders}>
                 <th onClick={(e) => this.sortBy("playersCount", 1, e.currentTarget)}>Players</th>
                 <th onClick={(e) => this.sortBy("address", -1, e.currentTarget)}>Address</th>
                 <th onClick={(e) => this.sortBy("country", -1, e.currentTarget)}>Country</th>

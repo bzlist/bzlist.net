@@ -15,8 +15,9 @@ interface State{
 }
 
 export class PlayerPage extends React.PureComponent<any, State>{
-  mobile = false;
+  mobile = window.innerWidth <= 768;
   firstData = true;
+  tableHeaders = React.createRef<HTMLTableRowElement>();
 
   constructor(props: any){
     super(props);
@@ -28,10 +29,6 @@ export class PlayerPage extends React.PureComponent<any, State>{
       showObservers: false,
       searchQuery: ""
     };
-
-    if(window.innerWidth <= 768){
-      this.mobile = true;
-    }
 
     this.handleData = this.handleData.bind(this);
 
@@ -46,7 +43,14 @@ export class PlayerPage extends React.PureComponent<any, State>{
 
   componentDidMount(): void{
     const {sort, sortOrder} = settings.getJson("playerSort", {sort: "score", sortOrder: 1});
-    this.sortBy(sort, sortOrder, document.querySelectorAll("th")[SORT_INDEXES.indexOf(sort)] as HTMLElement);
+    this.sortBy(sort, sortOrder, this.tableHeaders.current?.children[SORT_INDEXES.indexOf(sort)] as HTMLElement);
+
+    window.onresize = (): void => {
+      if(this.mobile !== (window.innerWidth <= 768)){
+        this.mobile = window.innerWidth <= 768;
+        this.forceUpdate();
+      }
+    };
   }
 
   componentWillUnmount(): void{
@@ -79,12 +83,14 @@ export class PlayerPage extends React.PureComponent<any, State>{
       sortOrder = -this.state.sortOrder;
     }
 
-    for(const element of document.querySelectorAll("th")){
+    for(const element of this.tableHeaders.current?.children ?? []){
       if(element.innerHTML.indexOf(" ") === element.innerHTML.length - 2){
         element.innerHTML = element.innerHTML.slice(0, -2);
       }
     }
-    target.innerHTML += ` ${sortOrder < 0 ? "&#8593;" : "&#8595;"}`;
+    if(target){
+      target.innerHTML += ` ${sortOrder < 0 ? "&#8593;" : "&#8595;"}`;
+    }
 
     this.setState({sort, sortOrder});
     settings.set("playerSort", JSON.stringify({sort, sortOrder}));
