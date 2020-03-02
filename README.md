@@ -7,6 +7,7 @@
 [![GitHub license](https://img.shields.io/github/license/bzlist/bzlist.net.svg)](https://github.com/bzlist/bzlist.net/blob/master/LICENSE)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/bzlist/bzlist.net)
 [![Build Status](https://travis-ci.org/bzlist/bzlist.net.svg?branch=master)](https://travis-ci.org/bzlist/bzlist.net)
+[![Netlify](https://img.shields.io/netlify/6aaaa6f8-575a-4432-a0b3-5402a2b4fb34)](https://bzlist.net)
 [![IRC #bzlist](https://img.shields.io/badge/IRC-%23bzlist-blue.svg)](http://webchat.freenode.net/?channels=#bzlist)
 
 Socket.io + React = *(kind of)* real-time server stats for BZFlag.
