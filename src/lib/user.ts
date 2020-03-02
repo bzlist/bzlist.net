@@ -23,7 +23,7 @@ const userChange = (): void => {
 export const updateUserCache = (): void => {
   const tokenData = parseToken();
 
-  if(!tokenData){
+  if(!tokenData || storage.get("refreshToken") === ""){
     signout();
     return;
   }
@@ -37,13 +37,14 @@ export const updateUserCache = (): void => {
 
 export const checkAuth = async (): Promise<string | true> => {
   const token = storage.get("token");
-  if(token === ""){
+  const refreshToken = storage.get("refreshToken");
+  if(token === "" || refreshToken === ""){
     signout();
     return "not signed in";
   }
 
   const data = await api("users/", undefined, "GET", {
-    "Authorization": `Bearer ${token}`
+    ...(await authHeaders())
   });
 
   if(!data || data.error){
@@ -71,19 +72,21 @@ export const signout = (): void => {
   user.bzid = "";
   user.exp = 0;
   storage.remove("token");
+  storage.remove("refreshToken");
 
   userChange();
 };
 
 export const deleteAccount = async (): Promise<string | true> => {
   const token = storage.get("token");
-  if(token === ""){
+  const refreshToken = storage.get("refreshToken");
+  if(token === "" || refreshToken === ""){
     signout();
     return "not signed in";
   }
 
   const data = await api("users/", undefined, "DELETE", {
-    "Authorization": `Bearer ${token}`
+    ...(await authHeaders())
   });
 
   if(data.error){
@@ -93,4 +96,26 @@ export const deleteAccount = async (): Promise<string | true> => {
 
   signout();
   return true;
+};
+
+export const authHeaders = async (): Promise<Object> => {
+  const refreshToken = storage.get("refreshToken");
+  const tokenData = parseToken();
+
+  if(refreshToken !== "" && (!tokenData || tokenData.exp - (Date.now() / 1000) <= 0)){
+    const data = await api("users/token/renew", {token: storage.get("token"), refreshToken}, "POST");
+    if(!data || !data.token || !data.refreshToken){
+      console.log("could not refresh token");
+      signout();
+      return {};
+    }
+
+    storage.set("token", data.token);
+    storage.set("refreshToken", data.refreshToken);
+    updateUserCache();
+  }
+
+  return {
+    "Authorization": `Bearer ${storage.get("token")}`
+  };
 };

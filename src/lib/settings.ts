@@ -1,4 +1,4 @@
-import {Storage, storage} from ".";
+import {Storage, storage, authHeaders} from ".";
 import {api} from "./utils";
 
 export interface IBoolSetting{
@@ -47,7 +47,7 @@ class Settings extends Storage{
 
   constructor(){
     super("setting_");
-    this.onChange = (key: string, value: string, sync: boolean = true): void => {
+    this.onChange = async (key: string, value: string, sync: boolean = true): Promise<void> => {
       if(key === this.DISABLE_ANIMATIONS.key){
         document.documentElement.style.setProperty("--animations", value !== "true" ? "1" : "0");
       }
@@ -59,7 +59,7 @@ class Settings extends Storage{
       const token = storage.get("token");
       if(token !== ""){
         api("users/settings", {settings: this.json()}, "PATCH", {
-          "Authorization": `Bearer ${token}`
+          ...(await authHeaders())
         });
       }
     };

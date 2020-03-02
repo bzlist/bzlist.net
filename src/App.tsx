@@ -14,7 +14,7 @@ import {
   FeedbackPage,
   Icon
 } from "./components";
-import {settings, history, storage, api, parseToken, checkAuth, updateUserCache, user, userChanged} from "./lib";
+import {settings, history, storage, api, checkAuth, updateUserCache, user, userChanged, authHeaders} from "./lib";
 
 interface State{
   offline: boolean;
@@ -99,7 +99,7 @@ class App extends React.PureComponent<any, State>{
     if(storage.get("syncSettings") !== "false" && token !== ""){
       console.log("fetching settings");
       const data = await api("users/settings", undefined, "GET", {
-        "Authorization": `Bearer ${token}`
+        ...(await authHeaders())
       });
 
       if(!data){
@@ -122,22 +122,6 @@ class App extends React.PureComponent<any, State>{
       const data = await api("status", undefined, "GET");
       if(!data || !data.online){
         this.setState({offline: true});
-      }
-    }
-
-    if(token !== ""){
-      const tokenData = parseToken();
-      if(tokenData.exp - (Date.now() / 1000) <= 43200){
-        const data = await api("users/token/renew", undefined, "GET", {
-          "Authorization": `Bearer ${token}`
-        });
-
-        if(!data){
-          this.setState({offline: true});
-        }else if(data.token){
-          storage.set("token", data.token);
-          updateUserCache();
-        }
       }
     }
 

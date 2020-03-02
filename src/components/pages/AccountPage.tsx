@@ -1,12 +1,12 @@
 import React from "react";
 
-import {storage, bzLoginURL, api, user, checkAuth, deleteAccount, signout, updateUserCache, settings} from "lib";
+import {storage, bzLoginURL, api, user, checkAuth, deleteAccount, signout, updateUserCache, settings, authHeaders} from "lib";
 import {Switch} from "components";
 
 const fetchSettings = async (): Promise<void> => {
   if(storage.get("syncSettings") !== "false" && storage.get("token") !== ""){
     const data = await api("users/settings", undefined, "GET", {
-      "Authorization": `Bearer ${storage.get("token")}`
+      ...(await authHeaders())
     });
 
     if(data && !data.error){
@@ -43,16 +43,17 @@ export class AccountPage extends React.PureComponent<any, State>{
 
   async login(callsign: string, token: string): Promise<void>{
     // skip login of trying sign in as same account and already logged in
-    if(callsign === user.callsign && storage.get("token") !== ""){
-      if(await checkAuth() === true){
+    if(callsign === user.callsign && storage.get("token") !== "" && storage.get("refreshToken") !== ""){
+      if(await checkAuth()){
         return;
       }
     }
 
     const data = await api("users/token", {callsign, token});
 
-    if(data.token){
+    if(data.token && data.refreshToken){
       storage.set("token", data.token);
+      storage.set("refreshToken", data.refreshToken);
 
       updateUserCache();
       await checkAuth();
@@ -78,9 +79,7 @@ export class AccountPage extends React.PureComponent<any, State>{
             <img src={`https://forums.bzflag.org/download/file.php?avatar=${user.bzid}.png`} height="42" style={{marginRight: "16px"}} alt=""/>
             <h1>{user.callsign}</h1>
             <p>
-              View <a href={`https://forums.bzflag.org/memberlist.php?mode=viewprofile&u=${user.bzid}`} target="_blank" rel="noopener noreferrer">forum profile</a>.<br/>
-              More features coming soon!<br/>
-              {Math.round((user.exp - (Date.now() / 1000)) / 3600)} hours until login expires.
+              View <a href={`https://forums.bzflag.org/memberlist.php?mode=viewprofile&u=${user.bzid}`} target="_blank" rel="noopener noreferrer">forum profile</a>. More features coming soon!
             </p>
             <Switch label="Sync Settings"
                     description="Sync all of your settings across devices"

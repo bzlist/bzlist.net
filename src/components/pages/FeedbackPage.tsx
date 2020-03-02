@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-import {api, storage, user} from "lib";
+import {api, user, authHeaders} from "lib";
 
 interface State{
   feedback: string;
@@ -20,7 +20,7 @@ export class FeedbackPage extends React.PureComponent<any, State>{
 
   async submit(): Promise<void>{
     const data = await api("feedback", {feedback: this.state.feedback}, "POST", {
-      "Authorization": `Bearer ${storage.get("token")}`
+      ...(await authHeaders())
     });
 
     if(!data){
