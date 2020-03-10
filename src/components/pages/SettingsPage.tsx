@@ -129,7 +129,7 @@ export class SettingsPage extends React.PureComponent<any, State>{
               }
             }}/>
             <div className="list">
-              {settings.getJson("favoriteServers", []).sort().map((server: string) =>
+              {settings.getJson("favoriteServers", []).sort((a: string, b: string) => a.toLowerCase().localeCompare(b.toLowerCase())).map((server: string) =>
                 <div key={server} onClick={() => history.push(`/s/${server.split(":")[0]}/${server.split(":")[1]}`)}>
                   <b>{server}</b>
                   <button className="btn icon" onClick={(e) => {
@@ -149,7 +149,7 @@ export class SettingsPage extends React.PureComponent<any, State>{
               }
             }}/>
             <div className="list">
-              {settings.getJson("friends", []).sort().map((callsign: string) =>
+              {settings.getJson("friends", []).sort((a: string, b: string) => a.toLowerCase().localeCompare(b.toLowerCase())).map((callsign: string) =>
                 <div key={callsign}>
                   <b>{callsign}</b>
                   <button className="btn icon" onClick={() => {
