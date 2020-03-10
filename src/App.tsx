@@ -157,7 +157,7 @@ class App extends React.PureComponent<any, State>{
               <Link to="/help" className="btn">Help</Link>
               <Link to="/feedback" className="btn">Feedback</Link>
             </nav>
-            {this.state.updateAvailable && <button className="btn icon" title="Update Available" onClick={() => window.location.reload()}>{Icon("update", true, "url(#a)")}</button>}
+            {this.state.updateAvailable && <button className="btn icon" title="Update Ready!" onClick={() => window.location.reload()}>{Icon("update", true, "url(#a)")}</button>}
             <a className="btn icon" href="https://github.com/bzlist/bzlist.net" target="_blank" rel="noopener noreferrer">{Icon("github", false)}</a>
             <Link to="/settings" className="btn icon">{Icon("settings", false)}</Link>
             <Link to="/account" className="btn icon">
