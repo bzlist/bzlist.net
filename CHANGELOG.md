@@ -2,6 +2,53 @@
 
 This is an outline and does not contain every change. Check the commits for a full list of changes.
 
+## v0.10.6 - General Improvements 🎈 (2020-3-10)
+
+### Added
+- Favorite button to serverr list
+- More server screenshots
+- Play button in server list
+- [Survey](https://docs.google.com/forms/d/e/1FAIpQLSdHA0q3MjVvRMNozwkUFv4dMDhIA-YFCSyt-97P3Afvsdv1zQ/viewform?usp=sf_link) button
+- Settings sync status
+- Server and player search
+- Auto fetch settings when signing in
+- Favorite server button on mobile
+- Friend button on mobile
+- Animations
+- Setting to disable animations
+- Manually editing favorite servers and friends
+- Different settings tabs have unique urls
+- Experimental hover info card on servers
+- Devtools warning
+- Native share button
+- Preload active server images
+- Setting to disable real-time data
+- Dynamic page title
+- Arrow indicating how tables are sorted
+- More info to help page
+- Fully handle resizing to/from mobile size
+- Netlify status to README
+
+### Changed
+- General performance improvments
+- Tweaked navbar
+- Improved select team dialog
+- More rounded corners on some items
+- Redesigned settings page
+- Shadows are more contrasting
+- New logo
+- Tweaked mobile look
+- Toggle and card backgrounds are now a gradient
+- Default server sorting
+- Token (authentication) system
+- Make buttons and last item in table go to end
+
+### Fixed
+- Wrong number of table headers
+- Server details cards being messed up
+- Server page icon button alignment
+- Incorrect favorite and friend status
+
 ## v0.10.5 (2020-1-18)
 
 ### Added
