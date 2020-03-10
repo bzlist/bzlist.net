@@ -15,7 +15,7 @@ export const user: IUser = {
 export const userChanged: (() => void)[] = [];
 
 const userChange = (): void => {
-  for(const userChangedHandler of userChanged) {
+  for(const userChangedHandler of userChanged){
     userChangedHandler();
   }
 };

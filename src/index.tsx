@@ -5,6 +5,8 @@ import {BrowserRouter} from "react-router-dom";
 import "./index.scss";
 import App from "./App";
 
+export const onUpdateFound: (() => void)[] = [];
+
 ReactDOM.render(<BrowserRouter><App/></BrowserRouter>, document.getElementById("root"));
 
 console.log("%cHang On!", "font-size: 56px");
@@ -24,7 +26,10 @@ if(process.env.NODE_ENV === "production" && "serviceWorker" in navigator){
         if(installingWorker.state === "installed"){
           if(navigator.serviceWorker.controller){
             console.log("an update is available; please refresh");
-            window.location.reload();
+            // window.location.reload();
+            for(const onUpdateFoundHandler of onUpdateFound){
+              onUpdateFoundHandler();
+            }
           }else{
             console.log("content is cached for offline use");
           }

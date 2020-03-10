@@ -15,9 +15,11 @@ import {
   Icon
 } from "./components";
 import {settings, history, storage, api, checkAuth, updateUserCache, user, userChanged, authHeaders} from "./lib";
+import {onUpdateFound} from "index";
 
 interface State{
   offline: boolean;
+  updateAvailable: boolean;
 }
 
 class App extends React.PureComponent<any, State>{
@@ -27,7 +29,8 @@ class App extends React.PureComponent<any, State>{
     super(props);
 
     this.state = {
-      offline: false
+      offline: false,
+      updateAvailable: false
     };
 
     this.drawerToggleRef = React.createRef<HTMLInputElement>();
@@ -85,6 +88,7 @@ class App extends React.PureComponent<any, State>{
 
   componentDidMount(): void{
     userChanged.push(() => this.forceUpdate());
+    onUpdateFound.push(() => this.setState({updateAvailable: true}));
   }
 
   async loadSettings(): Promise<void>{
@@ -153,14 +157,15 @@ class App extends React.PureComponent<any, State>{
               <Link to="/help" className="btn">Help</Link>
               <Link to="/feedback" className="btn">Feedback</Link>
             </nav>
+            {this.state.updateAvailable && <button className="btn icon" title="Update Available" onClick={() => window.location.reload()}>{Icon("update", true, "url(#a)")}</button>}
             <a className="btn icon" href="https://github.com/bzlist/bzlist.net" target="_blank" rel="noopener noreferrer">{Icon("github", false)}</a>
             <Link to="/settings" className="btn icon">{Icon("settings", false)}</Link>
             <Link to="/account" className="btn icon">
-            {user.bzid !== "" ?
-              <img src={`https://forums.bzflag.org/download/file.php?avatar=${user.bzid}.png`} height="15" alt="" style={{borderRadius: "2px"}}/>
-            :
-              Icon("account", false)
-            }
+              {user.bzid !== "" ?
+                <img src={`https://forums.bzflag.org/download/file.php?avatar=${user.bzid}.png`} height="15" alt="" style={{borderRadius: "2px"}}/>
+              :
+                Icon("account", false)
+              }
             </Link>
           </div>
           <div style={{flex: 1}}>
