@@ -229,6 +229,16 @@ td, th{
     padding-right: 14px;
   }
 
+  &:nth-last-child(1), &:nth-last-child(2){
+    width: 1%;
+    white-space: nowrap;
+  }
+
+  &:first-child:nth-last-child(3), &:first-child:nth-last-child(3) ~ &:nth-last-child(2){
+    width: auto;
+    white-space: inherit;
+  }
+
   @include mobile{
     padding: 0 6px;
 
