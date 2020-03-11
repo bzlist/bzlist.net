@@ -301,6 +301,15 @@ td, th{
 
     td{
       word-break: break-word;
+      white-space: pre;
+
+      &:first-child{
+        width: .01%;
+      }
+
+      &:last-child{
+        white-space: normal;
+      }
     }
 
     img{
