@@ -10,6 +10,7 @@
   position: relative;
   box-shadow: $shadow;
   border-radius: $border-radius;
+  z-index: 0;
 
   input{
     margin-right: 38px;
