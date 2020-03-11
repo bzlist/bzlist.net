@@ -77,14 +77,14 @@ export class PlayerPage extends React.PureComponent<any, State>{
     this.firstData = false;
   }
 
-  sortBy(sort: string, sortOrder: number, target: HTMLElement){
+  sortBy(sort: string, sortOrder: number, target: HTMLElement): void{
     // invert sort order if sorting by same field
     if(this.state.sort === sort){
       sortOrder = -this.state.sortOrder;
     }
 
     for(const element of this.tableHeaders.current?.children ?? []){
-      if(element.innerHTML.indexOf(" ") === element.innerHTML.length - 2){
+      if(element.innerHTML.lastIndexOf(" ") === element.innerHTML.length - 2){
         element.innerHTML = element.innerHTML.slice(0, -2);
       }
     }
@@ -126,7 +126,7 @@ export class PlayerPage extends React.PureComponent<any, State>{
         table = (
           <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
             <thead>
-              <tr>
+              <tr ref={this.tableHeaders}>
                 <th onClick={(e) => this.sortBy("callsign", -1, e.currentTarget)}>Callsign</th>
                 <th onClick={(e) => this.sortBy("score", 1, e.currentTarget)}>Score</th>
                 <th onClick={(e) => this.sortBy("team", -1, e.currentTarget)}>Team</th>

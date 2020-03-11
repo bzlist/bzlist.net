@@ -108,7 +108,7 @@ export class HomePage extends React.PureComponent<any, State>{
     }
 
     for(const element of this.tableHeaders.current?.children ?? []){
-      if(element.innerHTML.indexOf(" ") === element.innerHTML.length - 2){
+      if(element.innerHTML.lastIndexOf(" ") === element.innerHTML.length - 2){
         element.innerHTML = element.innerHTML.slice(0, -2);
       }
     }
