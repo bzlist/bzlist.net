@@ -151,6 +151,10 @@ div.content{
   }
 }
 
+.players table td:first-child{
+  white-space: normal;
+}
+
 @keyframes fade-in{
   from{
     opacity: 0;

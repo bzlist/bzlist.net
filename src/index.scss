@@ -302,13 +302,18 @@ td, th{
     td{
       word-break: break-word;
       white-space: pre;
+    }
 
-      &:first-child{
-        width: .01%;
-      }
+    @include mobile{
+      td:first-child:nth-last-child(2),
+      td:first-child:nth-last-child(2) ~ td{
+        &:first-child{
+          width: .1%;
+        }
 
-      &:last-child{
-        white-space: normal;
+        &:last-child{
+          white-space: normal;
+        }
       }
     }
 
