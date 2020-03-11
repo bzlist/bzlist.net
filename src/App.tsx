@@ -1,5 +1,5 @@
 import React from "react";
-import {Router, Route, Switch, Link} from "react-router-dom";
+import {Router, Route, Switch, Link, NavLink} from "react-router-dom";
 import "./App.scss";
 
 import {
@@ -144,31 +144,55 @@ class App extends React.PureComponent<any, State>{
       <Router history={history}>
         <div className="body">
           {this.state.offline ? <div className="offline">Currently offline.</div> : null}
-          <div className="navbar">
-            <input type="checkbox" id="drawer-toggle" ref={this.drawerToggleRef}/>
-            <label htmlFor="drawer-toggle" className="btn icon hamburger"></label>
-            <Link to="/" className="logo">{Icon("logo", true, "url(#a)")}BZList</Link>
-            <span style={{flex: 1}}></span>
-            <a className="btn btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSdHA0q3MjVvRMNozwkUFv4dMDhIA-YFCSyt-97P3Afvsdv1zQ/viewform?usp=sf_link" target="_blank" rel="noopener noreferrer">Survey</a>
-            <span style={{flex: 1}}></span>
-            <nav>
-              <Link to="/" className="btn">Servers</Link>
-              <Link to="/players" className="btn">Players</Link>
-              <Link to="/help" className="btn">Help</Link>
-              <Link to="/feedback" className="btn">Feedback</Link>
-            </nav>
-            {this.state.updateAvailable && <button className="btn icon" title="Update Ready!" onClick={() => window.location.reload()}>{Icon("update", true, "url(#a)")}</button>}
-            <a className="btn icon" href="https://github.com/bzlist/bzlist.net" target="_blank" rel="noopener noreferrer">{Icon("github", false)}</a>
-            <Link to="/settings" className="btn icon">{Icon("settings", false)}</Link>
-            <Link to="/account" className="btn icon">
-              {user.bzid !== "" ?
-                <img src={`https://forums.bzflag.org/download/file.php?avatar=${user.bzid}.png`} height="15" alt="" style={{borderRadius: "2px"}}/>
-              :
-                Icon("account", false)
-              }
+          <nav className="navbar">
+            <Link to="/">
+              <span className="icon">{Icon("logo", false)}</span>
+              <span>BZList</span>
             </Link>
-          </div>
-          <div style={{flex: 1}}>
+            {this.state.updateAvailable && <a href="/" onClick={() => window.location.reload()}>
+              <span className="icon">{Icon("update", true, "url(#a)")}</span>
+              <span>Update Ready!</span>
+            </a>}
+            <NavLink activeClassName="active" to="/" exact>
+              <span className="icon">{Icon("servers")}</span>
+              <span>Servers</span>
+            </NavLink>
+            <NavLink activeClassName="active" to="/players">
+              <span className="icon">{Icon("players")}</span>
+              <span>Players</span>
+            </NavLink>
+            <NavLink activeClassName="active" to="/help">
+              <span className="icon">{Icon("help")}</span>
+              <span>Help</span>
+            </NavLink>
+            <NavLink activeClassName="active" to="/feedback">
+              <span className="icon">{Icon("feedback")}</span>
+              <span>Send Feedback</span>
+            </NavLink>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdHA0q3MjVvRMNozwkUFv4dMDhIA-YFCSyt-97P3Afvsdv1zQ/viewform?usp=sf_link" target="_blank" rel="noopener noreferrer">
+              <span className="icon">{Icon("survey")}</span>
+              <span>Survey</span>
+            </a>
+            <a href="https://github.com/bzlist/bzlist.net" target="_blank" rel="noopener noreferrer">
+              <span className="icon">{Icon("github")}</span>
+              <span>GitHub</span>
+            </a>
+            <NavLink activeClassName="active" to="/settings">
+              <span className="icon">{Icon("settings")}</span>
+              <span>Settings</span>
+            </NavLink>
+            <NavLink activeClassName="active" to="/account">
+              <span className="icon">
+                {user.bzid !== "" ?
+                  <img src={`https://forums.bzflag.org/download/file.php?avatar=${user.bzid}.png`} height="15" alt="" style={{borderRadius: "2px"}}/>
+                :
+                  Icon("account")
+                }
+              </span>
+              <span>Account</span>
+            </NavLink>
+          </nav>
+          <div className="main">
             <Switch>
               <Route path="/players" component={PlayerPage}/>
               <Route path="/privacy-policy" component={PrivacyPolicyPage}/>
@@ -185,6 +209,7 @@ class App extends React.PureComponent<any, State>{
             <div className="links">
               <a href="https://github.com/bzlist/bzlist.net" target="_blank" rel="noopener noreferrer">GitHub</a> •&nbsp;
               <a href="https://github.com/gosquared/flags/blob/master/LICENSE.txt" target="_blank" rel="noopener noreferrer">GoSquared's Flags License</a> •&nbsp;
+              <a href="https://fontawesome.com/license" target="_blank" rel="noopener noreferrer">Font Awesome License</a> •&nbsp;
               <Link to="/terms-of-service">Terms of Service</Link> •&nbsp;
               <Link to="/privacy-policy">Privacy Policy</Link>
             </div>

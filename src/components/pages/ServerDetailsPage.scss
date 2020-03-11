@@ -1,11 +1,14 @@
 @import "../../variables.scss";
 
 .title{
+  width: calc(100% + #{$border-radius-large / 2 + 1});
   height: 300px;
   padding: 26px 36px;
   display: flex;
   box-sizing: border-box;
   align-items: flex-end;
+  position: relative;
+  left: -$border-radius-large / 2 - 1;
 
   @include mobile{
     height: 150px;

@@ -38,10 +38,10 @@ export class ServerRow extends ServerBase{
           favoriteServer(this.props.server);
           this.setState({favorite: isFavoriteServer(this.props.server)});
         }}>{Icon("heart", this.state.favorite, "url(#a)")}</button></td>
-        <td><button className="btn icon btn-play" onClick={(e) => {
+        <td><button className="btn icon" onClick={(e) => {
           e.stopPropagation();
           this.onClick("?play");
-        }} title="Play">&#9658;</button></td>
+        }} title="Play">{Icon("playCircle", true, "url(#c)")}</button></td>
       </tr>
     );
   }

@@ -181,7 +181,9 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
           <h1>{this.state.server.title}</h1>
         </div>
         <div className="server-header">
-          <div className="mobile-hide"><button className="btn btn-play" onClick={() => this.setState({selectTeam: true})} title="Requires BZFlag Launcher">&#9658; Play</button></div>
+          <div className="mobile-hide">
+            <button className="btn icon" onClick={() => this.setState({selectTeam: true})} title="Requires BZFlag Launcher">{Icon("playCircle", true, "url(#c)")}&nbsp;&nbsp;Play</button>
+          </div>
           <div>
             <button className="btn icon" onClick={() => {
               favoriteServer(this.state.server as Server);
