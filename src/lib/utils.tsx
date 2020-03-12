@@ -148,3 +148,33 @@ export const hideServer = (server: Server | null | string): void =>{
 
   settings.set("hiddenServers", JSON.stringify(hiddenServers));
 };
+
+export const sortBy = (
+  sort: string,
+  sortOrder: number,
+  target: HTMLElement,
+  currentSort: string,
+  currentSortOrder: number,
+  tableHeaders: React.RefObject<HTMLTableRowElement>,
+  storageKey: string,
+  callback: (sort: string, sortOrder: number) => void
+): void => {
+  // invert sort order if sorting by same field
+  if(currentSort === sort){
+    sortOrder = -currentSortOrder;
+  }
+
+  // remove all sort direction arrows
+  for(const element of tableHeaders.current?.children ?? []){
+    if(element.innerHTML.lastIndexOf(" ") === element.innerHTML.length - 2){
+      element.innerHTML = element.innerHTML.slice(0, -2);
+    }
+  }
+
+  if(target){
+    target.innerHTML += ` ${sortOrder < 0 ? "&#8593;" : "&#8595;"}`;
+  }
+
+  settings.set(storageKey, JSON.stringify({sort, sortOrder}));
+  callback(sort, sortOrder);
+};

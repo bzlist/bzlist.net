@@ -1,6 +1,6 @@
 import React from "react";
 
-import {cache, socket, autoPlural, settings, history, notification, api} from "lib";
+import {cache, socket, autoPlural, settings, history, notification, api, sortBy} from "lib";
 import {Player} from "models";
 import {TimeAgo, Search, PlayerRow, PlayerCard} from "components";
 
@@ -78,22 +78,9 @@ export class PlayerPage extends React.PureComponent<any, State>{
   }
 
   sortBy(sort: string, sortOrder: number, target: HTMLElement): void{
-    // invert sort order if sorting by same field
-    if(this.state.sort === sort){
-      sortOrder = -this.state.sortOrder;
-    }
-
-    for(const element of this.tableHeaders.current?.children ?? []){
-      if(element.innerHTML.lastIndexOf(" ") === element.innerHTML.length - 2){
-        element.innerHTML = element.innerHTML.slice(0, -2);
-      }
-    }
-    if(target){
-      target.innerHTML += ` ${sortOrder < 0 ? "&#8593;" : "&#8595;"}`;
-    }
-
-    this.setState({sort, sortOrder});
-    settings.set("playerSort", JSON.stringify({sort, sortOrder}));
+    sortBy(sort, sortOrder, target, this.state.sort, this.state.sortOrder, this.tableHeaders, "playerSort", (_sort: string, _sortOrder: number) =>
+      this.setState({sort: _sort, sortOrder: _sortOrder})
+    );
   }
 
   getPlayers(): Player[]{
