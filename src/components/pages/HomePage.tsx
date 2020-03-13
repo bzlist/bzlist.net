@@ -56,7 +56,9 @@ export class HomePage extends React.PureComponent<any, State>{
   }
 
   componentDidMount(): void{
-    new Image().src = "/images/servers/default.png";
+    if(!settings.getBool(settings.DATA_SAVER)){
+      new Image().src = "/images/servers/default.png";
+    }
 
     const {sort, sortOrder} = settings.getJson("serverSort", {sort: "playersCount", sortOrder: 1});
     this.sortBy(sort, sortOrder, this.tableHeaders.current?.children[SORT_INDEXES.indexOf(sort)] as HTMLElement);
@@ -85,7 +87,9 @@ export class HomePage extends React.PureComponent<any, State>{
 
       const playerCount = server.playersCount - observerTeam.players;
       if(playerCount >= 1){
-        new Image().src = `/images/servers/${server.address}_${server.port}.${imageExt}`;
+        if(!settings.getBool(settings.DATA_SAVER)){
+          new Image().src = `/images/servers/${server.address}_${server.port}.${imageExt}`;
+        }
 
         if(!this.firstData &&
            playerCount >= 2 &&

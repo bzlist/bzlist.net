@@ -5,7 +5,11 @@ import {settings, cache, IBoolSetting, notificationStatusText, user, storage, fa
 import {Dropdown, Switch, Icon} from "components";
 
 const themes = ["Light", "Dark", "Midnight"];
-const TABS = ["Appearance", "Notifications", "Favorites & Friends", "Other"];
+const TABS = ["Appearance", "Notifications", "Favorites & Friends", "Data Usage"];
+
+const tabToUrl = (tab: string): string => {
+  return tab.replace(/&/g, "").replace(/\s+/g, " ").replace(/ /g, "-").toLowerCase();
+};
 
 interface State{
   message: string;
@@ -20,7 +24,7 @@ export class SettingsPage extends React.PureComponent<any, State>{
 
     let tab = 0;
     for(let i = 0; i < TABS.length; i++){
-      if(history.location.pathname.endsWith(TABS[i].replace(/ /g, "").replace(/&/g, "-").toLowerCase())){
+      if(history.location.pathname.endsWith(tabToUrl(TABS[i]))){
         tab = i;
         break;
       }
@@ -55,7 +59,7 @@ export class SettingsPage extends React.PureComponent<any, State>{
 
   setTab(index: number): void{
     this.setState({tab: index});
-    history.push(`/settings/${TABS[index].replace(/ /g, "").replace(/&/g, "-").toLowerCase()}`);
+    history.push(`/settings/${tabToUrl(TABS[index])}`);
   }
 
   render(): JSX.Element{
@@ -81,10 +85,6 @@ export class SettingsPage extends React.PureComponent<any, State>{
                     description="Reduce the height of table rows to fit more on the screen at once"
                     checked={settings.getBool(settings.COMPACT_TABLES)}
                     onChange={(value: boolean) => this.set(settings.COMPACT_TABLES, value)}/>
-            <Switch label="Active Servers Only"
-                    description="Only get servers with at least 1 player or observer"
-                    checked={settings.getBool(settings.ONLY_SERVERS_WITH_PLAYERS)}
-                    onChange={(value: boolean) => this.set(settings.ONLY_SERVERS_WITH_PLAYERS, value)}/>
             <Switch label="Ignore Online Observers"
                     description="Don't treat observers as players on the server list"
                     checked={settings.getBool(settings.EXCLUDE_OBSERVERS)}
@@ -181,6 +181,14 @@ export class SettingsPage extends React.PureComponent<any, State>{
             </div>
           </>}
           {this.state.tab === 3 && <>
+            <Switch label="Data Saver"
+                    description="Use less network data (can reduce performance)"
+                    checked={settings.getBool(settings.DATA_SAVER)}
+                    onChange={(value: boolean) => this.set(settings.DATA_SAVER, value)}/>
+            <Switch label="Active Servers Only"
+                    description="Only get servers with at least 1 player or observer"
+                    checked={settings.getBool(settings.ONLY_SERVERS_WITH_PLAYERS)}
+                    onChange={(value: boolean) => this.set(settings.ONLY_SERVERS_WITH_PLAYERS, value)}/>
             <Switch label="Disable Real-time Data"
                     description="Don't use real-time data (may save data)"
                     checked={settings.getBool(settings.DISABLE_REALTIME_DATA)}

@@ -44,6 +44,10 @@ class Settings extends Storage{
     key: "disableRealtimeData",
     defaultValue: false
   };
+  DATA_SAVER: IBoolSetting = {
+    key: "dataSaver",
+    defaultValue: false
+  };
 
   constructor(){
     super("setting_");
