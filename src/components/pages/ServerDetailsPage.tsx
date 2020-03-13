@@ -5,6 +5,7 @@ import "./ServerDetailsPage.scss";
 import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings, isFavoriteServer, favoriteServer, hideServer, api} from "lib";
 import {Server, Player, Team} from "models";
 import {TimeAgo, PlayerRow, Switch, Icon, playerSort} from "components";
+import {imageExt} from "index";
 
 interface Params{
   address: string;
@@ -174,10 +175,11 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
     }
 
     const isServerHidden = settings.getJson("hiddenServers", []).includes(`${this.state.server.address}:${this.state.server.port}`);
+    const imageUrl = `/images/servers/${this.state.server.address}_${this.state.server.port}`;
 
     return (
       <div>
-        <div className="title" style={{background: `url(/images/servers/${this.state.server.address}_${this.state.server.port}.png), url(/images/servers/default.png) no-repeat center center`}}>
+        <div className="title" style={{background: `url(${imageUrl}.${imageExt}), url(/images/servers/default.png) center`}}>
           <h1>{this.state.server.title}</h1>
         </div>
         <div className="server-header">

@@ -1,8 +1,9 @@
 import React from "react";
 
-import {cache, socket, history, autoPlural, settings, notification, api, sortBy} from "lib";
+import {cache, socket, history, autoPlural, settings, notification, api, sortBy, favoriteServer} from "lib";
 import {Server, Team, Player} from "models";
 import {TimeAgo, Search, ServerRow, ServerCard, PlayerRow, playerSort} from "components";
+import {imageExt} from "index";
 
 const SORT_INDEXES = ["playersCount", "address", "country", "configuration.gameStyle", "title"];
 
@@ -84,13 +85,13 @@ export class HomePage extends React.PureComponent<any, State>{
 
       const playerCount = server.playersCount - observerTeam.players;
       if(playerCount >= 1){
-        new Image().src = `/images/servers/${server.address}_${server.port}.png`;
+        new Image().src = `/images/servers/${server.address}_${server.port}.${imageExt}`;
 
         if(!this.firstData &&
            playerCount >= 2 &&
            settings.getBool(settings.NOTIFICATIONS) &&
            settings.getBool(settings.SERVER_NOTIFICATIONS) &&
-           settings.getJson("favoriteServers", []).includes(`${server.address}:${server.port}`)){
+           favoriteServer(server.address)){
           notification(`${server.title} has ${playerCount} players`, "", `${server.address}:${server.port}`, () => {
             history.push(`/s/${server.address}/${server.port}`);
           });

@@ -5,6 +5,7 @@ module.exports = {
     "build/manifest.webmanifest",
     "build/static/**/!(*map*)",
     "build/images/servers/default.png",
+    "build/images/servers/*.webp",
     "build/favicon.ico"
   ],
   navigateFallback: "/index.html",

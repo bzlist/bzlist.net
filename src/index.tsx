@@ -7,6 +7,10 @@ import App from "./App";
 
 export const onUpdateFound: (() => void)[] = [];
 
+const canvas = document.createElement("canvas");
+export const imageExt = process.env.NODE_ENV === "production" ? canvas.toDataURL("image/webp").indexOf("data:image/webp") === 0 ? "webp" : "png" : "png";
+canvas.remove();
+
 ReactDOM.render(<BrowserRouter><App/></BrowserRouter>, document.getElementById("root"));
 
 console.log("%cHang On!", "font-size: 56px");
