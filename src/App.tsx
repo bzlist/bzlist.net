@@ -44,34 +44,6 @@ class App extends React.PureComponent<any, State>{
     window.ononline = () => this.setState({offline: false});
     window.onoffline = () => this.setState({offline: true});
 
-    // swiping
-    const touchsurface = document.documentElement,
-          threshold = 100, // required min distance traveled to be considered swipe
-          allowedTime = 300; // maximum time allowed to travel that distance
-    let startX = 0,
-        startY = 0,
-        startTime = 0;
-
-    touchsurface.addEventListener("touchstart", (e) => {
-      const touch = e.changedTouches[0];
-      startX = touch.pageX;
-      startY = touch.pageY;
-      startTime = new Date().getTime();
-    });
-
-    touchsurface.addEventListener("touchend", (e) => {
-      const touch = e.changedTouches[0];
-      const elapsedTime = new Date().getTime() - startTime;
-
-      if(this.drawerToggleRef.current && elapsedTime <= allowedTime && Math.abs(touch.pageY - startY) <= 30){
-        if(touch.pageX - startX >= threshold){
-          this.drawerToggleRef.current.checked = true;
-        }else if(touch.pageX + startX >= threshold){
-          this.drawerToggleRef.current.checked = false;
-        }
-      }
-    });
-
     this.setPageTitle(history.location.pathname);
     history.listen((location: any, action: string) => {
       this.setPageTitle(location.pathname);
