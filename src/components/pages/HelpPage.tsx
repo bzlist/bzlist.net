@@ -22,7 +22,7 @@ export const HelpPage = (): JSX.Element => (
       <span className="label">When chosing a team after clicking PLAY nothing happens.</span><br/>
       You must install <a href="https://github.com/The-Noah/bzflag-launcher" target="_blank" rel="noopener noreferrer">BZFlag Launcher</a>, however it is currently only supported on Windows.<br/><br/>
       <span className="label">Data doesn't seem to be updating.</span><br/>
-      If the API had to restart (due to an error or update) then refreshing the page should fix it. Also data won't automatically update if you turned it off in <Link to="/settings/other">settings</Link>. If you continue to experience issues contact me.
+      If the API had to restart (due to an error or update) then refreshing the page should fix it. Also data won't automatically update if you turned it off in <Link to="/settings/data-usage">settings</Link>. If you continue to experience issues contact me.
     </p>
     <p><small>Release version <a href={`https://github.com/bzlist/bzlist.net/releases/tag/v${version}`} target="_blank" rel="noopener noreferrer">v{version}</a> See <a href={`https://github.com/bzlist/bzlist.net/compare/v${version}...master`} target="_blank" rel="noopener noreferrer">what's new</a>.</small></p>
   </div>
