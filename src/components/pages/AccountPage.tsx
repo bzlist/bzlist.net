@@ -1,7 +1,14 @@
 import React from "react";
 
-import {storage, bzLoginURL, api, user, checkAuth, deleteAccount, signout, updateUserCache, settings, authHeaders} from "lib";
+import {storage, api, user, checkAuth, deleteAccount, signout, updateUserCache, settings, authHeaders} from "lib";
 import {Switch} from "components";
+
+let bzLoginURL: string;
+if(process.env.NODE_ENV === "production"){
+  bzLoginURL = "https://my.bzflag.org/weblogin.php?action=weblogin&url=https%3A%2F%2Fbzlist.net%2Faccount%3Fusername%3D%25USERNAME%25%26token%3D%25TOKEN%25";
+}else{
+  bzLoginURL = "https://my.bzflag.org/weblogin.php?action=weblogin&url=http%3A%2F%2Flocalhost%3A3000%2Faccount%3Fusername%3D%25USERNAME%25%26token%3D%25TOKEN%25";
+}
 
 const fetchSettings = async (): Promise<void> => {
   if(storage.get("syncSettings") !== "false" && storage.get("token") !== ""){

@@ -20,8 +20,8 @@ interface State{
 export class HomePage extends React.PureComponent<any, State>{
   mobile = window.innerWidth <= 768;
   firstData = true;
-  infoPopoutRef = React.createRef<HTMLDivElement>();
   tableHeaders = React.createRef<HTMLTableRowElement>();
+  infoPopoutRef = React.createRef<HTMLDivElement>();
 
   constructor(props: any){
     super(props);

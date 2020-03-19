@@ -44,14 +44,6 @@ export const api =  async (endpoint: string, body: any = undefined, method = "PO
   }).then((res: Response) => res.json()).catch(console.error);
 };
 
-let _bzLoginURL;
-if(process.env.NODE_ENV === "production"){
-  _bzLoginURL = "https://my.bzflag.org/weblogin.php?action=weblogin&url=https%3A%2F%2Fbzlist.net%2Faccount%3Fusername%3D%25USERNAME%25%26token%3D%25TOKEN%25";
-}else{
-  _bzLoginURL = "https://my.bzflag.org/weblogin.php?action=weblogin&url=http%3A%2F%2Flocalhost%3A3000%2Faccount%3Fusername%3D%25USERNAME%25%26token%3D%25TOKEN%25";
-}
-export const bzLoginURL = _bzLoginURL;
-
 export const notification = (title: string, body: string, tag: string, onclick: (this: Notification, event: Event) => void): void => {
   if(!window.Notification){
     return console.log("Browser does not support notifications");
@@ -82,15 +74,6 @@ export const notification = (title: string, body: string, tag: string, onclick: 
       }
     });
   }
-};
-
-export const notificationStatusText = (): string => {
-  if("Notification" in window){
-    const text = Notification.permission;
-    return text === "default" ? "not enabled" : text;
-  }
-
-  return "not supported";
 };
 
 export const favoriteServer = (server: Server | string): void => {

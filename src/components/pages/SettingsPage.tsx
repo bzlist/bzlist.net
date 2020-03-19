@@ -1,7 +1,7 @@
 import React from "react";
 import "./SettingsPage.scss";
 
-import {settings, cache, IBoolSetting, notificationStatusText, user, storage, favoriteServer, friendPlayer, history, hideServer} from "lib";
+import {settings, cache, IBoolSetting, user, storage, favoriteServer, friendPlayer, history, hideServer} from "lib";
 import {Dropdown, Switch, Icon} from "components";
 
 const themes = ["Light", "Dark", "Midnight"];
@@ -9,6 +9,15 @@ const TABS = ["Appearance", "Notifications", "Favorites & Friends", "Data Usage"
 
 const tabToUrl = (tab: string): string => {
   return tab.replace(/&/g, "").replace(/\s+/g, " ").replace(/ /g, "-").toLowerCase();
+};
+
+const notificationStatusText = (): string => {
+  if("Notification" in window){
+    const text = Notification.permission;
+    return text === "default" ? "not enabled" : text;
+  }
+
+  return "not supported";
 };
 
 interface State{
