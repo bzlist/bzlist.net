@@ -5,17 +5,23 @@ import "./App.scss";
 import {
   HomePage,
   PlayerPage,
-  PrivacyPolicyPage,
-  TermsOfServicePage,
-  HelpPage,
   ServerDetailsPage,
-  SettingsPage,
   AccountPage,
-  FeedbackPage,
   Icon
 } from "./components";
 import {settings, history, storage, api, checkAuth, updateUserCache, user, userChanged, authHeaders} from "./lib";
 import {onUpdateFound} from "index";
+
+const genAsyncRoute = (path: string, page: string): JSX.Element => {
+  const Page = React.lazy(() => import(`./components/pages/${page}Page`));
+  const Component = (): JSX.Element =>
+    <React.Suspense fallback={<div>Loading...</div>}>
+      <Page/>
+    </React.Suspense>
+  ;
+
+  return <Route path={path} component={Component}/>;
+};
 
 interface State{
   offline: boolean;
@@ -167,13 +173,13 @@ class App extends React.PureComponent<any, State>{
           <div className="main">
             <Switch>
               <Route path="/players" component={PlayerPage}/>
-              <Route path="/privacy-policy" component={PrivacyPolicyPage}/>
-              <Route path="/terms-of-service" component={TermsOfServicePage}/>
-              <Route path="/help" component={HelpPage}/>
+              {genAsyncRoute("/privacy-policy", "PrivacyPolicy")}
+              {genAsyncRoute("/terms-of-service", "TermsOfService")}
+              {genAsyncRoute("/help", "Help")}
               <Route path="/s/:address/:port" component={ServerDetailsPage}/>
-              <Route path="/settings" component={SettingsPage}/>
+              {genAsyncRoute("/settings", "Settings")}
               <Route path="/account" component={AccountPage}/>
-              <Route path="/feedback" component={FeedbackPage}/>
+              {genAsyncRoute("/feedback", "Feedback")}
               <Route path="/" component={HomePage}/>
             </Switch>
           </div>

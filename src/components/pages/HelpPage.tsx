@@ -28,3 +28,5 @@ export const HelpPage = (): JSX.Element => (
   </div>
   /* tslint:enable:max-line-length */
 );
+
+export default HelpPage;

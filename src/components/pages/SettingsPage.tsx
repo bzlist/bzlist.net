@@ -205,3 +205,5 @@ export class SettingsPage extends React.PureComponent<any, State>{
     );
   }
 }
+
+export default SettingsPage;
