@@ -181,7 +181,6 @@ class App extends React.PureComponent<any, State>{
             <div className="links">
               <a href="https://github.com/bzlist/bzlist.net" target="_blank" rel="noopener noreferrer">GitHub</a> •&nbsp;
               <a href="https://github.com/gosquared/flags/blob/master/LICENSE.txt" target="_blank" rel="noopener noreferrer">GoSquared's Flags License</a> •&nbsp;
-              <a href="https://fontawesome.com/license" target="_blank" rel="noopener noreferrer">Font Awesome License</a> •&nbsp;
               <Link to="/terms-of-service">Terms of Service</Link> •&nbsp;
               <Link to="/privacy-policy">Privacy Policy</Link>
             </div>
