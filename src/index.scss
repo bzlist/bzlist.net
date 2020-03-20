@@ -83,6 +83,11 @@ h2{
 .icon svg, .icon img{
   position: relative;
   top: 2px;
+  transition: transform .2s ease-in-out;
+}
+
+.icon:active svg, .icon:active img{
+  transform: scale(calc(1 + var(--animations) * .1));
 }
 
 .link{

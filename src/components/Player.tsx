@@ -37,7 +37,7 @@ export class PlayerRow extends PlayerBase{
         <td>{player.team}</td>
         {serverTr}
         {this.props.showFriend &&
-          <td><button className="btn icon" onClick={() => {
+          <td><button className="btn icon" onClick={(e) => {
             friendPlayer(player.callsign);
             this.setState({friend: isPlayerFriend(player.callsign)});
           }} title={this.state.friend ? "Remove friend" : "Add as friend"}>{Icon("friend", this.state.friend, "url(#a)")}</button></td>
