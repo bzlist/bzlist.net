@@ -1,14 +1,14 @@
 @import "../../variables.scss";
 
 .title{
-  width: calc(100% + #{$border-radius-large / 2 + 1});
+  width: calc(100% + #{$border-radius-large});
   height: 300px;
   padding: 26px 36px;
   display: flex;
   box-sizing: border-box;
   align-items: flex-end;
   position: relative;
-  left: -$border-radius-large / 2 - 1;
+  left: -$border-radius-large;
 
   @include mobile{
     height: 150px;
@@ -29,7 +29,8 @@
 }
 
 .server-header{
-  padding: 8px 18px;
+  margin-top: 4px;
+  padding: 0 18px;
   display: flex;
   align-items: center;
 
@@ -73,6 +74,7 @@
 }
 
 div.content{
+  margin-bottom: 22px;
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
 
   .players td{

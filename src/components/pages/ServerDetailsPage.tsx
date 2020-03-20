@@ -202,7 +202,6 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
           <div><b>{autoPlural(`${this.state.server.playersCount} Player`)}</b></div>
         </div>
         <div className="container">
-          <Switch label="Hide Server" description="Don't show in server list" checked={isServerHidden} onChange={() => hideServer(this.state.server)}/><br/>
           <div className="card-list content">
             <div>
               <h2>Info</h2>
@@ -299,6 +298,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
               </table>
             </div>
           </div>
+          <Switch label="Hide Server" description="Don't show in server list" checked={isServerHidden} onChange={() => hideServer(this.state.server)}/><br/>
         </div>
         {playPopup}
       </div>
