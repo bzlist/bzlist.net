@@ -33,7 +33,7 @@ export const autoPlural = (value: string): string => {
   return value.split(" ")[0] === "1" ? value : `${value}s`;
 };
 
-export const api =  async (endpoint: string, body: any = undefined, method = "POST", headers: any = {}): Promise<any> => {
+export const api = async (endpoint: string, body: any = undefined, method = "POST", headers: any = {}): Promise<any> => {
   return fetch(`https://api.bzlist.net/${endpoint}`, {
     headers: {
       "Content-Type": "application/json",
