@@ -163,7 +163,15 @@ class App extends React.PureComponent<any, State>{
             <NavLink activeClassName="active" to="/account">
               <span className="icon">
                 {user.bzid !== "" ?
-                  <img src={`https://forums.bzflag.org/download/file.php?avatar=${user.bzid}.png`} height="15" alt="" style={{borderRadius: "2px"}}/>
+                  <img src={`https://forums.bzflag.org/download/file.php?avatar=${user.bzid}.png`} onError={(e) => {
+                    if(e.currentTarget.src.endsWith(".png")){
+                      e.currentTarget.src = `https://forums.bzflag.org/download/file.php?avatar=${user.bzid}.jpeg`;
+                    }else if(e.currentTarget.src.endsWith(".jpeg")){
+                      e.currentTarget.src = `https://forums.bzflag.org/download/file.php?avatar=${user.bzid}.jpg`;
+                    }else if(e.currentTarget.src.endsWith(".jpg")){
+                      e.currentTarget.src = `https://forums.bzflag.org/download/file.php?avatar=${user.bzid}.gif`;
+                    }
+                  }} height="15" alt="" style={{borderRadius: "2px"}}/>
                 :
                   Icon("account")
                 }
