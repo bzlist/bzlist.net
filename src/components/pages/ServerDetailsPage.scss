@@ -3,7 +3,7 @@
 .title{
   width: calc(100% + #{$border-radius-large});
   height: 300px;
-  padding: 26px 36px;
+  padding: 1.6rem 2.25rem;
   display: flex;
   box-sizing: border-box;
   align-items: flex-end;
@@ -17,37 +17,37 @@
 
   & > h1{
     color: #EEE;
-    font-size: 38px;
+    font-size: 2.4rem;
     font-weight: normal;
-    text-shadow: 0 0 6px #000, 0 0 12px #000;
+    text-shadow: 0 0 .38rem #000, 0 0 .75rem #000;
     word-break: break-word;
 
     @include mobile{
-      font-size: 24px;
+      font-size: 1.5rem;
     }
   }
 }
 
 .server-header{
-  margin-top: 4px;
-  padding: 0 18px;
+  margin-top: .25rem;
+  padding: 0 1.1rem;
   display: flex;
   align-items: center;
 
   @include mobile{
-    padding: 2px;
+    padding: .125rem;
   }
 
   & > div{
-    margin-right: 32px;
+    margin-right: 2rem;
     display: flex;
     align-items: center;
 
     @include mobile{
-      margin-right: 10px;
+      margin-right: .63rem;
 
       & > .icon{
-        padding: 0 12px;
+        padding: 0 .75rem;
       }
     }
 
@@ -56,25 +56,20 @@
     }
 
     & > .icon{
-      height: 38px;
+      height: 2.38rem;
       display: flex;
       align-items: center;
 
       svg{
-        height: 20px;
+        height: 1.25rem;
         top: 0;
       }
     }
   }
-
-  .btn-play{
-    line-height: 38px;
-    box-shadow: $shadow;
-  }
 }
 
 div.content{
-  margin-bottom: 22px;
+  margin-bottom: 1.5rem;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
 
   .players td{
@@ -85,7 +80,7 @@ div.content{
     grid-template-columns: inherit;
 
     & > * h2{
-      font-size: 24px;
+      font-size: 1.5rem;
     }
   }
 }
@@ -119,8 +114,8 @@ div.content{
   }
 
   .close{
-    padding-top: 8px;
-    padding-right: 8px;
+    padding-top: .5rem;
+    padding-right: .5rem;
     position: absolute;
     top: 0;
     right: 0;
@@ -128,7 +123,7 @@ div.content{
 
   .popup__container{
     max-width: 90%;
-    width: 380px;
+    width: 400px;
     min-height: 100px;
     background-color: var(--bg-lighter);
     position: relative;
@@ -137,18 +132,18 @@ div.content{
   }
 
   .popup__header{
-    padding: 16px;
+    padding: 1rem;
     text-align: center;
   }
 
   .popup__inner{
-    padding: 16px;
+    padding: 1rem;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     grid-gap: .5rem;
 
     .btn{
-      padding: 0 4px;
+      padding: 0 .25rem;
     }
   }
 }

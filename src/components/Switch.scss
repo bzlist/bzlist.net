@@ -18,15 +18,15 @@
   }
 
   .switch__label{
-    line-height: 20px;
+    line-height: 1.25rem;
   }
 
   .switch__inner-container{
-    width: 42px;
-    height: 24px;
+    width: 2.6rem;
+    height: 1.5rem;
     position: relative;
     box-shadow: $shadow;
-    border-radius: 34px;
+    border-radius: 2rem;
   }
 
   .switch__slider{
@@ -36,17 +36,17 @@
     left: 0;
     right: 0;
     bottom: 0;
-    border-radius: 34px;
+    border-radius: 2rem;
     transition: .1s all ease-out;
 
     &:before{
       content: "";
-      width: 16px;
-      height: 16px;
+      width: 1rem;
+      height: 1rem;
       background-color: #F0F0F0;
       position: absolute;
-      left: 4px;
-      bottom: 4px;
+      left: .25rem;
+      bottom: .25rem;
       border-radius: 50%;
       transition: .1s all ease-out;
     }
@@ -56,7 +56,7 @@
     background: $gradient-primary;
 
     &:before{
-      left: 22px;
+      left: 1.3rem;
     }
   }
 }

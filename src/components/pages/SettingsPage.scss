@@ -2,7 +2,7 @@
 @import "../../index.scss";
 
 .settings{
-  margin-top: 36px;
+  margin-top: 2.25rem;
   line-height: 1.7;
   display: flex;
 
@@ -13,23 +13,23 @@
   }
 
   .settings__sidebar{
-    padding: 0 52px;
+    padding: 0 3.25rem;
     flex-basis: 340px;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
 
     @include mobile{
-      padding: 12px 0 18px 0;
+      padding: .75rem 0 1.1rem 0;
       flex-basis: auto;
     }
 
     h2{
-      margin-bottom: 20px;
+      margin-bottom: 1.25rem;
     }
 
     .btn{
-      margin-top: 8px;
+      margin-top: .5rem;
       text-align: left;
       position: relative;
 
@@ -40,7 +40,7 @@
   }
 
   .settings__inner{
-    padding-right: 52px;
+    padding-right: 3.25rem;
     flex: 1;
 
     @include mobile{
@@ -52,7 +52,7 @@
     }
 
     .btn-list{
-      margin-top: 64px;
+      margin-top: 3rem;
     }
   }
 }

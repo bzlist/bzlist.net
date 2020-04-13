@@ -4,14 +4,14 @@
   max-width: 300px;
   position: relative;
   user-select: none;
-  font-size: 14px;
+  font-size: .9rem;
   cursor: pointer;
 }
 
 .dropdown__title{
-  padding: 0 8px;
+  padding: 0 .5rem;
   display: block;
-  line-height: 30px;
+  line-height: 2rem;
   border: 1px solid var(--color-text);
   border-radius: $border-radius;
 
@@ -23,8 +23,8 @@
 .dropdown__caret{
   position: absolute;
   top: 1px;
-  right: 8px;
-  line-height: 30px;
+  right: .5rem;
+  line-height: 2rem;
 }
 
 .dropdown__content{
@@ -39,8 +39,8 @@
 
 .dropdown__option{
   width: 100%;
-  height: 36px;
-  padding: 0 8px;
+  height: 2.25rem;
+  padding: 0 .6rem;
   display: flex;
   align-items: center;
   box-sizing: border-box;

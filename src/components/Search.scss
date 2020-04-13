@@ -2,7 +2,7 @@
 
 .search-box{
   height: 38px;
-  padding: 2px 14px;
+  padding: .1rem .9rem;
   background-color: var(--bg-lighter);
   box-sizing: border-box;
   display: flex;
@@ -13,7 +13,7 @@
   z-index: 0;
 
   input{
-    margin-right: 38px;
+    margin-right: 2.4rem;
     max-width: 100%;
     background: transparent;
     flex: 1;
@@ -22,7 +22,7 @@
 
   .icon:first-child{
     margin-top: -4px;
-    margin-right: 12px;
+    margin-right: .75rem;
     display: flex;
     flex-direction: column;
     justify-content: center;

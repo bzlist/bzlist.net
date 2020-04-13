@@ -124,7 +124,7 @@ class App extends React.PureComponent<any, State>{
         <div className="body">
           {this.state.offline ? <div className="offline">Currently offline.</div> : null}
           <nav className="navbar">
-            <Link to="/">
+            <Link to="/" className="mobile-hide">
               <span className="icon">{Icon("logo", false)}</span>
               <span>BZList</span>
             </Link>
@@ -144,15 +144,17 @@ class App extends React.PureComponent<any, State>{
               <span className="icon">{Icon("help")}</span>
               <span>Help</span>
             </NavLink>
-            <NavLink activeClassName="active" to="/feedback">
-              <span className="icon">{Icon("feedback")}</span>
-              <span>Send Feedback</span>
-            </NavLink>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdHA0q3MjVvRMNozwkUFv4dMDhIA-YFCSyt-97P3Afvsdv1zQ/viewform?usp=sf_link" target="_blank" rel="noopener noreferrer">
+            {user.bzid !== "" &&
+              <NavLink activeClassName="active" to="/feedback">
+                <span className="icon">{Icon("feedback")}</span>
+                <span>Send Feedback</span>
+              </NavLink>
+            }
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdHA0q3MjVvRMNozwkUFv4dMDhIA-YFCSyt-97P3Afvsdv1zQ/viewform?usp=sf_link" className="mobile-hide" target="_blank" rel="noopener noreferrer">
               <span className="icon">{Icon("survey")}</span>
               <span>Survey</span>
             </a>
-            <a href="https://github.com/bzlist/bzlist.net" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/bzlist/bzlist.net" className="mobile-hide" target="_blank" rel="noopener noreferrer">
               <span className="icon">{Icon("github")}</span>
               <span>GitHub</span>
             </a>
@@ -195,6 +197,8 @@ class App extends React.PureComponent<any, State>{
           <footer>
             <div className="links">
               <a href="https://github.com/bzlist/bzlist.net" target="_blank" rel="noopener noreferrer">GitHub</a> •&nbsp;
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLSdHA0q3MjVvRMNozwkUFv4dMDhIA-YFCSyt-97P3Afvsdv1zQ/viewform?usp=sf_link" target="_blank" rel="noopener noreferrer">Survey</a> •&nbsp;
+              <Link to="/feedback">Feedback</Link> •&nbsp;
               <a href="https://github.com/gosquared/flags/blob/master/LICENSE.txt" target="_blank" rel="noopener noreferrer">GoSquared's Flags License</a> •&nbsp;
               <Link to="/terms-of-service">Terms of Service</Link> •&nbsp;
               <Link to="/privacy-policy">Privacy Policy</Link>
