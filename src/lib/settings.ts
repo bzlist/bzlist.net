@@ -54,6 +54,12 @@ class Settings extends Storage{
     this.onChange = async (key: string, value: string, sync: boolean = true): Promise<void> => {
       if(key === this.DISABLE_ANIMATIONS.key){
         document.documentElement.style.setProperty("--animations", value !== "true" ? "1" : "0");
+      }else if(key === this.CUSTOM_SCROLLBARS.key){
+        if(this.getBool(this.CUSTOM_SCROLLBARS)){
+          document.documentElement.classList.add("custom-scrollbars");
+        }else{
+          document.documentElement.classList.remove("custom-scrollbars");
+        }
       }
 
       if(storage.get("syncSettings") === "false" || !sync){

@@ -91,6 +91,13 @@ class App extends React.PureComponent<any, State>{
         if(data.disableAnimations){
           document.documentElement.style.setProperty("--animations", settings.getBool(settings.DISABLE_ANIMATIONS) ? "0" : "1");
         }
+        if(data.customScrollbars){
+          if(settings.getBool(settings.CUSTOM_SCROLLBARS)){
+            document.documentElement.classList.add("custom-scrollbars");
+          }else{
+            document.documentElement.classList.remove("custom-scrollbars");
+          }
+        }
       }
     }
 
