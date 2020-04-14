@@ -39,7 +39,7 @@
     Learn how to configure a non-root public URL by running `npm run build`.
   -->
   <title>BZList</title>
-  <script>if(localStorage.getItem("setting_theme") === "dark" || localStorage.getItem("setting_theme") === "midnight" || (localStorage.getItem("setting_theme") === null && window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)){document.documentElement.style.backgroundColor="#111"}setTimeout(function(){document.getElementById("perror").style.display="block"},2000)</script>
+  <script>if(localStorage.getItem("setting_theme") === "dark" || localStorage.getItem("setting_theme") === "midnight" || (localStorage.getItem("setting_theme") === null && window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)){document.documentElement.style.backgroundColor="#111"}setTimeout(function(){document.getElementById("perror")&&(document.getElementById("perror").style.display="block")},2000)</script>
 </head>
 <body>
   <div id="root">
