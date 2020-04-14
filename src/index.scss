@@ -109,8 +109,7 @@ a, .link{
 }
 
 a:hover, .link:hover{
-  background: $color-primary-light;
-  background-clip: text;
+  color: $color-primary-light;
   text-decoration: underline;
 }
 
