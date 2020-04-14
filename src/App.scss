@@ -93,6 +93,8 @@
       color: #EEE;
       white-space: nowrap;
       display: none;
+      animation: slide-in calc(var(--animations) * .1s) forwards ease;
+      opacity: calc(var(--animations) * -1 + 1);
     }
   }
 }
