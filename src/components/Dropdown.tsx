@@ -67,7 +67,7 @@ export class Dropdown extends React.PureComponent<Props, State>{
         {
           this.state.show && <div className="dropdown__content">
             {this.props.items.map((item: string) =>
-              <div key={item} className="dropdown__option" onClick={() => this.select(item)}>{item}</div>
+              <div key={item} className={`dropdown__option ${this.state.label === item && "selected"}`} onClick={() => this.select(item)}>{item}</div>
             )}
           </div>
         }
