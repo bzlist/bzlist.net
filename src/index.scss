@@ -152,7 +152,8 @@ a:hover, .link:hover{
 }
 
 .btn-outline{
-  border: 1px solid var(--color-text);
+  background: $gradient-dark;
+  color: #FFF;
 
   &:active{
     border-color: $color-primary;
