@@ -215,10 +215,14 @@ td, th{
 
   &:first-child{
     padding-left: .9rem;
+    border-top-left-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
   }
 
   &:last-child{
     padding-right: .9rem;
+    border-top-right-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
   }
 
   &:last-child,
