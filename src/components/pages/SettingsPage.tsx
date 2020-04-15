@@ -107,7 +107,7 @@ export class SettingsPage extends React.PureComponent<any, State>{
                     checked={settings.getBool(settings.DISABLE_ANIMATIONS)}
                     onChange={(value: boolean) => this.set(settings.DISABLE_ANIMATIONS, value)}/>
             <Switch label="Experimental Info Cards"
-                    description="Show experimental info cards when mousing over a server"
+                    description="Show experimental info card when mousing over a server"
                     checked={settings.getBool(settings.INFO_CARDS)}
                     onChange={(value: boolean) => this.set(settings.INFO_CARDS, value)}/>
             <span className="label">Theme</span>
@@ -204,7 +204,7 @@ export class SettingsPage extends React.PureComponent<any, State>{
                     onChange={(value: boolean) => this.set(settings.DISABLE_REALTIME_DATA, value)}/>
           </>}
           <div className="btn-list">
-            <button className="btn btn-outline" onClick={() => {settings.clear();this.message("Settings cleared");}}>Reset</button>
+            <button className="btn btn-outline" onClick={() => {settings.clear();this.message("Settings cleared");}} aria-label="Reset all settings to default">Reset</button>
             <button className="btn btn-outline" onClick={() => {cache.clear();this.message("Cache cleared");}}>Clear Cache</button>
             <b>{this.state.message}</b>
           </div>
