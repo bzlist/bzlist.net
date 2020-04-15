@@ -9,7 +9,7 @@
   position: fixed;
   border-top-right-radius: $border-radius-large;
   border-bottom-right-radius: $border-radius-large;
-  z-index: 99;
+  z-index: 98;
   transition: width calc(var(--animations) * .1s) ease;
 
   @include mobile{

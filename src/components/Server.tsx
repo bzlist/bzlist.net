@@ -29,19 +29,19 @@ export class ServerRow extends ServerBase{
         <td>{this.props.server.playersCount}</td>
         <td>{this.props.server.address}:{this.props.server.port}</td>
         <td>
-          <img src={`https://countryflags.io/${this.props.server.countryCode}/flat/32.png`} alt={this.props.server.countryCode} title={this.props.server.country}/>
+          <span aria-label={this.props.server.country}><img src={`https://countryflags.io/${this.props.server.countryCode}/flat/32.png`} alt={this.props.server.countryCode}/></span>
         </td>
-        <td title={verboseGameStyle(this.props.server.configuration.gameStyle)}>{this.props.server.configuration.gameStyle}</td>
+        <td><span aria-label={verboseGameStyle(this.props.server.configuration.gameStyle)}>{this.props.server.configuration.gameStyle}</span></td>
         <td>{this.props.server.title}</td>
         <td><button className="btn icon" onClick={(e) => {
           e.stopPropagation();
           favoriteServer(this.props.server);
           this.setState({favorite: isFavoriteServer(this.props.server)});
-        }}>{Icon("heart", this.state.favorite, "url(#a)")}</button></td>
+        }} aria-label={this.state.favorite ? "Unfavorite" : "Favorite"}>{Icon("heart", this.state.favorite, "url(#a)")}</button></td>
         <td><button className="btn icon" onClick={(e) => {
           e.stopPropagation();
           this.onClick("?play");
-        }} title="Play">{Icon("playCircle", true, "url(#c)")}</button></td>
+        }} aria-label="Play">{Icon("playCircle", true, "url(#c)")}</button></td>
       </tr>
     );
   }

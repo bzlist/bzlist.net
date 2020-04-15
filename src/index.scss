@@ -34,8 +34,8 @@ html[data-theme=dark]{
   --bg-lighter: hsl(210, 5%, 14%);
   --bg-darker: hsl(210, 5%, 8%);
   --color-hover: rgba(255, 255, 255, .05);
-  --color-text-headings: hsl(210, 5%, 85%);
-  --color-text: hsl(210, 5%, 75%);
+  --color-text-headings: hsl(210, 5%, 90%);
+  --color-text: hsl(210, 5%, 80%);
 }
 
 html[data-theme=midnight]{
@@ -468,6 +468,51 @@ input[type=text]{
 
   & > div:last-child{
     display: flex;
+  }
+}
+
+[aria-label]{
+  position: relative;
+  display: inline-block;
+
+  &:before, &:after{
+    --scale: 0;
+
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) translateY(var(--y, 0)) scale(var(--scale));
+    transition: calc(var(--animations) * .1s) .2s transform;
+    pointer-events: none;
+    z-index: 99;
+  }
+
+  &:before{
+    --y: -100%;
+
+    content: attr(aria-label);
+    width: max-content;
+    padding: .4rem;
+    background: $gradient-dark;
+    color: #FFF;
+    font-size: .9rem;
+    font-weight: 400;
+    line-height: 1;
+    top: -.4rem;
+    border-radius: $border-radius;
+    transform-origin: bottom center;
+  }
+
+  &:after{
+    content: " ";
+    top: calc(-.4rem - 1px);
+    border-width: .3rem;
+    border-style: solid;
+    border-color: hsl(210, 5%, 20%) transparent transparent transparent;
+    transform-origin: top center;
+  }
+
+  &:hover:before, &:hover:after{
+    --scale: 1;
   }
 }
 

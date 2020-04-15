@@ -186,7 +186,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
           <div className="mobile-hide">
             <button className="btn icon" onClick={(e) => {
               this.setState({selectTeam: true});
-            }} title="Requires BZFlag Launcher">{Icon("playCircle", true, "url(#c)")}&nbsp;&nbsp;Play</button>
+            }} aria-label="Requires BZFlag Launcher">{Icon("playCircle", true, "url(#c)")}&nbsp;&nbsp;Play</button>
           </div>
           <div>
             <button className="btn icon" onClick={(e) => {
