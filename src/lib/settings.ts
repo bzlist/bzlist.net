@@ -48,6 +48,10 @@ class Settings extends Storage{
     key: "dataSaver",
     defaultValue: false
   };
+  DISABLE_ANALYTICS: IBoolSetting = {
+    key: "disableAnalytics",
+    defaultValue: false
+  };
 
   constructor(){
     super("setting_");

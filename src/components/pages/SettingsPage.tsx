@@ -202,6 +202,10 @@ export class SettingsPage extends React.PureComponent<any, State>{
                     description="Don't use real-time data (may save data)"
                     checked={settings.getBool(settings.DISABLE_REALTIME_DATA)}
                     onChange={(value: boolean) => this.set(settings.DISABLE_REALTIME_DATA, value)}/>
+            <Switch label="Disable Analytics"
+                    description="Don't collect client side analytics"
+                    checked={settings.getBool(settings.DISABLE_ANALYTICS)}
+                    onChange={(value: boolean) => this.set(settings.DISABLE_ANALYTICS, value)}/>
           </>}
           <div className="btn-list">
             <button className="btn btn-outline" onClick={() => {settings.clear();this.message("Settings cleared");}} aria-label="Reset all settings to default">Reset</button>

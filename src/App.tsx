@@ -43,6 +43,28 @@ class App extends React.PureComponent<any, State>{
 
     window.ononline = () => this.setState({offline: false});
     window.onoffline = () => this.setState({offline: true});
+    document.body.addEventListener("click", async (e) => {
+      if(settings.getBool(settings.DISABLE_ANALYTICS)){
+        return;
+      }
+
+      const target = e.target as HTMLElement;
+      api("analytics", {
+        name: "click",
+        data: {
+          element: target.localName,
+          class: target.classList.value,
+          text: target.innerText,
+          id: target.id,
+          coords: {
+            width: window.innerWidth,
+            height: window.innerHeight,
+            x: e.clientX,
+            y: e.clientY
+          }
+        }
+      });
+    });
 
     this.setPageTitle(history.location.pathname);
     history.listen((location: any, action: string) => {
