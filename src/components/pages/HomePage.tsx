@@ -2,7 +2,7 @@ import React from "react";
 
 import {cache, socket, history, autoPlural, settings, notification, api, sortBy, favoriteServer} from "lib";
 import {Server, Team, Player} from "models";
-import {TimeAgo, Search, ServerRow, ServerCard, PlayerRow, playerSort} from "components";
+import {TimeAgo, Search, ServerRow, ServerCard, PlayerRow, playerSort, List} from "components";
 import {imageExt} from "index";
 
 const SORT_INDEXES = ["playersCount", "address", "country", "configuration.gameStyle", "title"];
@@ -174,28 +174,34 @@ export class HomePage extends React.PureComponent<any, State>{
               </tr>
             </thead>
             <tbody>
-              {this.getServers().map((server: Server) => <ServerRow key={`${server.address}:${server.port}`} server={server} onMouseMove={!settings.getBool(settings.INFO_CARDS) ? undefined : (e) => {
-                if(this.state.infoServer?.address !== server.address || this.state.infoServer.port !== server.port){
-                  this.setState({infoServer: server});
-                }
-                if(!this.infoPopoutRef.current){
-                  return;
-                }
+              <List
+                items={this.getServers()}
+                increment={settings.getBool(settings.COMPACT_TABLES) ? 28 : 36}
+                render={(server: Server) =>
+                  <ServerRow key={`${server.address}:${server.port}`} server={server} onMouseMove={!settings.getBool(settings.INFO_CARDS) ? undefined : (e) => {
+                    if(this.state.infoServer?.address !== server.address || this.state.infoServer.port !== server.port){
+                      this.setState({infoServer: server});
+                    }
+                    if(!this.infoPopoutRef.current){
+                      return;
+                    }
 
-                const pos = {
-                  x: e.pageX + 12,
-                  y: e.pageY + 12
-                };
+                    const pos = {
+                      x: e.pageX + 12,
+                      y: e.pageY + 12
+                    };
 
-                if(pos.x + this.infoPopoutRef.current.offsetWidth >= window.innerWidth){
-                  pos.x = pos.x - this.infoPopoutRef.current.offsetWidth - 12;
-                }
-                if(pos.y + this.infoPopoutRef.current.offsetHeight >= window.innerHeight){
-                  pos.y = pos.y - this.infoPopoutRef.current.offsetHeight - 12;
-                }
+                    if(pos.x + this.infoPopoutRef.current.offsetWidth >= window.innerWidth){
+                      pos.x = pos.x - this.infoPopoutRef.current.offsetWidth - 12;
+                    }
+                    if(pos.y + this.infoPopoutRef.current.offsetHeight >= window.innerHeight){
+                      pos.y = pos.y - this.infoPopoutRef.current.offsetHeight - 12;
+                    }
 
-                this.infoPopoutRef.current.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0)`;
-              }}/>)}
+                    this.infoPopoutRef.current.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0)`;
+                  }}/>
+                }
+              />
             </tbody>
           </table>
         );

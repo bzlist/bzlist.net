@@ -3,6 +3,7 @@ import "./SettingsPage.scss";
 
 import {settings, cache, IBoolSetting, user, storage, favoriteServer, friendPlayer, history, hideServer} from "lib";
 import {Dropdown, Switch, Icon} from "components";
+import {List} from "components/List";
 
 const themes = ["Light", "Dark", "Midnight"];
 const TABS = ["Appearance", "Notifications", "Favorites & Friends", "Data Usage"];
@@ -138,16 +139,20 @@ export class SettingsPage extends React.PureComponent<any, State>{
               }
             }}/>
             <div className="list">
-              {settings.getJson("favoriteServers", []).sort((a: string, b: string) => a.toLowerCase().localeCompare(b.toLowerCase())).map((server: string) =>
-                <div key={server} onClick={() => history.push(`/s/${server.split(":")[0]}/${server.split(":")[1]}`)}>
-                  <b>{server}</b>
-                  <button className="btn icon" onClick={(e) => {
-                    e.stopPropagation();
-                    favoriteServer(server);
-                    this.forceUpdate();
-                  }}>{Icon("close")}</button>
-                </div>
-              )}
+              <List
+                items={settings.getJson("favoriteServers", []).sort((a: string, b: string) => a.toLowerCase().localeCompare(b.toLowerCase()))}
+                increment={37}
+                render={(server: string) =>
+                  <div key={server} onClick={() => history.push(`/s/${server.split(":")[0]}/${server.split(":")[1]}`)}>
+                    <b>{server}</b>
+                    <button className="btn icon" onClick={(e) => {
+                      e.stopPropagation();
+                      favoriteServer(server);
+                      this.forceUpdate();
+                    }}>{Icon("close")}</button>
+                  </div>
+                }
+              />
             </div>
             <h3>Friends</h3>
             <input type="text" placeholder="Add player by callsign" onKeyUp={(e) => {
@@ -158,15 +163,19 @@ export class SettingsPage extends React.PureComponent<any, State>{
               }
             }}/>
             <div className="list">
-              {settings.getJson("friends", []).sort((a: string, b: string) => a.toLowerCase().localeCompare(b.toLowerCase())).map((callsign: string) =>
-                <div key={callsign}>
-                  <b>{callsign}</b>
-                  <button className="btn icon" onClick={() => {
-                    friendPlayer(callsign);
-                    this.forceUpdate();
-                  }}>{Icon("close")}</button>
-                </div>
-              )}
+              <List
+                items={settings.getJson("friends", []).sort((a: string, b: string) => a.toLowerCase().localeCompare(b.toLowerCase()))}
+                increment={37}
+                render={(callsign: string) =>
+                  <div key={callsign}>
+                    <b>{callsign}</b>
+                    <button className="btn icon" onClick={() => {
+                      friendPlayer(callsign);
+                      this.forceUpdate();
+                    }}>{Icon("close")}</button>
+                  </div>
+                }
+              />
             </div>
             <h3>Hidden Servers</h3>
             <input type="text" placeholder="Add server by host:port" onKeyUp={(e) => {
@@ -177,16 +186,20 @@ export class SettingsPage extends React.PureComponent<any, State>{
               }
             }}/>
             <div className="list">
-              {settings.getJson("hiddenServers", []).sort().map((server: string) =>
-                <div key={server} onClick={() => history.push(`/s/${server.split(":")[0]}/${server.split(":")[1]}`)}>
-                  <b>{server}</b>
-                  <button className="btn icon" onClick={(e) => {
-                    e.stopPropagation();
-                    hideServer(server);
-                    this.forceUpdate();
-                  }}>{Icon("close")}</button>
-                </div>
-              )}
+              <List
+                items={settings.getJson("hiddenServers", []).sort((a: string, b: string) => a.toLowerCase().localeCompare(b.toLowerCase()))}
+                increment={37}
+                render={(server: string) =>
+                  <div key={server} onClick={() => history.push(`/s/${server.split(":")[0]}/${server.split(":")[1]}`)}>
+                    <b>{server}</b>
+                    <button className="btn icon" onClick={(e) => {
+                      e.stopPropagation();
+                      hideServer(server);
+                      this.forceUpdate();
+                    }}>{Icon("close")}</button>
+                  </div>
+                }
+              />
             </div>
           </>}
           {this.state.tab === 3 && <>

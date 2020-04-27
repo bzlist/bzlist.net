@@ -3,6 +3,7 @@ import React from "react";
 import {cache, socket, autoPlural, settings, history, notification, api, sortBy} from "lib";
 import {Player} from "models";
 import {TimeAgo, Search, PlayerRow, PlayerCard} from "components";
+import {List} from "components/List";
 
 const SORT_INDEXES = ["callsign", "score", "team", "server"];
 
@@ -122,7 +123,10 @@ export class PlayerPage extends React.PureComponent<any, State>{
               </tr>
             </thead>
             <tbody>
-              {this.getPlayers().map((player: Player) => <PlayerRow key={`${player.callsign}:${player.server}`} player={player} showServer={true}/>)}
+              <List
+                items={this.getPlayers()}
+                increment={settings.getBool(settings.COMPACT_TABLES) ? 28 : 36}
+                render={(player: Player) => <PlayerRow key={`${player.callsign}:${player.server}`} player={player} showServer={true}/>}/>
             </tbody>
           </table>
         );
