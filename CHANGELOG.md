@@ -2,6 +2,46 @@
 
 This is an outline and does not contain every change. Check the commits for a full list of changes.
 
+## v0.10.7 - More Improvements (2020-4-26)
+
+### Added
+- Update button (instead of automatic updates)
+- WebP for server banner images (if supported)
+- Data saver setting
+- Icon click animation
+- Automatically update scrollbar style without refreshing
+- Support for more avatar formats
+- Splash screen color matches theme
+- Splash screen stuck message
+- Rounded corners to table rows
+- Custom tooltips
+- Basic client-side analytics
+- Greatly improved list rendering performance
+
+### Changed
+- Updated to new logo on maintenence page
+- Improved navigation menu
+- Improved play button
+- Updated dependencies
+- Tweaked server details page
+- Improved cards
+- Increased midnight theme contrast
+- Tweaked appearence
+- Slightly rounder corners
+- Dropdown appearence
+- Button appearence
+
+### Fixed
+- Indication arrow when sorting by game style
+- Player motto overflowing
+- Some table rows overflowing
+- Server page cards expanding
+- Offline bar overlapping text
+- Invalid token message when not signed in
+- Some buttons being too short
+- Links getting background on Firefox
+- Primary button text hover color
+
 ## v0.10.6 - General Improvements 🎈 (2020-3-10)
 
 ### Added
