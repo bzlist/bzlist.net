@@ -7,7 +7,7 @@ import {Dropdown, Switch, Icon} from "components";
 import {List} from "components/List";
 
 const themes = ["Light", "Dark", "Midnight"];
-const TABS = ["Appearance", "Notifications", "Favorites & Friends", "Data Usage"];
+const TABS = ["Appearance", "Notifications", "Servers & Players", "Data Usage"];
 
 const tabToUrl = (tab: string): string => {
   return tab.replace(/&/g, "").replace(/\s+/g, " ").replace(/ /g, "-").toLowerCase();
