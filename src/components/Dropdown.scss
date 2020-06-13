@@ -10,10 +10,10 @@
 
 .dropdown__title{
   padding: 0 .6rem;
-  background: linear-gradient(45deg, var(--bg-darker), var(--bg-lighter));
+  background: linear-gradient($gradient-angle, var(--bg-darker), var(--bg-lighter));
   display: block;
   line-height: 2rem;
-  border: 1px solid var(--color-text);
+  border: 1px solid $color-gray-light;
   border-radius: $border-radius;
 
   &:active{
@@ -30,7 +30,7 @@
 
 .dropdown__content{
   width: 300px;
-  background: linear-gradient(45deg, var(--bg-darker), var(--bg-lighter));
+  background: linear-gradient($gradient-angle, var(--bg-darker), var(--bg-lighter));
   position: absolute;
   box-shadow: $shadow;
   border-radius: $border-radius;

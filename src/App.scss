@@ -3,7 +3,7 @@
 .navbar{
   width: 4rem;
   height: calc(100vh);
-  background: linear-gradient(45deg, hsl(210, 5%, 15%), hsl(210, 5%, 30%));
+  background: linear-gradient($gradient-angle, $color-gray-dark, $color-gray-light);
   display: flex;
   flex-direction: column;
   position: fixed;

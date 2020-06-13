@@ -15,7 +15,7 @@ html{
     }
 
     ::-webkit-scrollbar-thumb{
-      background: linear-gradient(45deg, hsl(210, 5%, 20%), hsl(210, 5%, 40%));
+      background: linear-gradient($gradient-angle, $color-gray-dark, $color-gray-light);
     }
   }
 
@@ -459,7 +459,7 @@ input[type=text]{
 .info-popout{
   max-width: 800px;
   padding: 1rem 1.6rem;
-  background: linear-gradient(45deg, var(--bg-darker), var(--bg));
+  background: linear-gradient($gradient-angle, var(--bg-darker), var(--bg));
   position: absolute;
   top: 0;
   left: 0;
@@ -507,7 +507,7 @@ input[type=text]{
     top: calc(-.4rem - 1px);
     border-width: .3rem;
     border-style: solid;
-    border-color: hsl(210, 5%, 20%) transparent transparent transparent;
+    border-color: $color-gray-dark transparent transparent transparent;
     transform-origin: top center;
   }
 

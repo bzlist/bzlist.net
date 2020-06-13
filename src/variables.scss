@@ -1,8 +1,16 @@
-$breakpoint-mobile: 768px;
+// colors
 $color-primary: hsl(210, 70%, 55%);
 $color-primary-light: hsl(191, 70%, 60%);
-$gradient-primary: linear-gradient(45deg, $color-primary, $color-primary-light);
-$gradient-dark: linear-gradient(45deg, hsl(210, 5%, 20%), hsl(210, 5%, 30%));
+$color-gray-light: hsl(210, 5%, 30%);
+$color-gray-dark: hsl(210, 5%, 20%);
+
+// gradients
+$gradient-angle: 45deg;
+$gradient-primary: linear-gradient($gradient-angle, $color-primary, $color-primary-light);
+$gradient-dark: linear-gradient($gradient-angle, $color-gray-dark, $color-gray-light);
+
+// misc
+$breakpoint-mobile: 768px;
 $border-radius: 3px;
 $border-radius-large: $border-radius * 2;
 $shadow: 0 2px 1.5rem rgba(0, 0, 0, .07), 0 1px .25rem rgba(0, 0, 0, .07);
