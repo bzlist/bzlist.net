@@ -8,6 +8,10 @@ module.exports = {
     "build/images/servers/*.webp",
     "build/favicon.ico"
   ],
+  runtimeCaching: [{
+    urlPattern: "",
+    handler: "networkFirst"
+  }],
   navigateFallback: "/index.html",
   staticFileGlobsIgnorePatterns: [/\.map$/],
   dontCacheBustUrlsMatching: /\.\w{8}\./,
