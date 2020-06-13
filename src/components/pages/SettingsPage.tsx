@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 import "./SettingsPage.scss";
 
 import {settings, cache, IBoolSetting, user, storage, favoriteServer, friendPlayer, history, hideServer} from "lib";
@@ -225,7 +226,7 @@ export class SettingsPage extends React.PureComponent<any, State>{
             <button className="btn btn-outline" onClick={() => {cache.clear();this.message("Cache cleared");}}>Clear Cache</button>
             <b>{this.state.message}</b>
           </div>
-          {user.bzid !== "" && storage.get("syncSettings") !== "false" ? "Synced" : "Not synced"}.
+          {user.bzid !== "" && storage.get("syncSettings") !== "false" ? "Synced" : <><Link to="/account">Sign in</Link> to sync</>}.
         </div>
       </div>
     );
