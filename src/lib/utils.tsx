@@ -115,7 +115,7 @@ export const friendPlayer = (callsign: string): void => {
 
 export const isPlayerFriend = (callsign: string): boolean => settings.getJson("friends", []).includes(callsign);
 
-export const hideServer = (server: Server | null | string): void =>{
+export const hideServer = (server: Server | null | string): void => {
   if(server === undefined || server === null){
     return;
   }
@@ -130,6 +130,15 @@ export const hideServer = (server: Server | null | string): void =>{
   }
 
   settings.set("hiddenServers", JSON.stringify(hiddenServers));
+};
+
+export const isServerHidden = (server: Server | null | string): boolean => {
+  if(server === undefined || server === null){
+    return false;
+  }
+
+  const address = typeof(server) === "object" ? `${server.address}:${server.port}` : server;
+  return settings.getJson("hiddenServers", []).includes(address);
 };
 
 export const sortBy = (

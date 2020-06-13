@@ -1,6 +1,6 @@
 import React from "react";
 
-import {verboseGameStyle, history, favoriteServer, isFavoriteServer} from "lib";
+import {verboseGameStyle, history, favoriteServer, isFavoriteServer, isServerHidden} from "lib";
 import {Server} from "models";
 import {Icon} from "components";
 
@@ -25,7 +25,12 @@ class ServerBase extends React.Component<{server: Server, onMouseMove?: (e: Reac
 export class ServerRow extends ServerBase{
   render(): JSX.Element{
     return (
-      <tr style={{fontWeight: this.props.server.playersCount > 0 ? "bold" : "inherit"}} onClick={() => this.onClick()} onMouseMove={this.props.onMouseMove} data-server>
+      <tr
+        style={{fontWeight: this.props.server.playersCount > 0 ? "bold" : "inherit", color: isServerHidden(this.props.server) ? "hsla(210, 5%, 50%, .7)" : "inherit"}}
+        onClick={() => this.onClick()}
+        onMouseMove={this.props.onMouseMove}
+        data-server
+      >
         <td>{this.props.server.playersCount}</td>
         <td>{this.props.server.address}:{this.props.server.port}</td>
         <td>

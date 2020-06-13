@@ -2,7 +2,7 @@ import React from "react";
 import {match, Link} from "react-router-dom";
 import "./ServerDetailsPage.scss";
 
-import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings, isFavoriteServer, favoriteServer, hideServer, api} from "lib";
+import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings, isFavoriteServer, favoriteServer, hideServer, api, isServerHidden} from "lib";
 import {Server, Player, Team} from "models";
 import {TimeAgo, PlayerRow, Switch, Icon, playerSort} from "components";
 import {imageExt} from "index";
@@ -174,7 +174,6 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
       observerCount += observerTeam.players;
     }
 
-    const isServerHidden = settings.getJson("hiddenServers", []).includes(`${this.state.server.address}:${this.state.server.port}`);
     const imageUrl = `/images/servers/${this.state.server.address}_${this.state.server.port}`;
 
     return (
@@ -184,20 +183,20 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
         </div>
         <div className="server-header">
           <div className="mobile-hide">
-            <button className="btn icon" onClick={(e) => {
-              this.setState({selectTeam: true});
-            }} aria-label="Requires BZFlag Launcher">{Icon("playCircle", true, "url(#c)")}&nbsp;&nbsp;Play</button>
+            <button className="btn icon" onClick={() =>
+              this.setState({selectTeam: true})
+            } aria-label="Requires BZFlag Launcher">{Icon("playCircle", true, "url(#c)")}&nbsp;&nbsp;Play</button>
           </div>
           <div>
-            <button className="btn icon" onClick={(e) => {
+            <button className="btn icon" onClick={() => {
               favoriteServer(this.state.server as Server);
               this.setState({favorite: isFavoriteServer(this.state.server)});
             }}>{Icon("heart", isFavoriteServer(this.state.server), "url(#a)")}</button>
           </div>
           {"share" in navigator && <div>
-            <button className="btn icon" onClick={(e) => {
-              (navigator as any).share({url: window.location.href, title: this.state.server?.title});
-            }}>{Icon("share", false)}</button>
+            <button className="btn icon" onClick={() =>
+              (navigator as any).share({url: window.location.href, title: this.state.server?.title})
+            }>{Icon("share", false)}</button>
           </div>}
           <div>
             <img src={`https://countryflags.io/${this.state.server.countryCode}/flat/32.png`} style={{margin:"0 4px 0 0"}} alt=""/>
@@ -302,7 +301,12 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
               </table>
             </div>
           </div>
-          <Switch label="Hide Server" description="Don't show in server list" checked={isServerHidden} onChange={() => hideServer(this.state.server)}/><br/>
+          <Switch
+            label="Hide Server"
+            description="Don't show in server list"
+            checked={isServerHidden(this.server)}
+            onChange={() => hideServer(this.state.server)}
+          /><br/>
         </div>
         {playPopup}
       </div>

@@ -1,6 +1,6 @@
 import React from "react";
 
-import {cache, socket, history, autoPlural, settings, notification, api, sortBy, favoriteServer} from "lib";
+import {cache, socket, history, autoPlural, settings, notification, api, sortBy, favoriteServer, isServerHidden} from "lib";
 import {Server, Team, Player} from "models";
 import {TimeAgo, Search, ServerRow, ServerCard, PlayerRow, playerSort, List} from "components";
 import {imageExt} from "index";
@@ -115,8 +115,8 @@ export class HomePage extends React.PureComponent<any, State>{
   getServers(): Server[]{
     let servers: Server[] = JSON.parse(JSON.stringify(this.state.servers));
 
-    if(!this.state.showHidden){
-      servers = servers.filter((server) => !settings.getJson("hiddenServers", []).includes(`${server.address}:${server.port}`));
+    if(!this.state.showHidden && this.state.searchQuery === ""){
+      servers = servers.filter((server) => !isServerHidden(server));
     }
 
     if(this.state.searchQuery !== ""){
