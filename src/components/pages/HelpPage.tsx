@@ -11,6 +11,9 @@ export const HelpPage = (): JSX.Element => (
       I can be contacted <a href="https://forums.bzflag.org/ucp.php?i=pm&mode=compose&u=58103" target="_blank" rel="noopener noreferrer">here</a> via the BZFlag Forums.
       You can also submit <Link to="/feedback">feedback</Link> directly.
     </p>
+    <p>
+      Check the status page <a href="https://bzlist.statuspage.io/" target="_blank" rel="noopener noreferrer">here</a>.
+    </p>
     <h2>FAQ</h2>
     <p>
       <span className="label">What happened to "real-time?"</span><br/>

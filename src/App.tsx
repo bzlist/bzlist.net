@@ -218,9 +218,9 @@ class App extends React.PureComponent<any, State>{
           </div>
           <footer>
             <div className="links">
+              <a href="https://bzlist.statuspage.io/" target="_blank" rel="noopener noreferrer">Status</a> •&nbsp;
               <a href="https://github.com/bzlist/bzlist.net" target="_blank" rel="noopener noreferrer">GitHub</a> •&nbsp;
               <a href="https://docs.google.com/forms/d/e/1FAIpQLSdHA0q3MjVvRMNozwkUFv4dMDhIA-YFCSyt-97P3Afvsdv1zQ/viewform?usp=sf_link" target="_blank" rel="noopener noreferrer">Survey</a> •&nbsp;
-              <Link to="/feedback">Feedback</Link> •&nbsp;
               <a href="https://github.com/gosquared/flags/blob/master/LICENSE.txt" target="_blank" rel="noopener noreferrer">GoSquared's Flags License</a> •&nbsp;
               <Link to="/terms-of-service">Terms of Service</Link> •&nbsp;
               <Link to="/privacy-policy">Privacy Policy</Link>
