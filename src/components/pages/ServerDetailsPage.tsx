@@ -133,6 +133,14 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
     this.setState({selectTeam: false});
   }
 
+  getTeamCount(team: Team): number{
+    if(this.state.server && team.name === "Rogue"){
+      return team.players + (this.state.server.players || []).filter((player: Player) => player.team === "Hunter" || player.team === "Rabbit").length;
+    }
+
+    return team.players;
+  }
+
   render(): JSX.Element{
     if(!this.state.server){
       const {address, port} = this.props.match.params;
@@ -156,7 +164,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
             </div>
             <div className="popup__inner">
               {this.state.server.teams.map((team: Team) =>
-                <button key={team.name} className="btn btn-outline" onClick={() => this.joinTeam(team.name)}>{autoPlural(`${team.players} ${team.name}`)}</button>
+                <button key={team.name} className="btn btn-outline" onClick={() => this.joinTeam(team.name)}>{autoPlural(`${this.getTeamCount(team)} ${team.name}`)}</button>
               )}
             </div>
           </div>
@@ -294,7 +302,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
                     <tr key={team.name}>
                       <td><b>{team.name}</b></td>
                       <td>{team.name === "Observer" ? "" : team.score}</td>
-                      <td>{team.players} / {team.maxPlayers}</td>
+                      <td>{this.getTeamCount(team)} / {team.maxPlayers}</td>
                     </tr>
                   )}
                 </tbody>
