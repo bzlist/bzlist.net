@@ -481,7 +481,7 @@ input[type=text]{
     position: absolute;
     left: 50%;
     transform: translateX(-50%) translateY(var(--y, 0)) scale(var(--scale));
-    transition: calc(var(--animations) * .1s) .2s transform;
+    transition: calc(var(--animations) * .1s) .1s transform;
     pointer-events: none;
     z-index: 99;
   }
@@ -492,7 +492,7 @@ input[type=text]{
     content: attr(aria-label);
     width: max-content;
     padding: .4rem;
-    background: $gradient-dark;
+    background-color: #000;
     color: #FFF;
     font-size: .9rem;
     font-weight: 400;
@@ -503,11 +503,11 @@ input[type=text]{
   }
 
   &:after{
-    content: " ";
+    content: "";
     top: calc(-.4rem - 1px);
     border-width: .3rem;
     border-style: solid;
-    border-color: $color-gray-dark transparent transparent transparent;
+    border-color: #000 transparent transparent transparent;
     transform-origin: top center;
   }
 
