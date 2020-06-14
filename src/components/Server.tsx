@@ -26,7 +26,10 @@ export class ServerRow extends ServerBase{
   render(): JSX.Element{
     return (
       <tr
-        style={{fontWeight: this.props.server.playersCount > 0 ? "bold" : "inherit", color: isServerHidden(this.props.server) ? "hsla(210, 5%, 50%, .7)" : "inherit"}}
+        style={{
+          fontWeight: this.props.server.playersCount > 0 ? "bold" : "inherit",
+          color: isServerHidden(this.props.server) ? "hsla(210, 5%, 50%, .7)" : this.props.server.playersCount > 0 ? "var(--color-text-headings)" : "inherit"
+        }}
         onClick={() => this.onClick()}
         onMouseMove={this.props.onMouseMove}
         data-server
