@@ -26,8 +26,13 @@ export class HomePage extends React.PureComponent<any, State>{
   constructor(props: any){
     super(props);
 
+    const playerCache = cache.getJson("players", []);
+
     this.state = {
-      servers: cache.getJson("servers", []),
+      servers: cache.getJson("servers", []).map((server: Server) => {
+        server.players = playerCache.filter((player: Player) => player.server === `${server.address}:${server.port}`);
+        return server;
+      }),
       sort: "",
       sortOrder: 0,
       serversToShow: 10,
@@ -92,10 +97,11 @@ export class HomePage extends React.PureComponent<any, State>{
         }
 
         if(!this.firstData &&
-           playerCount >= 2 &&
-           settings.getBool(settings.NOTIFICATIONS) &&
-           settings.getBool(settings.SERVER_NOTIFICATIONS) &&
-           favoriteServer(server.address)){
+          playerCount >= 2 &&
+          settings.getBool(settings.NOTIFICATIONS) &&
+          settings.getBool(settings.SERVER_NOTIFICATIONS) &&
+          favoriteServer(server.address))
+        {
           notification(`${server.title} has ${playerCount} players`, "", `${server.address}:${server.port}`, () => {
             history.push(`/s/${server.address}/${server.port}`);
           });
@@ -126,6 +132,11 @@ export class HomePage extends React.PureComponent<any, State>{
     if(settings.getBool(settings.EXCLUDE_OBSERVERS)){
       servers = servers.map((server: Server) => {
         server.playersCount -= server.teams.filter((team: Team) => team.name === "Observer")[0].players;
+        return server;
+      });
+    }else if(settings.getBool(settings.IGNORE_OBSERVER_BOTS)){
+      servers = servers.map((server: Server) => {
+        server.playersCount -= (server.players || []).filter((player: Player) => player.team === "Observer" && ["admin", "r3"].includes(player.callsign)).length;
         return server;
       });
     }

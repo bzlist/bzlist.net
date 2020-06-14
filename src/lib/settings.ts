@@ -52,6 +52,10 @@ class Settings extends Storage{
     key: "disableAnalytics",
     defaultValue: false
   };
+  IGNORE_OBSERVER_BOTS: IBoolSetting = {
+    key: "ignoreObserverBots",
+    defaultValue: true
+  };
 
   constructor(){
     super("setting_");

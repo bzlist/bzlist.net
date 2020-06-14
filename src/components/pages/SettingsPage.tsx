@@ -100,6 +100,10 @@ export class SettingsPage extends React.PureComponent<any, State>{
                     description="Don't treat observers as players on the server list"
                     checked={settings.getBool(settings.EXCLUDE_OBSERVERS)}
                     onChange={(value: boolean) => this.set(settings.EXCLUDE_OBSERVERS, value)}/>
+            <Switch label="Ignore Observers Bots"
+                    description="Ignore observers that appear to be bots"
+                    checked={settings.getBool(settings.IGNORE_OBSERVER_BOTS)}
+                    onChange={(value: boolean) => this.set(settings.IGNORE_OBSERVER_BOTS, value)}/>
             <Switch label="Custom Scrollbars"
                     description="Use custom scrollbars instead of the default ones"
                     checked={settings.getBool(settings.CUSTOM_SCROLLBARS)}
