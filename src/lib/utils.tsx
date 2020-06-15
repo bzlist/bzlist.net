@@ -196,7 +196,7 @@ export const newServerToLegacy = (server: any): Server => {
       maxPlayers: server.maxPlayers,
       superflags: server.options.flags,
       jumping: server.options.jumping,
-      ricochet: server.options.ricoshet,
+      ricochet: server.options.ricochet,
       inertia: server.options.inertia,
       shaking: server.options.shaking,
       noTeamKills: server.options.noTeamKills,
