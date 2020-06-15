@@ -69,7 +69,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
 
     this.handleData = this.handleData.bind(this);
 
-    api(`history/${this.address}/${this.port}`, undefined, "GET").then((data: Server[]) => this.setState({
+    api(`history/${this.address}/${this.port}`, undefined, "GET").then((data: Server[]) => data && this.setState({
       history: data.sort((a: Server, b: Server) => a.timestamp - b.timestamp).map((server: Server) => {
         if(server.players){
           server.players = server.players.map((player: any) => {
