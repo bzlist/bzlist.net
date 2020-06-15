@@ -339,7 +339,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
                 </tbody>
               </table>
             </div>
-            <div>
+            {this.state.history && <div>
               <h2>Player History</h2>
               <div className="history">
                 <span>-24h</span>
@@ -361,7 +361,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
                 )}
                 <span>Now</span>
               </div>
-            </div>
+            </div>}
           </div>
           <Switch
             label="Hide Server"
