@@ -208,7 +208,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
           {"share" in navigator && <div>
             <button className="btn icon" onClick={() =>
               (navigator as any).share({url: window.location.href, title: this.state.server?.title})
-            }>{Icon("share", false)}</button>
+            } aria-label="Share">{Icon("share", false)}</button>
           </div>}
           <div>
             <img src={`https://countryflags.io/${this.state.server.countryCode}/flat/32.png`} style={{margin:"0 4px 0 0"}} alt=""/>
