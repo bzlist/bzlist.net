@@ -168,6 +168,8 @@ div.content{
     font-weight: 500;
     align-self: flex-start;
     position: absolute;
+    top: -.25rem;
+    pointer-events: none;
 
     &:last-child{
       right: 0;
