@@ -56,6 +56,10 @@ class Settings extends Storage{
     key: "ignoreObserverBots",
     defaultValue: true
   };
+  EXPERIMENTAL_HISTORY: IBoolSetting = {
+    key: "experimentalHistory",
+    defaultValue: false
+  };
 
   constructor(){
     super("setting_");

@@ -2,7 +2,7 @@ import React from "react";
 import {match, Link} from "react-router-dom";
 import "./ServerDetailsPage.scss";
 
-import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings, isFavoriteServer, favoriteServer, hideServer, api, isServerHidden} from "lib";
+import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings, isFavoriteServer, favoriteServer, hideServer, api, isServerHidden, newServerToLegacy} from "lib";
 import {Server, Player, Team} from "models";
 import {TimeAgo, PlayerRow, Switch, Icon, playerSort} from "components";
 import {imageExt} from "index";
@@ -21,6 +21,7 @@ interface State{
   selectTeam: boolean;
   favorite: boolean;
   history: Server[];
+  past: boolean;
 }
 
 export class ServerDetailsPage extends React.PureComponent<Props, State>{
@@ -62,13 +63,43 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
       server: this.server,
       selectTeam,
       favorite: isFavoriteServer(this.server),
-      history: []
+      history: [],
+      past: false
     };
 
     this.handleData = this.handleData.bind(this);
 
-    api(`history/${this.address}/${this.port}`, undefined, "GET").then((data: Server[]) => this.setState({history: data.sort((a: Server, b: Server) => a.timestamp - b.timestamp)}));
+    api(`history/${this.address}/${this.port}`, undefined, "GET").then((data: Server[]) => this.setState({
+      history: data.sort((a: Server, b: Server) => a.timestamp - b.timestamp).map((server: Server) => {
+        if(server.players){
+          server.players = server.players.map((player: any) => {
+            player.score = player.wins || 0 - player.losses || 0;
+            return player;
+          }).sort(playerSort);
+        }
 
+        return server;
+      })
+    }));
+
+    this.fetchData();
+  }
+
+  componentWillUnmount(): void{
+    if(!settings.getBool(settings.DISABLE_REALTIME_DATA)){
+      socket.off(`${this.address}:${this.port}`);
+    }
+  }
+
+  componentDidUpdate(): void{
+    if(this.state.past){
+      socket.off(`${this.address}:${this.port}`);
+    }else{
+      this.fetchData();
+    }
+  }
+
+  fetchData(): void{
     if(settings.getBool(settings.DISABLE_REALTIME_DATA)){
       api(`servers/${this.address}/${this.port}`, undefined, "GET").then(this.handleData);
       return;
@@ -76,10 +107,6 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
 
     socket.on<Server>(`${this.address}:${this.port}`, this.handleData);
     socket.emit("server", {address: this.address, port: this.port});
-  }
-
-  componentWillUnmount(): void{
-    socket.off(`${this.address}:${this.port}`);
   }
 
   handleData(data: Server): void{
@@ -317,7 +344,17 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
               <div className="history">
                 <span>-24h</span>
                 {this.state.history.map((server: Server) =>
-                  <div key={server.timestamp}>
+                  <div
+                    key={server.timestamp}
+                    style={{cursor: settings.getBool(settings.EXPERIMENTAL_HISTORY) ? "pointer" : "inherit"}}
+                    onClick={() => settings.getBool(settings.EXPERIMENTAL_HISTORY) && this.state.server && this.setState({past: true, server: {
+                      ...newServerToLegacy(server),
+                      address: this.state.server?.address,
+                      port: this.state.server?.port,
+                      owner: this.state.server?.owner,
+                      country: this.state.server?.country,
+                      countryCode: this.state.server?.countryCode
+                    }})}>
                     <div style={{height: (server.players?.length || 0) * 6}}></div>
                     <div>{server.players?.length}</div>
                   </div>
@@ -332,6 +369,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
             checked={isServerHidden(this.server)}
             onChange={() => hideServer(this.state.server)}
           />
+          {this.state.past && <button style={{marginTop: "2rem"}} className="btn btn-outline" onClick={() => this.setState({past: false})}>View Current</button>}
         </div>
         {playPopup}
       </div>

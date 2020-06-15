@@ -170,3 +170,40 @@ export const sortBy = (
   settings.set(storageKey, JSON.stringify({sort, sortOrder}));
   callback(sort, sortOrder);
 };
+
+export const newServerToLegacy = (server: any): Server => {
+  return {
+    address: "",
+    port: 0,
+    ip: server.ip,
+    owner: "",
+    country: "",
+    countryCode: "",
+    timestamp: server.timestamp,
+    title: server.title,
+    teams: server.teams.map((team: any) => {
+      team.score = team.wins - team.losses;
+      return team;
+    }),
+    players: server.players.map((player: any) => {
+      player.score = player.wins || 0 - player.losses || 0;
+      return player;
+    }),
+    playersCount: server.players.length,
+    configuration: {
+      gameStyle: server.style,
+      maxShots: server.maxShots,
+      maxPlayers: server.maxPlayers,
+      superflags: server.options.flags,
+      jumping: server.options.jumping,
+      ricochet: server.options.ricoshet,
+      inertia: server.options.inertia,
+      shaking: server.options.shaking,
+      noTeamKills: server.options.noTeamKills,
+      dropBadFlags: {
+        wins: server.options.shake?.wins || 0,
+        time: server.options.shake?.timeout || 0
+      }
+    }
+  } as Server;
+};

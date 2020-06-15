@@ -116,6 +116,10 @@ export class SettingsPage extends React.PureComponent<any, State>{
                     description="Show experimental info card when mousing over a server"
                     checked={settings.getBool(settings.INFO_CARDS)}
                     onChange={(value: boolean) => this.set(settings.INFO_CARDS, value)}/>
+            <Switch label="Experimental History"
+                    description="Allow viewing experimental server history"
+                    checked={settings.getBool(settings.EXPERIMENTAL_HISTORY)}
+                    onChange={(value: boolean) => this.set(settings.EXPERIMENTAL_HISTORY, value)}/>
             <span className="label">Theme</span>
             <Dropdown items={themes} selected={currentTheme} onChange={(value: string) => this.setTheme(value.toLowerCase())}/>
           </>}
