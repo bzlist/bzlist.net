@@ -20,6 +20,7 @@ interface State{
   server: Server | null;
   selectTeam: boolean;
   favorite: boolean;
+  history: Server[];
 }
 
 export class ServerDetailsPage extends React.PureComponent<Props, State>{
@@ -60,10 +61,13 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
     this.state = {
       server: this.server,
       selectTeam,
-      favorite: isFavoriteServer(this.server)
+      favorite: isFavoriteServer(this.server),
+      history: []
     };
 
     this.handleData = this.handleData.bind(this);
+
+    api(`history/${this.address}/${this.port}`, undefined, "GET").then((data: Server[]) => this.setState({history: data.sort((a: Server, b: Server) => a.timestamp - b.timestamp)}));
 
     if(settings.getBool(settings.DISABLE_REALTIME_DATA)){
       api(`servers/${this.address}/${this.port}`, undefined, "GET").then(this.handleData);
@@ -308,13 +312,26 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
                 </tbody>
               </table>
             </div>
+            <div>
+              <h2>Player History</h2>
+              <div className="history">
+                <span>-24h</span>
+                {this.state.history.map((server: Server) =>
+                  <div key={server.timestamp}>
+                    <div style={{height: (server.players?.length || 0) * 6}}></div>
+                    <div>{server.players?.length}</div>
+                  </div>
+                )}
+                <span>Now</span>
+              </div>
+            </div>
           </div>
           <Switch
             label="Hide Server"
             description="Don't show in server list"
             checked={isServerHidden(this.server)}
             onChange={() => hideServer(this.state.server)}
-          /><br/>
+          />
         </div>
         {playPopup}
       </div>

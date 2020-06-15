@@ -71,6 +71,7 @@
 div.content{
   margin-bottom: 1.5rem;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  overflow: auto;
 
   .players td{
     word-break: break-all;
@@ -151,6 +152,39 @@ div.content{
 .players table td:first-child{
   word-break: break-word;
   white-space: normal;
+}
+
+.history{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  position: relative;
+  user-select: none;
+
+  & > span{
+    padding: 0 .1rem;
+    font-size: .9rem;
+    font-weight: 500;
+    align-self: flex-start;
+    position: absolute;
+
+    &:last-child{
+      right: 0;
+    }
+  }
+
+  & > div{
+    width: calc(100% / 24);
+
+    & > div:first-child{
+      background-color: $color-primary;
+    }
+
+    & > div:last-child{
+      font-size: .8rem;
+      text-align: center;
+    }
+  }
 }
 
 @keyframes fade-in{
