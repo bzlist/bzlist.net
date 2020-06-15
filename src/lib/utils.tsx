@@ -4,6 +4,7 @@ import {createBrowserHistory} from "history";
 import {settings} from ".";
 import {Server} from "../models";
 
+export const API_ROOT = "https://api.bzlist.net";
 export const history = createBrowserHistory();
 
 export const verboseGameStyle = (value: string): string => {
@@ -34,7 +35,7 @@ export const autoPlural = (value: string): string => {
 };
 
 export const api = async (endpoint: string, body: any = undefined, method = "POST", headers: any = {}): Promise<any> => {
-  return fetch(`https://api.bzlist.net/${endpoint}`, {
+  return fetch(`${API_ROOT}/${endpoint}`, {
     headers: {
       "Content-Type": "application/json",
       ...headers

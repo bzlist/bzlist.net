@@ -1,4 +1,5 @@
 import * as io from "socket.io-client";
+import {API_ROOT} from "./utils";
 
 export const socket: {
   _socket: SocketIOClient.Socket | undefined,
@@ -10,7 +11,7 @@ export const socket: {
 
   emit(event: string, data: any = null): void{
     if(!this._socket){
-      this._socket = io.connect("https://api.bzlist.net");
+      this._socket = io.connect(API_ROOT);
     }
 
     this._socket.emit(event, data);
@@ -18,7 +19,7 @@ export const socket: {
 
   on<T>(event: string, callback: (data: T) => void): void{
     if(!this._socket){
-      this._socket = io.connect("https://api.bzlist.net");
+      this._socket = io.connect(API_ROOT);
     }
 
     this._socket.on(event, (data: T) => {

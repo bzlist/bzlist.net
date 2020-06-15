@@ -91,10 +91,10 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
     }
   }
 
-  componentDidUpdate(): void{
-    if(this.state.past){
+  componentDidUpdate(prevProps: Props, prevState: State): void{
+    if(!prevState.past && this.state.past){
       socket.off(`${this.address}:${this.port}`);
-    }else{
+    }else if(prevState.past && !this.state.past){
       this.fetchData();
     }
   }
