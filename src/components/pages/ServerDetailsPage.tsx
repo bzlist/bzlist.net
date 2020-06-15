@@ -349,9 +349,6 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
                     style={{cursor: settings.getBool(settings.EXPERIMENTAL_HISTORY) ? "pointer" : "inherit"}}
                     onClick={() => settings.getBool(settings.EXPERIMENTAL_HISTORY) && this.state.server && this.setState({past: true, server: {
                       ...newServerToLegacy(server),
-                      address: this.state.server?.address,
-                      port: this.state.server?.port,
-                      owner: this.state.server?.owner,
                       country: this.state.server?.country,
                       countryCode: this.state.server?.countryCode
                     }})}>

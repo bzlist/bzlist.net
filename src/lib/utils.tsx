@@ -173,10 +173,10 @@ export const sortBy = (
 
 export const newServerToLegacy = (server: any): Server => {
   return {
-    address: "",
-    port: 0,
+    address: server.address,
+    port: server.port,
     ip: server.ip,
-    owner: "",
+    owner: server.owner,
     country: "",
     countryCode: "",
     timestamp: server.timestamp,
