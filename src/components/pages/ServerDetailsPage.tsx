@@ -339,10 +339,10 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
                 </tbody>
               </table>
             </div>
-            {this.state.history && <div>
+            {this.state.history.length > 0 && <div>
               <h2>Player History</h2>
               <div className="history">
-                <span>-24h</span>
+                <span>-{Math.round((Math.floor(new Date().getTime() / 1000) - this.state.history[0].timestamp) / 3600)}h</span>
                 {this.state.history.map((server: Server) =>
                   <div
                     key={server.timestamp}
@@ -360,7 +360,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
                     <div>{server.players?.length}</div>
                   </div>
                 )}
-                <span>Now</span>
+                <span>-{Math.round((Math.floor(new Date().getTime() / 1000) - this.state.history[this.state.history.length - 1].timestamp) / 60)}m</span>
               </div>
             </div>}
           </div>
