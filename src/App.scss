@@ -46,6 +46,14 @@
       height: 2.5rem;
     }
 
+    span:last-child{
+      color: #EEE;
+      white-space: nowrap;
+      display: none;
+      animation: slide-in calc(var(--animations) * .1s) forwards ease;
+      opacity: calc(var(--animations) * -1 + 1);
+    }
+
     &:first-child span:last-child{
       font-size: 1.2rem;
       font-weight: 500;
@@ -63,10 +71,6 @@
       span:last-child{
         color: #FFF;
       }
-    }
-
-    &.active path{
-      fill: url(#a);
     }
 
     @include desktop{
@@ -89,12 +93,8 @@
       }
     }
 
-    span:last-child{
-      color: #EEE;
-      white-space: nowrap;
-      display: none;
-      animation: slide-in calc(var(--animations) * .1s) forwards ease;
-      opacity: calc(var(--animations) * -1 + 1);
+    &.active path{
+      fill: url(#a);
     }
   }
 }

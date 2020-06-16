@@ -71,7 +71,6 @@
 div.content{
   margin-bottom: 1.5rem;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  overflow: auto;
 
   .players td{
     word-break: break-all;
@@ -176,7 +175,7 @@ div.content{
     }
   }
 
-  & > div{
+  & > *:not(span){
     width: calc(100% / 24);
 
     & > div:first-child{

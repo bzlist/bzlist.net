@@ -82,16 +82,6 @@ h2{
   }
 }
 
-.icon svg, .icon img{
-  position: relative;
-  top: 2px;
-  transition: transform .2s ease-in-out;
-}
-
-.icon:active svg, .icon:active img{
-  transform: scale(calc(1 + var(--animations) * .1));
-}
-
 .link{
   margin: 0;
   padding: 0;
@@ -329,12 +319,22 @@ td, th{
       margin-bottom: -3px;
     }
 
-    @for $i from 2 through 3{
+    @for $i from 2 through 4{
       &:nth-child(#{$i}){
         animation-delay: (.05s * $i);
       }
     }
   }
+}
+
+.icon svg, .icon img{
+  position: relative;
+  top: 2px;
+  transition: transform calc(var(--animations) * .05s) ease-in-out;
+}
+
+.icon:active svg, .icon:active img{
+  transform: scale(1.1);
 }
 
 .label{

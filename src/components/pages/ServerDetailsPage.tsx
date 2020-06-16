@@ -339,30 +339,34 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
                 </tbody>
               </table>
             </div>
-            {this.state.history.length > 0 && <div>
+            <div>
               <h2>Player History</h2>
-              <div className="history">
-                <span>-{Math.round((Math.floor(new Date().getTime() / 1000) - this.state.history[0].timestamp) / 3600)}h</span>
-                {this.state.history.map((server: Server) =>
-                  <div
-                    key={server.timestamp}
-                    style={{cursor: settings.getBool(settings.EXPERIMENTAL_HISTORY) ? "pointer" : "inherit"}}
-                    onClick={() => settings.getBool(settings.EXPERIMENTAL_HISTORY) && this.state.server && this.setState({past: true, server: {
-                      ...newServerToLegacy(server),
-                      address: this.state.server.address,
-                      port: this.state.server.port,
-                      ip: this.state.server.ip,
-                      owner: this.state.server.owner,
-                      country: this.state.server.country,
-                      countryCode: this.state.server.countryCode
-                    }})}>
-                    <div style={{height: (server.players?.length || 0) * 6}}></div>
-                    <div>{server.players?.length}</div>
-                  </div>
-                )}
-                <span>-{Math.round((Math.floor(new Date().getTime() / 1000) - this.state.history[this.state.history.length - 1].timestamp) / 60)}m</span>
-              </div>
-            </div>}
+              {this.state.history.length > 0 ?
+                <div className="history">
+                  <span>-{Math.round((Math.floor(new Date().getTime() / 1000) - this.state.history[0].timestamp) / 3600)}h</span>
+                  {this.state.history.map((server: Server) =>
+                    <div
+                      key={server.timestamp}
+                      style={{cursor: settings.getBool(settings.EXPERIMENTAL_HISTORY) ? "pointer" : "inherit"}}
+                      onClick={() => settings.getBool(settings.EXPERIMENTAL_HISTORY) && this.state.server && this.setState({past: true, server: {
+                        ...newServerToLegacy(server),
+                        address: this.state.server.address,
+                        port: this.state.server.port,
+                        ip: this.state.server.ip,
+                        owner: this.state.server.owner,
+                        country: this.state.server.country,
+                        countryCode: this.state.server.countryCode
+                      }})}>
+                      <div style={{height: (server.players?.length || 0) * 6}}></div>
+                      <div>{server.players?.length}</div>
+                    </div>
+                  )}
+                  <span>-{Math.round((Math.floor(new Date().getTime() / 1000) - this.state.history[this.state.history.length - 1].timestamp) / 60)}m</span>
+                </div>
+              :
+                <span>Loading...</span>
+              }
+            </div>
           </div>
           <Switch
             label="Hide Server"
