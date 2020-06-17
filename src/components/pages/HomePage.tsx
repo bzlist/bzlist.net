@@ -83,6 +83,11 @@ export class HomePage extends React.PureComponent<any, State>{
   handleData(data: Server[]): void{
     this.setState({servers: data});
     cache.set("servers", JSON.stringify(data));
+    cache.set("players", JSON.stringify(([] as Player[]).concat.apply([], data.map((server: Server) => (server.players || []).map((player: Player) => {
+      player.server = `${server.address}:${server.port}`;
+      player.timestamp = server.timestamp;
+      return player;
+    })))));
 
     data.forEach((server: Server) => {
       const observerTeam = server.teams.find((team: Team) => team.name === "Observer");
