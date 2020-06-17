@@ -272,12 +272,6 @@ td, th{
       padding: .75rem 1rem;
     }
 
-    @include desktop{
-      tr:hover{
-        background: linear-gradient(to right, var(--bg), var(--bg-darker));
-      }
-    }
-
     h2{
       word-break: break-word;
       margin-bottom: .8rem;
@@ -323,6 +317,14 @@ td, th{
       &:nth-child(#{$i}){
         animation-delay: (.05s * $i);
       }
+    }
+  }
+}
+
+.card-list, .dialog{
+  @include desktop{
+    tr:hover{
+      background: linear-gradient(to right, var(--bg), var(--bg-darker));
     }
   }
 }

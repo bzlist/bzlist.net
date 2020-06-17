@@ -354,11 +354,13 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
           />
           {this.state.past && <button style={{marginTop: "2rem"}} className="btn btn-outline" onClick={() => this.setState({past: false})}>View Current</button>}
         </div>
-        <Dialog title="Select Team" open={this.state.selectTeam} onClose={() => this.setState({selectTeam: false})}>
-          {this.state.server.teams.map((team: Team) =>
-            <button key={team.name} className="btn btn-outline" onClick={() => this.joinTeam(team.name)}>{autoPlural(`${this.getTeamCount(team)} ${team.name}`)}</button>
-          )}
-        </Dialog>
+        <div className="play-dialog">
+          <Dialog title="Select Team" open={this.state.selectTeam} onClose={() => this.setState({selectTeam: false})}>
+            {this.state.server.teams.map((team: Team) =>
+              <button key={team.name} className="btn btn-outline" onClick={() => this.joinTeam(team.name)}>{autoPlural(`${this.getTeamCount(team)} ${team.name}`)}</button>
+            )}
+          </Dialog>
+        </div>
       </div>
     );
   }

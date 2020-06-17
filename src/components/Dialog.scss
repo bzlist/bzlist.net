@@ -5,13 +5,15 @@
   height: 100%;
   position: fixed;
   top: 0;
+  left: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: fade-in .15s forwards;
+  animation: fade-in calc(var(--animations) * .1s) forwards;
+  z-index: 999;
 
   .dialog__overlay{
-    background-color: var(--bg);
+    background-color: #000;
     opacity: .5;
     position: absolute;
     top: 0;
@@ -31,28 +33,26 @@
   & > div{
     max-width: 90%;
     min-width: 400px;
-    min-height: 100px;
     background-color: var(--bg-lighter);
     position: relative;
     box-shadow: $shadow;
     border-radius: $border-radius-large;
+
+    @include mobile{
+      min-width: 300px;
+    }
   }
 
   .dialog__header{
-    padding: 1rem;
+    padding: .75rem;
     text-align: center;
   }
 
   .dialog__inner{
-    // min-height: 64px;
-    // padding: 16px;
     padding: 1rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    grid-gap: .5rem;
 
-    .btn{
-      padding: 0 .25rem;
+    td{
+      width: 50%;
     }
   }
 }

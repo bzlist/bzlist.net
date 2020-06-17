@@ -17,6 +17,13 @@ import {
 import {settings, history, storage, api, checkAuth, updateUserCache, user, userChanged, authHeaders} from "./lib";
 import {onUpdateFound} from "index";
 
+export const setDialog = (_dialog: JSX.Element | null): void => {
+  dialog = _dialog;
+  dialogChanged();
+};
+let dialog: JSX.Element | null = null;
+let dialogChanged: () => void = () => {};
+
 interface State{
   offline: boolean;
   updateAvailable: boolean;
@@ -83,6 +90,7 @@ class App extends React.PureComponent<any, State>{
   componentDidMount(): void{
     userChanged.push(() => this.forceUpdate());
     onUpdateFound.push(() => this.setState({updateAvailable: true}));
+    dialogChanged = () => this.forceUpdate();
   }
 
   async loadSettings(): Promise<void>{
@@ -228,6 +236,7 @@ class App extends React.PureComponent<any, State>{
             <div className="copyright">Copyright © 2019-2020 The Noah</div>
           </footer>
         </div>
+        {dialog}
       </Router>
     );
   }
