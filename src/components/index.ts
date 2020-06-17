@@ -15,3 +15,4 @@ export * from "./Search";
 export * from "./Server";
 export * from "./Player";
 export * from "./List";
+export * from "./Dialog";

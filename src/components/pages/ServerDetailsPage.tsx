@@ -6,6 +6,7 @@ import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings, isF
 import {Server, Player, Team} from "models";
 import {TimeAgo, PlayerRow, Switch, Icon, playerSort} from "components";
 import {imageExt} from "index";
+import {Dialog} from "components/Dialog";
 
 interface Params{
   address: string;
@@ -176,26 +177,6 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
         <div className="wrapper">
           <h1>{address}:{port} isn't in the database :(</h1><br/><br/>
           <Link to="/" className="btn btn-primary">Go Home</Link>
-        </div>
-      );
-    }
-
-    let playPopup;
-    if(this.state.selectTeam){
-      playPopup = (
-        <div className="play-popup">
-          <span className="overlay" onClick={() => this.setState({selectTeam: false})}></span>
-          <div className="popup__container">
-            <div className="popup__header">
-              <h3>Select Team</h3>
-              <div className="close"><button className="btn icon" onClick={() => this.setState({selectTeam: false})}>{Icon("close")}</button></div>
-            </div>
-            <div className="popup__inner">
-              {this.state.server.teams.map((team: Team) =>
-                <button key={team.name} className="btn btn-outline" onClick={() => this.joinTeam(team.name)}>{autoPlural(`${this.getTeamCount(team)} ${team.name}`)}</button>
-              )}
-            </div>
-          </div>
         </div>
       );
     }
@@ -373,7 +354,11 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
           />
           {this.state.past && <button style={{marginTop: "2rem"}} className="btn btn-outline" onClick={() => this.setState({past: false})}>View Current</button>}
         </div>
-        {playPopup}
+        <Dialog title="Select Team" open={this.state.selectTeam} onClose={() => this.setState({selectTeam: false})}>
+          {this.state.server.teams.map((team: Team) =>
+            <button key={team.name} className="btn btn-outline" onClick={() => this.joinTeam(team.name)}>{autoPlural(`${this.getTeamCount(team)} ${team.name}`)}</button>
+          )}
+        </Dialog>
       </div>
     );
   }
