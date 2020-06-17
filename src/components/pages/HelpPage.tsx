@@ -8,11 +8,13 @@ export const HelpPage = (): JSX.Element => (
   <div className="wrapper">
     <h1>Help</h1>
     <p>
-      I can be contacted <a href="https://forums.bzflag.org/ucp.php?i=pm&mode=compose&u=58103" target="_blank" rel="noopener noreferrer">here</a> via the BZFlag Forums.
-      You can also submit <Link to="/feedback">feedback</Link> directly.
+      If you are experiencing issues you can check the status page <a href="https://bzlist.statuspage.io/" target="_blank" rel="noopener noreferrer">here</a>.
     </p>
+    <h2>Contact</h2>
     <p>
-      Check the status page <a href="https://bzlist.statuspage.io/" target="_blank" rel="noopener noreferrer">here</a>.
+      I can be contacted <a href="https://forums.bzflag.org/ucp.php?i=pm&mode=compose&u=58103" target="_blank" rel="noopener noreferrer">here</a> via the BZFlag Forums,
+      on Twitter <a href="https://twitter.com/The_Noah_Blitz" target="_blank" rel="noopener noreferrer">@The_Noah_Blitz</a>,
+      or directly through the <Link to="/feedback">feedback</Link> page.
     </p>
     <h2>FAQ</h2>
     <p>

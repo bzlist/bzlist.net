@@ -45,7 +45,7 @@ export class FeedbackPage extends React.PureComponent<any, State>{
             {this.state.message !== "" && <span>&nbsp;&nbsp;{this.state.message}</span>}
           </p>
         :
-          <p>To prevent spam, you must be <Link to="/account">signed in</Link> to leave feedback.</p>
+          <p>To prevent spam, you must be <Link to="/account">signed in</Link> to leave feedback. You can also see how to reach me on the <Link to="/help">help</Link> page.</p>
         }
       </div>
     );
