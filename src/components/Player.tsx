@@ -5,12 +5,14 @@ import {settings, friendPlayer, isPlayerFriend} from "lib";
 import {Player} from "models";
 import {Icon} from "components";
 
-export const playerSort = (a: Player, b: Player) => a.team === "Observer" ? 1 : b.team === "Observer" ? -1 : a.score > b.score ? -1 : 1;
+export const playerSort = (a: Player, b: Player) => a.team === "Observer" ? 1 : b.team === "Observer" ? -1 : (a.score ?? a.wins - a.losses) > (b.score ?? b.wins - b.losses) ? -1 : 1;
 
 class PlayerBase extends React.Component<{player: Player, showServer?: boolean, showFriend: boolean}, {friend: boolean}>{
   static defaultProps = {
     showFriend: true
   };
+
+  score = this.props.player.score ?? this.props.player.wins - this.props.player.losses;
 
   constructor(props: any){
     super(props);
@@ -33,7 +35,7 @@ export class PlayerRow extends PlayerBase{
     return (
       <tr>
         <td><b>{player.callsign}</b> {player.motto && `(${player.motto})`}</td>
-        <td>{player.team !== "Observer" && player.score}</td>
+        <td>{player.team !== "Observer" && this.score}</td>
         <td>{player.team}</td>
         {serverTr}
         {this.props.showFriend &&
@@ -64,7 +66,7 @@ export class PlayerCard extends PlayerBase{
             {this.props.player.team !== "Observer" &&
               <tr>
                 <td>Score</td>
-                <td>{this.props.player.score}</td>
+                <td>{this.score}</td>
               </tr>
             }
             <tr>

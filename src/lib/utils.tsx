@@ -186,10 +186,7 @@ export const newServerToLegacy = (server: any): Server => {
       team.score = team.wins - team.losses;
       return team;
     }),
-    players: server.players.map((player: any) => {
-      player.score = player.wins || 0 - player.losses || 0;
-      return player;
-    }),
+    players: server.players,
     playersCount: server.players.length,
     configuration: {
       gameStyle: server.style,
