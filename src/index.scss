@@ -10,12 +10,12 @@
 html{
   &.custom-scrollbars{
     ::-webkit-scrollbar{
-      width: .5rem;
-      height: .5rem;
+      width: .75rem;
+      height: .75rem;
     }
 
     ::-webkit-scrollbar-thumb{
-      background: linear-gradient($gradient-angle, $color-gray-dark, $color-gray-light);
+      background: $gradient-dark;
     }
   }
 
