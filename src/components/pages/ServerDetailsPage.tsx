@@ -4,7 +4,7 @@ import "./ServerDetailsPage.scss";
 
 import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings, isFavoriteServer, favoriteServer, hideServer, api, isServerHidden, newServerToLegacy} from "lib";
 import {Server, Player, Team} from "models";
-import {TimeAgo, PlayerRow, Switch, Icon, playerSort} from "components";
+import {TimeAgo, PlayerRow, Switch, Icon, playerSort, Dropdown} from "components";
 import {imageExt} from "index";
 import {Dialog} from "components/Dialog";
 
@@ -23,6 +23,7 @@ interface State{
   favorite: boolean;
   history: Server[];
   past: boolean;
+  historyPeriod: "Day" | "3 Days" | "Week";
 }
 
 export class ServerDetailsPage extends React.PureComponent<Props, State>{
@@ -65,21 +66,13 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
       selectTeam,
       favorite: isFavoriteServer(this.server),
       history: [],
-      past: false
+      past: false,
+      historyPeriod: "Day"
     };
 
     this.handleData = this.handleData.bind(this);
 
-    api(`history/${this.address}/${this.port}`, undefined, "GET").then((data: Server[]) => data && this.setState({
-      history: data.sort((a: Server, b: Server) => a.timestamp - b.timestamp).map((server: Server) => {
-        if(server.players){
-          server.players = server.players.sort(playerSort);
-        }
-
-        return server;
-      })
-    }));
-
+    this.fetchHistory();
     this.fetchData();
   }
 
@@ -95,6 +88,10 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
     }else if(prevState.past && !this.state.past){
       this.fetchData();
     }
+
+    if(prevState.historyPeriod !== this.state.historyPeriod){
+      this.fetchHistory();
+    }
   }
 
   fetchData(): void{
@@ -105,6 +102,27 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
 
     socket.on<Server>(`${this.address}:${this.port}`, this.handleData);
     socket.emit("server", {address: this.address, port: this.port});
+  }
+
+  fetchHistory(): void{
+    const hours = this.state.historyPeriod === "3 Days" ? 72 : this.state.historyPeriod === "Week" ? 168 : 24;
+    api(`history/${this.address}/${this.port}?hours=${hours}`, undefined, "GET").then((data: Server[]) => {
+      if(this.state.historyPeriod === "Week"){
+        data = data.filter((server: Server, i) => i % 4 === 0);
+      }else if(this.state.historyPeriod === "3 Days"){
+        data = data.filter((server: Server, i) => i % 2 === 0);
+      }
+
+      this.setState({
+        history: data.sort((a: Server, b: Server) => a.timestamp - b.timestamp).map((server: Server) => {
+          if(server.players){
+            server.players = server.players.sort(playerSort);
+          }
+
+          return server;
+        })
+      });
+    });
   }
 
   handleData(data: Server): void{
@@ -319,9 +337,11 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
             </div>
             <div>
               <h2>Player History</h2>
+              <span className="label">Last</span>
+              <Dropdown items={["Day", "3 Days", "Week"]} selected={this.state.historyPeriod} onChange={(value: any) => this.setState({historyPeriod: value})}/><br/>
               {this.state.history.length > 0 ?
                 <div className="history">
-                  <span>-{Math.round((Math.floor(new Date().getTime() / 1000) - this.state.history[0].timestamp) / 3600)}h</span>
+                  <span>-{Math.ceil((Math.floor(new Date().getTime() / 1000) - this.state.history[0].timestamp) / 3600)}h</span>
                   {this.state.history.map((server: Server) =>
                     <div
                       key={server.timestamp}
