@@ -2,7 +2,7 @@ import React from "react";
 
 import {createBrowserHistory} from "history";
 import {settings} from ".";
-import {Server, GameStyle} from "../models";
+import {Server, GameStyle, TeamName} from "../models";
 
 export const API_ROOT = "https://api.bzlist.net";
 export const history = createBrowserHistory();
@@ -205,6 +205,6 @@ export const newServerToLegacy = (server: any): Server => {
   } as Server;
 };
 
-export const joinGame = (server: Server | string, team: string): void => {
+export const joinGame = (server: Server | string, team: TeamName): void => {
   window.location.href = `bzflag-launcher:${typeof(server) === "object" ? `${server.address}:${server.port}` : server} ${team.toLowerCase()}`;
 };

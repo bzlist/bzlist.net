@@ -1,9 +1,10 @@
 import {Player} from "./player.model";
 
 export type GameStyle = "FFA" | "CTF" | "OFFA" | "Rabbit";
+export type TeamName = "Rogue" | "Red" | "Green" | "Blue" | "Purple" | "Observer" | "Rabbit" | "Hunter";
 
 export interface Team{
-  name: string;
+  name: TeamName;
   players: number;
   maxPlayers: number;
   wins: number;
@@ -27,12 +28,10 @@ interface Configuration{
   // antidoteFlags: boolean;
   // handicap: boolean;
   noTeamKills: boolean;
-  dropBadFlags: DropBadFlags;
-}
-
-interface DropBadFlags{
-  wins: number;
-  time: number;
+  dropBadFlags: {
+    wins: number;
+    time: number;
+  };
 }
 
 export interface Server{

@@ -3,7 +3,7 @@ import {match, Link} from "react-router-dom";
 import "./ServerDetailsPage.scss";
 
 import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings, isFavoriteServer, favoriteServer, hideServer, api, isServerHidden, newServerToLegacy, joinGame} from "lib";
-import {Server, Player, Team} from "models";
+import {Server, Player, Team, TeamName} from "models";
 import {TimeAgo, PlayerRow, Switch, Icon, playerSort, Dropdown} from "components";
 import {imageExt} from "index";
 import {Dialog} from "components/Dialog";
@@ -173,7 +173,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
     }
   }
 
-  joinTeam(team: string): void{
+  joinTeam(team: TeamName): void{
     if(!this.state.server){
       return;
     }
