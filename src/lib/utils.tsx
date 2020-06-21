@@ -2,12 +2,12 @@ import React from "react";
 
 import {createBrowserHistory} from "history";
 import {settings} from ".";
-import {Server} from "../models";
+import {Server, GameStyle} from "../models";
 
 export const API_ROOT = "https://api.bzlist.net";
 export const history = createBrowserHistory();
 
-export const verboseGameStyle = (value: string): string => {
+export const verboseGameStyle = (value: GameStyle): string => {
   // turn the short abbreviation string to the verbose version
   switch(value){
     case "CTF":
@@ -188,7 +188,6 @@ export const newServerToLegacy = (server: any): Server => {
     }),
     players: server.players,
     configuration: {
-      gameStyle: server.style,
       maxShots: server.maxShots,
       maxPlayers: server.maxPlayers,
       superflags: server.options.flags,
@@ -201,7 +200,8 @@ export const newServerToLegacy = (server: any): Server => {
         wins: server.options.shake?.wins || 0,
         time: server.options.shake?.timeout || 0
       }
-    }
+    },
+    style: server.style
   } as Server;
 };
 

@@ -39,7 +39,7 @@ export class ServerRow extends ServerBase{
         <td>
           <span aria-label={this.props.server.country}><img src={`https://countryflags.io/${this.props.server.countryCode}/flat/32.png`} alt={this.props.server.countryCode}/></span>
         </td>
-        <td><span aria-label={verboseGameStyle(this.props.server.configuration.gameStyle)}>{this.props.server.configuration.gameStyle}</span></td>
+        <td><span aria-label={verboseGameStyle(this.props.server.style)}>{this.props.server.style}</span></td>
         <td>{this.props.server.title}</td>
         <td><button className="btn icon" onClick={(e) => {
           e.stopPropagation();
@@ -79,7 +79,7 @@ export class ServerCard extends ServerBase{
             </tr>
             <tr>
               <td>Game Style</td>
-              <td>{verboseGameStyle(this.props.server.configuration.gameStyle)}</td>
+              <td>{verboseGameStyle(this.props.server.style)}</td>
             </tr>
           </tbody>
         </table>

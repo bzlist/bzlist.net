@@ -5,7 +5,7 @@ import {Server, Team, Player} from "models";
 import {TimeAgo, Search, ServerRow, ServerCard, PlayerRow, playerSort, List} from "components";
 import {imageExt} from "index";
 
-const SORT_INDEXES = ["playersCount", "address", "country", "configuration.gameStyle", "title"];
+const SORT_INDEXES = ["playersCount", "address", "country", "style", "title"];
 
 interface State{
   servers: Server[];
@@ -185,7 +185,7 @@ export class HomePage extends React.PureComponent<any, State>{
                 <th onClick={(e) => this.sortBy("playersCount", 1, e.currentTarget)}>Players</th>
                 <th onClick={(e) => this.sortBy("address", -1, e.currentTarget)}>Address</th>
                 <th onClick={(e) => this.sortBy("country", -1, e.currentTarget)}>Country</th>
-                <th onClick={(e) => this.sortBy("configuration.gameStyle", -1, e.currentTarget)}>Game Style</th>
+                <th onClick={(e) => this.sortBy("style", -1, e.currentTarget)}>Game Style</th>
                 <th onClick={(e) => this.sortBy("title", -1, e.currentTarget)}>Title</th>
                 <th></th>
                 <th></th>

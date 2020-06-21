@@ -1,5 +1,7 @@
 import {Player} from "./player.model";
 
+export type GameStyle = "FFA" | "CTF" | "OFFA" | "Rabbit";
+
 export interface Team{
   name: string;
   players: number;
@@ -11,7 +13,7 @@ export interface Team{
 
 interface Configuration{
   [index: string]: any;
-  gameStyle: string;
+  // gameStyle: string;
   // timeLimit: number;
   maxShots: number;
   maxPlayers: number;
@@ -49,4 +51,5 @@ export interface Server{
   players: Array<Player>;
   // playersCount: number;
   configuration: Configuration;
+  style: GameStyle;
 }

@@ -265,7 +265,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
                   </tr>
                   <tr>
                     <th>Game Style</th>
-                    <td>{verboseGameStyle(this.state.server.configuration.gameStyle)}</td>
+                    <td>{verboseGameStyle(this.state.server.style)}</td>
                   </tr>
                   <tr>
                     <th>Max shots</th>
