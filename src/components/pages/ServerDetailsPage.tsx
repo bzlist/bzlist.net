@@ -179,7 +179,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
     }
 
     joinGame(this.state.server, team);
-    this.setState({selectTeam: false});
+    this.setState({selectTeam: false, selectedTeam: null});
   }
 
   getTeamCount(team: Team): number{
@@ -405,7 +405,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
             </tbody>
           </table>
           <div className="btn-list">
-            <button className="btn btn-primary" onClick={() => this.state.server && this.state.selectedTeam?.name && joinGame(this.state.server, this.state.selectedTeam?.name)}>Join</button>
+            <button className="btn btn-primary" onClick={() => this.state.server && this.state.selectedTeam?.name && this.joinTeam(this.state.selectedTeam?.name)}>Join</button>
           </div>
         </Dialog>
       </div>

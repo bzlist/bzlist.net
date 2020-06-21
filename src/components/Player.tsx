@@ -3,12 +3,22 @@ import {Link} from "react-router-dom";
 
 import {settings, friendPlayer, isPlayerFriend, joinGame} from "lib";
 import {Player} from "models";
-import {Icon, Dialog} from "components";
-import {setDialog} from "App";
+import {Icon} from "components";
+import {setDialog, showDialog} from "App";
 
 export const playerSort = (a: Player, b: Player) => a.team === "Observer" ? 1 : b.team === "Observer" ? -1 : (a.wins || 0) - (a.losses || 0) > (b.wins || 0) - (b.losses || 0) ? -1 : 1;
 
-class PlayerBase extends React.Component<{player: Player, showServer?: boolean, showFriend: boolean}, {friend: boolean, showInfo: boolean}>{
+interface Props{
+  player: Player;
+  showServer?: boolean;
+  showFriend: boolean;
+}
+
+interface State{
+  friend: boolean;
+}
+
+class PlayerBase extends React.Component<Props, State>{
   static defaultProps = {
     showFriend: true
   };
@@ -19,47 +29,51 @@ class PlayerBase extends React.Component<{player: Player, showServer?: boolean, 
     super(props);
 
     this.state = {
-      friend: isPlayerFriend(this.props.player.callsign),
-      showInfo: false
+      friend: isPlayerFriend(this.props.player.callsign)
     };
+
+    this.showDialog = this.showDialog.bind(this);
   }
 
-  shouldComponentUpdate(nextProps: {player: Player, showServer: boolean, showFriend: boolean}, nextState: {friend: boolean, showInfo: boolean}): boolean{
-    return nextState.friend !== this.state.friend || nextProps.player.timestamp !== this.props.player.timestamp || nextState.showInfo !== this.state.showInfo;
+  shouldComponentUpdate(nextProps: Props, nextState: State): boolean{
+    return nextState.friend !== this.state.friend || nextProps.player.timestamp !== this.props.player.timestamp;
   }
 
-  componentDidUpdate(): void{
+  showDialog(): void{
     const {player, showServer} = this.props;
-    setDialog(<Dialog title={player.callsign} open={this.state.showInfo} onClose={() => this.setState({showInfo: false})}>
-      <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
-        <tbody>
-          {player.motto && <tr>
-            <th>Motto</th>
-            <td>{player.motto}</td>
-          </tr>}
-          <tr>
-            <th>Team</th>
-            <td>{player.team}</td>
-          </tr>
-          {player.wins !== undefined && <tr>
-            <th>Wins</th>
-            <td>{player.wins}</td>
-          </tr>}
-          {player.losses !== undefined && <tr>
-            <th>Losses</th>
-            <td>{player.losses}</td>
-          </tr>}
-          {player.tks !== undefined && <tr>
-            <th>Team Kills</th>
-            <td>{player.tks}</td>
-          </tr>}
-        </tbody>
-      </table>
-      <div className="btn-list">
-        <button className="btn btn-primary" onClick={() => joinGame(player.server, player.team)}>Join</button>
-        {showServer && <Link onClick={() => setDialog(null)} to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`} className="btn btn-outline">View Server</Link>}
-      </div>
-    </Dialog>);
+    setDialog({
+      title: player.callsign,
+      body: <>
+        <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
+          <tbody>
+            {player.motto && <tr>
+              <th>Motto</th>
+              <td>{player.motto}</td>
+            </tr>}
+            <tr>
+              <th>Team</th>
+              <td>{player.team}</td>
+            </tr>
+            {player.wins !== undefined && <tr>
+              <th>Wins</th>
+              <td>{player.wins}</td>
+            </tr>}
+            {player.losses !== undefined && <tr>
+              <th>Losses</th>
+              <td>{player.losses}</td>
+            </tr>}
+            {player.tks !== undefined && <tr>
+              <th>Team Kills</th>
+              <td>{player.tks}</td>
+            </tr>}
+          </tbody>
+        </table>
+        <div className="btn-list">
+          <button className="btn btn-primary" onClick={() => {showDialog(false); joinGame(player.server, player.team)}}>Join</button>
+          {showServer && <Link onClick={() => setDialog(null)} to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`} className="btn btn-outline">View Server</Link>}
+        </div>
+      </>
+    });
   }
 }
 
@@ -69,7 +83,7 @@ export class PlayerRow extends PlayerBase{
     const serverTr = player.server && this.props.showServer && <td><Link to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`}>{player.server}</Link></td>;
 
     return (
-      <tr onClick={() => this.setState({showInfo: true})} style={{cursor: "pointer"}}>
+      <tr onClick={this.showDialog} style={{cursor: "pointer"}}>
         <td><b>{player.callsign}</b>{player.motto && ` (${player.motto})`}</td>
         <td>{player.team !== "Observer" && this.score}</td>
         <td>{player.team}</td>
@@ -91,7 +105,7 @@ export class PlayerCard extends PlayerBase{
     const {player} = this.props;
 
     return (
-      <div onClick={() => this.setState({showInfo: true})}>
+      <div onClick={this.showDialog}>
         <h2>
           <button className="btn icon" onClick={(e) => {
             e.stopPropagation();

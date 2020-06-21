@@ -12,21 +12,27 @@ import {
   SettingsPage,
   AccountPage,
   FeedbackPage,
-  Icon
+  Icon,
+  Dialog
 } from "./components";
 import {settings, history, storage, api, checkAuth, updateUserCache, user, userChanged, authHeaders} from "./lib";
 import {onUpdateFound} from "index";
 
-export const setDialog = (_dialog: JSX.Element | null): void => {
+interface IDialog{
+  title: string;
+  body: JSX.Element;
+}
+export const setDialog = (_dialog: IDialog | null): void => {
   dialog = _dialog;
-  dialogChanged();
+  showDialog(true);
 };
-let dialog: JSX.Element | null = null;
-let dialogChanged: () => void = () => {};
+let dialog: IDialog | null = null;
+export let showDialog: (open: boolean) => void = () => {};
 
 interface State{
   offline: boolean;
   updateAvailable: boolean;
+  isDialogOpen: boolean;
 }
 
 class App extends React.PureComponent<any, State>{
@@ -37,7 +43,8 @@ class App extends React.PureComponent<any, State>{
 
     this.state = {
       offline: false,
-      updateAvailable: false
+      updateAvailable: false,
+      isDialogOpen: false
     };
 
     this.drawerToggleRef = React.createRef<HTMLInputElement>();
@@ -90,7 +97,7 @@ class App extends React.PureComponent<any, State>{
   componentDidMount(): void{
     userChanged.push(() => this.forceUpdate());
     onUpdateFound.push(() => this.setState({updateAvailable: true}));
-    dialogChanged = () => this.forceUpdate();
+    showDialog = (open: boolean) => this.setState({isDialogOpen: open});
   }
 
   async loadSettings(): Promise<void>{
@@ -236,7 +243,9 @@ class App extends React.PureComponent<any, State>{
             <div className="copyright">Copyright © 2019-2020 The Noah</div>
           </footer>
         </div>
-        {dialog}
+        <Dialog title={dialog?.title ?? ""} open={this.state.isDialogOpen} onClose={() => this.setState({isDialogOpen: false})}>
+          {dialog?.body}
+        </Dialog>
       </Router>
     );
   }
