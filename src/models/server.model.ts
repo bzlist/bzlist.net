@@ -4,9 +4,9 @@ export interface Team{
   name: string;
   players: number;
   maxPlayers: number;
-  // wins: number;
-  // losses: number;
-  score: number;
+  wins: number;
+  losses: number;
+  // score: number;
 }
 
 interface Configuration{

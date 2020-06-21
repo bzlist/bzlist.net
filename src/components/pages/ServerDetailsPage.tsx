@@ -24,6 +24,7 @@ interface State{
   history: Server[];
   past: boolean;
   historyPeriod: "Day" | "3 Days" | "Week";
+  selectedTeam: Team | null;
 }
 
 export class ServerDetailsPage extends React.PureComponent<Props, State>{
@@ -67,7 +68,8 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
       favorite: isFavoriteServer(this.server),
       history: [],
       past: false,
-      historyPeriod: "Day"
+      historyPeriod: "Day",
+      selectedTeam: null
     };
 
     this.handleData = this.handleData.bind(this);
@@ -314,7 +316,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
                 </table>
               </div>
             }
-            <div>
+            <div className="teams">
               <h2>{autoPlural(`${this.state.server.teams.length} Team`)}</h2>
               <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
               <thead>
@@ -325,10 +327,10 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
                 </tr>
               </thead>
                 <tbody>
-                  {this.state.server.teams.sort((a: Team, b: Team) => a.score > b.score ? -1 : 1).map((team: Team) =>
-                    <tr key={team.name}>
+                  {this.state.server.teams.sort((a: Team, b: Team) => (a.wins - a.losses) > (b.wins - b.losses) ? -1 : 1).map((team: Team) =>
+                    <tr key={team.name} onClick={() => this.setState({selectedTeam: team})}>
                       <td><b>{team.name}</b></td>
-                      <td>{team.name === "Observer" ? "" : team.score}</td>
+                      <td>{team.name === "Observer" ? "" : team.wins - team.losses}</td>
                       <td>{this.getTeamCount(team)} / {team.maxPlayers}</td>
                     </tr>
                   )}
@@ -381,6 +383,28 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
             )}
           </Dialog>
         </div>
+        <Dialog title={this.state.selectedTeam?.name || ""} open={this.state.selectedTeam !== null} onClose={() => this.setState({selectedTeam: null})}>
+          <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
+            <tbody>
+              <tr>
+                <th>Wins</th>
+                <td>{this.state.selectedTeam?.wins}</td>
+              </tr>
+              <tr>
+                <th>Losses</th>
+                <td>{this.state.selectedTeam?.losses}</td>
+              </tr>
+              <tr>
+                <th>Players</th>
+                <td>{this.state.selectedTeam?.players}</td>
+              </tr>
+              <tr>
+                <th>Max Players</th>
+                <td>{this.state.selectedTeam?.maxPlayers}</td>
+              </tr>
+            </tbody>
+          </table>
+        </Dialog>
       </div>
     );
   }
