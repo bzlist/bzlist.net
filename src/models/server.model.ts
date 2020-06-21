@@ -7,9 +7,8 @@ export interface Team{
   name: TeamName;
   players: number;
   maxPlayers: number;
-  wins: number;
-  losses: number;
-  // score: number;
+  wins?: number;
+  losses?: number;
 }
 
 interface Configuration{

@@ -2,7 +2,7 @@ import React from "react";
 import {match, Link} from "react-router-dom";
 import "./ServerDetailsPage.scss";
 
-import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings, isFavoriteServer, favoriteServer, hideServer, api, isServerHidden, newServerToLegacy, joinGame} from "lib";
+import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings, isFavoriteServer, favoriteServer, hideServer, api, isServerHidden, newServerToLegacy, joinGame, teamSort} from "lib";
 import {Server, Player, Team, TeamName} from "models";
 import {TimeAgo, PlayerRow, Switch, Icon, playerSort, Dropdown} from "components";
 import {imageExt} from "index";
@@ -327,10 +327,10 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
                 </tr>
               </thead>
                 <tbody>
-                  {this.state.server.teams.sort((a: Team, b: Team) => (a.wins - a.losses) > (b.wins - b.losses) ? -1 : 1).map((team: Team) =>
+                  {this.state.server.teams.sort(teamSort).map((team: Team) =>
                     <tr key={team.name} onClick={() => this.setState({selectedTeam: team})}>
                       <td><b>{team.name}</b></td>
-                      <td>{team.name === "Observer" ? "" : team.wins - team.losses}</td>
+                      <td>{team.wins !== undefined && team.losses !== undefined && team.wins - team.losses}</td>
                       <td>{this.getTeamCount(team)} / {team.maxPlayers}</td>
                     </tr>
                   )}
@@ -386,14 +386,14 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
         <Dialog title={this.state.selectedTeam?.name || ""} open={this.state.selectedTeam !== null} onClose={() => this.setState({selectedTeam: null})}>
           <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
             <tbody>
-              <tr>
+              {this.state.selectedTeam?.wins !== undefined && <tr>
                 <th>Wins</th>
                 <td>{this.state.selectedTeam?.wins}</td>
-              </tr>
-              <tr>
+              </tr>}
+              {this.state.selectedTeam?.losses !== undefined && <tr>
                 <th>Losses</th>
                 <td>{this.state.selectedTeam?.losses}</td>
-              </tr>
+              </tr>}
               <tr>
                 <th>Players</th>
                 <td>{this.state.selectedTeam?.players}</td>

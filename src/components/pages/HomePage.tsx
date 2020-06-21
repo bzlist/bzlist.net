@@ -1,6 +1,6 @@
 import React from "react";
 
-import {cache, socket, history, autoPlural, settings, notification, api, sortBy, favoriteServer, isServerHidden} from "lib";
+import {cache, socket, history, autoPlural, settings, notification, api, sortBy, favoriteServer, isServerHidden, teamSort} from "lib";
 import {Server, Team, Player} from "models";
 import {TimeAgo, Search, ServerRow, ServerCard, PlayerRow, playerSort, List} from "components";
 import {imageExt} from "index";
@@ -300,10 +300,10 @@ export class HomePage extends React.PureComponent<any, State>{
               </tr>
             </thead>
               <tbody>
-                {this.state.infoServer.teams.sort((a: Team, b: Team) => (a.wins - a.losses) > (b.wins - b.losses) ? -1 : 1).map((team: Team) =>
+                {this.state.infoServer.teams.sort(teamSort).map((team: Team) =>
                   <tr key={team.name}>
                     <td><b>{team.name}</b></td>
-                    <td>{team.name === "Observer" ? "" : team.wins - team.losses}</td>
+                    <td>{team.wins !== undefined && team.losses !== undefined && team.wins - team.losses}</td>
                     <td>{team.players} / {team.maxPlayers}</td>
                   </tr>
                 )}
