@@ -404,6 +404,9 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
               </tr>
             </tbody>
           </table>
+          <div className="btn-list">
+            <button className="btn btn-primary" onClick={() => this.state.server && this.state.selectedTeam?.name && joinGame(this.state.server, this.state.selectedTeam?.name)}>Join</button>
+          </div>
         </Dialog>
       </div>
     );
