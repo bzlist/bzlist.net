@@ -69,7 +69,7 @@ class PlayerBase extends React.Component<Props, State>{
           </tbody>
         </table>
         <div className="btn-list">
-          <button className="btn btn-primary" onClick={() => {showDialog(false); joinGame(player.server, player.team)}}>Join</button>
+          <button className="btn btn-primary" onClick={() => {showDialog(false); joinGame(player.server, player.team);}}>Join</button>
           {showServer && <Link onClick={() => setDialog(null)} to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`} className="btn btn-outline">View Server</Link>}
         </div>
       </>
