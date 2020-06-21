@@ -340,7 +340,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
               <span className="label">Last</span>
               <Dropdown items={["Day", "3 Days", "Week"]} selected={this.state.historyPeriod} onChange={(value: any) => this.setState({historyPeriod: value})}/><br/>
               {this.state.history.length > 0 ?
-                <div className="history">
+                <div className="history" style={{height: `${[...this.state.history].sort((a: Server, b: Server) => a.players.length < b.players.length ? 1 : -1)[0].players.length * 6 + 32}px`}}>
                   <span>-{Math.ceil((Math.floor(new Date().getTime() / 1000) - this.state.history[0].timestamp) / 3600)}h</span>
                   {this.state.history.map((server: Server) =>
                     <div
@@ -355,8 +355,8 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
                         country: this.state.server.country,
                         countryCode: this.state.server.countryCode
                       }})}>
-                      <div style={{height: (server.players?.length || 0) * 6}}></div>
-                      <div>{server.players?.length}</div>
+                      <div style={{height: server.players.length * 6}}></div>
+                      <div>{server.players.length}</div>
                     </div>
                   )}
                   <span>-{Math.round((Math.floor(new Date().getTime() / 1000) - this.state.history[this.state.history.length - 1].timestamp) / 60)}m</span>
