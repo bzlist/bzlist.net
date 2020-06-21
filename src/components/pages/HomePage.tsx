@@ -95,7 +95,7 @@ export class HomePage extends React.PureComponent<any, State>{
         return;
       }
 
-      const playerCount = server.playersCount - observerTeam.players;
+      const playerCount = server.players.length - observerTeam.players;
       if(playerCount >= 1){
         if(!settings.getBool(settings.DATA_SAVER)){
           new Image().src = `/images/servers/${server.address}_${server.port}.${imageExt}`;
@@ -136,12 +136,12 @@ export class HomePage extends React.PureComponent<any, State>{
 
     if(settings.getBool(settings.EXCLUDE_OBSERVERS)){
       servers = servers.map((server: Server) => {
-        server.playersCount -= server.teams.filter((team: Team) => team.name === "Observer")[0].players;
+        server.players.length -= server.teams.filter((team: Team) => team.name === "Observer")[0].players;
         return server;
       });
     }else if(settings.getBool(settings.IGNORE_OBSERVER_BOTS)){
       servers = servers.map((server: Server) => {
-        server.playersCount -= (server.players || []).filter((player: Player) => player.team === "Observer" && ["admin", "r3"].includes(player.callsign)).length;
+        server.players.length -= (server.players || []).filter((player: Player) => player.team === "Observer" && ["admin", "r3"].includes(player.callsign)).length;
         return server;
       });
     }
@@ -150,6 +150,8 @@ export class HomePage extends React.PureComponent<any, State>{
     if(this.state.sort.startsWith("configuration.")){
       const sort = this.state.sort.replace("configuration.", "");
       servers.sort((a: Server, b: Server) => a.configuration[sort] > b.configuration[sort] ? -this.state.sortOrder : this.state.sortOrder);
+    }else if(this.state.sort === "playersCount"){
+      servers.sort((a: Server, b: Server) => a.players.length > b.players.length ? -this.state.sortOrder : this.state.sortOrder);
     }else{
       servers.sort((a: Server, b: Server) => a[this.state.sort] > b[this.state.sort] ? -this.state.sortOrder : this.state.sortOrder);
     }
@@ -233,7 +235,7 @@ export class HomePage extends React.PureComponent<any, State>{
     let observerCount = 0;
     let timestamp = -1;
     for(const server of this.state.servers){
-      playerCount += server.playersCount;
+      playerCount += server.players.length;
 
       const observerTeam = server.teams.find((team) => team.name === "Observer");
       if(observerTeam){
@@ -270,9 +272,9 @@ export class HomePage extends React.PureComponent<any, State>{
         {this.state.infoServer && <div className="info-popout" ref={this.infoPopoutRef}>
           <h2>{this.state.infoServer.title}</h2>
           <small>Owner: {this.state.infoServer.owner}</small><br/><br/>
-          <h3>{autoPlural(`${this.state.infoServer.playersCount} Player`)} - {autoPlural(`${this.state.infoServer.teams.length} Team`)}</h3><br/>
+          <h3>{autoPlural(`${this.state.infoServer.players.length} Player`)} - {autoPlural(`${this.state.infoServer.teams.length} Team`)}</h3><br/>
           <div>
-            {this.state.infoServer.playersCount > 0 && this.state.infoServer.players && <>
+            {this.state.infoServer.players.length > 0 && this.state.infoServer.players && <>
               <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
               <thead>
                 <tr>

@@ -46,7 +46,7 @@ export interface Server{
   title: string;
   // online: boolean;
   teams: Array<Team>;
-  players?: Array<Player>;
-  playersCount: number;
+  players: Array<Player>;
+  // playersCount: number;
   configuration: Configuration;
 }

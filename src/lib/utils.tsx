@@ -187,7 +187,6 @@ export const newServerToLegacy = (server: any): Server => {
       return team;
     }),
     players: server.players,
-    playersCount: server.players.length,
     configuration: {
       gameStyle: server.style,
       maxShots: server.maxShots,

@@ -200,7 +200,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
     }
 
     // calculate number of players and observers
-    let playerCount = this.state.server.playersCount;
+    let playerCount = this.state.server.players.length;
     let observerCount = 0;
 
     const observerTeam = this.state.server.teams.find((team: Team) => team.name === "Observer");
@@ -237,7 +237,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
             <img src={`https://countryflags.io/${this.state.server.countryCode}/flat/32.png`} style={{margin:"0 4px 0 0"}} alt=""/>
             {this.state.server.country}
           </div>
-          <div><b>{autoPlural(`${this.state.server.playersCount} Player`)}</b></div>
+          <div><b>{autoPlural(`${this.state.server.players.length} Player`)}</b></div>
         </div>
         <div className="container">
           <div className="card-list content">
@@ -296,7 +296,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
                 </tbody>
               </table>
             </div>
-            {this.state.server.playersCount > 0 && this.state.server.players &&
+            {this.state.server.players.length > 0 && this.state.server.players &&
               <div className="players">
                 <h2>{autoPlural(`${playerCount} Player`)} and {autoPlural(`${observerCount} Observer`)}</h2>
                 <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>

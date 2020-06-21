@@ -27,14 +27,14 @@ export class ServerRow extends ServerBase{
     return (
       <tr
         style={{
-          fontWeight: this.props.server.playersCount > 0 ? "bold" : "inherit",
-          color: isServerHidden(this.props.server) ? "hsla(210, 5%, 50%, .7)" : this.props.server.playersCount > 0 ? "var(--color-text-headings)" : "inherit"
+          fontWeight: this.props.server.players.length > 0 ? "bold" : "inherit",
+          color: isServerHidden(this.props.server) ? "hsla(210, 5%, 50%, .7)" : this.props.server.players.length > 0 ? "var(--color-text-headings)" : "inherit"
         }}
         onClick={() => this.onClick()}
         onMouseMove={this.props.onMouseMove}
         data-server
       >
-        <td>{this.props.server.playersCount}</td>
+        <td>{this.props.server.players.length}</td>
         <td>{this.props.server.address}:{this.props.server.port}</td>
         <td>
           <span aria-label={this.props.server.country}><img src={`https://countryflags.io/${this.props.server.countryCode}/flat/32.png`} alt={this.props.server.countryCode}/></span>
@@ -71,7 +71,7 @@ export class ServerCard extends ServerBase{
           <tbody>
             <tr>
               <td>Players</td>
-              <td><b>{this.props.server.playersCount}</b></td>
+              <td><b>{this.props.server.players.length}</b></td>
             </tr>
             <tr>
               <td>Server</td>
