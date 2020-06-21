@@ -379,10 +379,6 @@ td, th{
     &:last-child{
       margin-right: 0;
     }
-
-    @include mobile{
-      margin-bottom: .75rem;
-    }
   }
 }
 
