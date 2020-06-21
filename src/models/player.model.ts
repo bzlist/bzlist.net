@@ -5,9 +5,9 @@ export interface Player{
   callsign: string;
   motto?: string;
   team: TeamName;
-  wins: number;
-  losses: number;
-  tks: number;
+  wins?: number;
+  losses?: number;
+  tks?: number;
   server: string;
   timestamp: number;
 }

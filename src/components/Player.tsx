@@ -6,14 +6,14 @@ import {Player} from "models";
 import {Icon, Dialog} from "components";
 import {setDialog} from "App";
 
-export const playerSort = (a: Player, b: Player) => a.team === "Observer" ? 1 : b.team === "Observer" ? -1 : (a.score ?? a.wins - a.losses) > (b.score ?? b.wins - b.losses) ? -1 : 1;
+export const playerSort = (a: Player, b: Player) => a.team === "Observer" ? 1 : b.team === "Observer" ? -1 : (a.wins || 0) - (a.losses || 0) > (b.wins || 0) - (b.losses || 0) ? -1 : 1;
 
 class PlayerBase extends React.Component<{player: Player, showServer?: boolean, showFriend: boolean}, {friend: boolean, showInfo: boolean}>{
   static defaultProps = {
     showFriend: true
   };
 
-  score = this.props.player.score ?? this.props.player.wins - this.props.player.losses;
+  score = (this.props.player.wins || 0) - (this.props.player.losses || 0);
 
   constructor(props: any){
     super(props);
@@ -41,18 +41,18 @@ class PlayerBase extends React.Component<{player: Player, showServer?: boolean, 
             <th>Team</th>
             <td>{player.team}</td>
           </tr>
-          <tr>
+          {player.wins !== undefined && <tr>
             <th>Wins</th>
             <td>{player.wins}</td>
-          </tr>
-          <tr>
+          </tr>}
+          {player.losses !== undefined && <tr>
             <th>Losses</th>
             <td>{player.losses}</td>
-          </tr>
-          <tr>
+          </tr>}
+          {player.tks !== undefined && <tr>
             <th>Team Kills</th>
             <td>{player.tks}</td>
-          </tr>
+          </tr>}
         </tbody>
       </table>
       <div className="btn-list">

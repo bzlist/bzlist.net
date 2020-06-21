@@ -95,7 +95,7 @@ export class PlayerPage extends React.PureComponent<any, State>{
 
     players = players.sort((a: Player, b: Player) =>
       a.team === "Observer" ? 1 : b.team === "Observer" ? -1 :
-      this.state.sort === "score" ? (a.score ?? a.wins - a.losses) > (b.score ?? b.wins - b.losses) ? -this.state.sortOrder : this.state.sortOrder :
+      this.state.sort === "score" ? (a.wins || 0) - (a.losses || 0) > (b.wins || 0) - (b.losses || 0) ? -this.state.sortOrder : this.state.sortOrder :
       a[this.state.sort] > b[this.state.sort] ? -this.state.sortOrder : this.state.sortOrder
     );
 
