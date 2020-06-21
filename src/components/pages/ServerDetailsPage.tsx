@@ -336,7 +336,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
               </table>
             </div>
             <div>
-              <h2>Player History</h2>
+              <h2>Player History<span className="beta"></span></h2>
               <span className="label">Last</span>
               <Dropdown items={["Day", "3 Days", "Week"]} selected={this.state.historyPeriod} onChange={(value: any) => this.setState({historyPeriod: value})}/><br/>
               {this.state.history.length > 0 ?
