@@ -204,3 +204,7 @@ export const newServerToLegacy = (server: any): Server => {
     }
   } as Server;
 };
+
+export const joinGame = (server: Server | string, team: string): void => {
+  window.location.href = `bzflag-launcher:${typeof(server) === "object" ? `${server.address}:${server.port}` : server} ${team.toLowerCase()}`;
+};

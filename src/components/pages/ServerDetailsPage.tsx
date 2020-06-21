@@ -2,7 +2,7 @@ import React from "react";
 import {match, Link} from "react-router-dom";
 import "./ServerDetailsPage.scss";
 
-import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings, isFavoriteServer, favoriteServer, hideServer, api, isServerHidden, newServerToLegacy} from "lib";
+import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings, isFavoriteServer, favoriteServer, hideServer, api, isServerHidden, newServerToLegacy, joinGame} from "lib";
 import {Server, Player, Team} from "models";
 import {TimeAgo, PlayerRow, Switch, Icon, playerSort, Dropdown} from "components";
 import {imageExt} from "index";
@@ -178,13 +178,13 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
       return;
     }
 
-    window.location.href = `bzflag-launcher:${this.state.server.address}:${this.state.server.port} ${team.toLowerCase()}`;
+    joinGame(this.state.server, team);
     this.setState({selectTeam: false});
   }
 
   getTeamCount(team: Team): number{
     if(this.state.server && team.name === "Rogue"){
-      return team.players + (this.state.server.players || []).filter((player: Player) => player.team === "Hunter" || player.team === "Rabbit").length;
+      return team.players + this.state.server.players.filter((player: Player) => player.team === "Hunter" || player.team === "Rabbit").length;
     }
 
     return team.players;
@@ -298,7 +298,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
                 </tbody>
               </table>
             </div>
-            {this.state.server.players.length > 0 && this.state.server.players &&
+            {this.state.server.players.length > 0 &&
               <div className="players">
                 <h2>{autoPlural(`${playerCount} Player`)} and {autoPlural(`${observerCount} Observer`)}</h2>
                 <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>

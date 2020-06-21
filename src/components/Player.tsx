@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-import {settings, friendPlayer, isPlayerFriend} from "lib";
+import {settings, friendPlayer, isPlayerFriend, joinGame} from "lib";
 import {Player} from "models";
 import {Icon, Dialog} from "components";
 import {setDialog} from "App";
@@ -29,32 +29,36 @@ class PlayerBase extends React.Component<{player: Player, showServer?: boolean, 
   }
 
   componentDidUpdate(): void{
-    const {player} = this.props;
+    const {player, showServer} = this.props;
     setDialog(<Dialog title={player.callsign} open={this.state.showInfo} onClose={() => this.setState({showInfo: false})}>
       <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
-         <tbody>
-           {player.motto && <tr>
-             <th>Motto</th>
-             <td>{player.motto}</td>
-           </tr>}
-           <tr>
-             <th>Team</th>
-             <td>{player.team}</td>
-           </tr>
-           <tr>
-             <th>Wins</th>
-             <td>{player.wins}</td>
-           </tr>
-           <tr>
-             <th>Losses</th>
-             <td>{player.losses}</td>
-           </tr>
-           <tr>
-             <th>Team Kills</th>
-             <td>{player.tks}</td>
-           </tr>
-         </tbody>
-       </table>
+        <tbody>
+          {player.motto && <tr>
+            <th>Motto</th>
+            <td>{player.motto}</td>
+          </tr>}
+          <tr>
+            <th>Team</th>
+            <td>{player.team}</td>
+          </tr>
+          <tr>
+            <th>Wins</th>
+            <td>{player.wins}</td>
+          </tr>
+          <tr>
+            <th>Losses</th>
+            <td>{player.losses}</td>
+          </tr>
+          <tr>
+            <th>Team Kills</th>
+            <td>{player.tks}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div className="btn-list">
+        <button className="btn btn-primary" onClick={() => joinGame(player.server, player.team)}>Join</button>
+        {showServer && <Link onClick={() => setDialog(null)} to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`} className="btn btn-outline">View Server</Link>}
+      </div>
     </Dialog>);
   }
 }
