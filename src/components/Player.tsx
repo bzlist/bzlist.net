@@ -11,6 +11,7 @@ export const playerSort = (a: Player, b: Player) => a.team === "Observer" ? 1 : 
 interface Props{
   player: Player;
   showServer?: boolean;
+  showMotto?: boolean;
   showFriend: boolean;
 }
 
@@ -79,12 +80,12 @@ class PlayerBase extends React.Component<Props, State>{
 
 export class PlayerRow extends PlayerBase{
   render(): JSX.Element{
-    const {player} = this.props;
+    const {player, showMotto} = this.props;
     const serverTr = player.server && this.props.showServer && <td><Link to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`}>{player.server}</Link></td>;
 
     return (
       <tr onClick={this.showDialog} style={{cursor: "pointer"}}>
-        <td><b>{player.callsign}</b>{player.motto && ` (${player.motto})`}</td>
+        <td><b>{player.callsign}</b>{showMotto !== false && player.motto && ` (${player.motto})`}</td>
         <td>{player.team !== "Observer" && this.score}</td>
         <td>{player.team}</td>
         {serverTr}

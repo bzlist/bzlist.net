@@ -311,7 +311,9 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
                   </tr>
                 </thead>
                   <tbody>
-                    {this.state.server.players.map((player: Player) => <PlayerRow key={`${player.callsign}:${player.server}${this.state.server?.timestamp}`} player={player} showServer={false}/>)}
+                    {this.state.server.players.map((player: Player) =>
+                      <PlayerRow key={`${player.callsign}:${player.server}${this.state.server?.timestamp}`} player={player} showServer={false} showMotto={false}/>
+                    )}
                   </tbody>
                 </table>
               </div>
