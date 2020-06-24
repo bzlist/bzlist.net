@@ -182,12 +182,16 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
     this.setState({selectTeam: false, selectedTeam: null});
   }
 
-  getTeamCount(team: Team): number{
-    if(this.state.server && team.name === "Rogue"){
-      return team.players + this.state.server.players.filter((player: Player) => player.team === "Hunter" || player.team === "Rabbit").length;
+  getTeamCount(team: Team | null): number{
+    if(!this.state.server || !team){
+      return 0;
     }
 
-    return team.players;
+    if(team.name === "Rogue"){
+      return this.state.server.players.filter((player: Player) => player.team === "Rogue" || player.team === "Hunter" || player.team === "Rabbit").length;
+    }
+
+    return this.state.server.players.filter((player: Player) => player.team === team.name).length;
   }
 
   render(): JSX.Element{
@@ -398,7 +402,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
               </tr>}
               <tr>
                 <th>Players</th>
-                <td>{this.state.selectedTeam?.players}</td>
+                <td>{this.getTeamCount(this.state.selectedTeam)}</td>
               </tr>
               <tr>
                 <th>Max Players</th>

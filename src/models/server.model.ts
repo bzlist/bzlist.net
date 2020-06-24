@@ -5,7 +5,7 @@ export type TeamName = "Rogue" | "Red" | "Green" | "Blue" | "Purple" | "Observer
 
 export interface Team{
   name: TeamName;
-  players: number;
+  // players: number;
   maxPlayers: number;
   wins?: number;
   losses?: number;
