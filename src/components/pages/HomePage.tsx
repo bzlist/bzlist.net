@@ -90,12 +90,7 @@ export class HomePage extends React.PureComponent<any, State>{
     })))));
 
     data.forEach((server: Server) => {
-      const observerTeam = server.teams.find((team: Team) => team.name === "Observer");
-      if(!observerTeam){
-        return;
-      }
-
-      const playerCount = server.players.length - observerTeam.players;
+      const playerCount = server.players.filter((player: Player) => player.team !== "Observer").length;
       if(playerCount >= 1){
         if(!settings.getBool(settings.DATA_SAVER)){
           new Image().src = `/images/servers/${server.address}_${server.port}.${imageExt}`;
@@ -136,12 +131,12 @@ export class HomePage extends React.PureComponent<any, State>{
 
     if(settings.getBool(settings.EXCLUDE_OBSERVERS)){
       servers = servers.map((server: Server) => {
-        server.players.length -= server.teams.filter((team: Team) => team.name === "Observer")[0].players;
+        server.players.length -= server.players.filter((player: Player) => player.team !== "Observer").length;
         return server;
       });
     }else if(settings.getBool(settings.IGNORE_OBSERVER_BOTS)){
       servers = servers.map((server: Server) => {
-        server.players.length -= (server.players || []).filter((player: Player) => player.team === "Observer" && ["admin", "r3"].includes(player.callsign)).length;
+        server.players.length -= server.players.filter((player: Player) => player.team === "Observer" && ["admin", "r3"].includes(player.callsign)).length;
         return server;
       });
     }
@@ -235,13 +230,9 @@ export class HomePage extends React.PureComponent<any, State>{
     let observerCount = 0;
     let timestamp = -1;
     for(const server of this.state.servers){
-      playerCount += server.players.length;
-
-      const observerTeam = server.teams.find((team) => team.name === "Observer");
-      if(observerTeam){
-        playerCount -= observerTeam.players;
-        observerCount += observerTeam.players;
-      }
+      const serverObserverCount = server.players.filter((player: Player) => player.team === "Observer").length;
+      observerCount += serverObserverCount;
+      playerCount += server.players.length - serverObserverCount;
 
       if(server.timestamp > timestamp){
         timestamp = server.timestamp;
@@ -304,7 +295,7 @@ export class HomePage extends React.PureComponent<any, State>{
                   <tr key={team.name}>
                     <td><b>{team.name}</b></td>
                     <td>{team.wins !== undefined && team.losses !== undefined && team.wins - team.losses}</td>
-                    <td>{team.players} / {team.maxPlayers}</td>
+                    <td>{this.state.infoServer?.players.filter((player: Player) => player.team === team.name)} / {team.maxPlayers}</td>
                   </tr>
                 )}
               </tbody>

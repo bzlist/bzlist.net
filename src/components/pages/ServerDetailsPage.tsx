@@ -206,14 +206,8 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
     }
 
     // calculate number of players and observers
-    let playerCount = this.state.server.players.length;
-    let observerCount = 0;
-
-    const observerTeam = this.state.server.teams.find((team: Team) => team.name === "Observer");
-    if(observerTeam){
-      playerCount -= observerTeam.players;
-      observerCount += observerTeam.players;
-    }
+    const observerCount = this.state.server.players.filter((player: Player) => player.team === "Observer").length;
+    const playerCount = this.state.server.players.length - observerCount;
 
     const imageUrl = `/images/servers/${this.state.server.address}_${this.state.server.port}`;
 
