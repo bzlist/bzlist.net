@@ -28,7 +28,8 @@ export class ServerRow extends ServerBase{
       <tr
         style={{
           fontWeight: this.props.server.players.length > 0 ? "bold" : "inherit",
-          color: isServerHidden(this.props.server) ? "hsla(210, 5%, 50%, .7)" : this.props.server.players.length > 0 ? "var(--color-text-headings)" : "inherit"
+          color: isServerHidden(this.props.server) ? "hsla(210, 5%, 50%, .7)" : this.props.server.players.length > 0 ? "var(--color-text-headings)" : "inherit",
+          cursor: "pointer"
         }}
         onClick={() => this.onClick()}
         onMouseMove={this.props.onMouseMove}
