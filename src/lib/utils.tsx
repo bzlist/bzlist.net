@@ -8,7 +8,7 @@ export const API_ROOT = "https://api.bzlist.net";
 export const history = createBrowserHistory();
 
 export const teamSort = (a: Team, b: Team) =>
-  a.wins === undefined || a.losses === undefined || b.wins === undefined || b.losses === undefined ? 1 : (a.wins - a.losses) > (b.wins - b.losses) ? -1 : 1;
+  a.wins === undefined || a.losses === undefined ? 1 : b.wins === undefined || b.losses === undefined ? -1 : (a.wins - a.losses) > (b.wins - b.losses) ? -1 : 1;
 
 export const verboseGameStyle = (value: GameStyle): string => {
   // turn the short abbreviation string to the verbose version
