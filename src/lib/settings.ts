@@ -88,6 +88,10 @@ class Settings extends Storage{
   }
 
   getBool(setting: IBoolSetting): boolean{
+    if(navigator.userAgent.indexOf("Edge/") > -1 && setting.key === this.DISABLE_ANIMATIONS.key){
+      return false;
+    }
+
     const value = localStorage.getItem(this.prefix+setting.key);
     return value ? value === "true" : setting.defaultValue || false;
   }
