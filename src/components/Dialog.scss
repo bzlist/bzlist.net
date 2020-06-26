@@ -9,7 +9,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: fade-in calc(var(--animations) * .1s) forwards;
   z-index: 999;
 
   .dialog__overlay{
@@ -37,6 +36,7 @@
     position: relative;
     box-shadow: $shadow;
     border-radius: $border-radius-large;
+    animation: slide-down calc(var(--animations) * .1s) forwards;
 
     @include mobile{
       min-width: 300px;
