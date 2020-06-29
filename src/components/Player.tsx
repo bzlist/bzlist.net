@@ -81,7 +81,9 @@ class PlayerBase extends React.Component<Props, State>{
 export class PlayerRow extends PlayerBase{
   render(): JSX.Element{
     const {player, showMotto} = this.props;
-    const serverTr = player.server && this.props.showServer && <td><Link to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`}>{player.server}</Link></td>;
+    const serverTr = player.server && this.props.showServer && <td>
+      <Link onClick={(e) => e.stopPropagation()} to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`}>{player.server}</Link>
+    </td>;
 
     return (
       <tr onClick={this.showDialog} style={{cursor: "pointer"}}>
@@ -125,7 +127,7 @@ export class PlayerCard extends PlayerBase{
             }
             <tr>
               <td>Server</td>
-              <td><Link to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`}>{player.server}</Link></td>
+              <td><Link onClick={(e) => e.stopPropagation()} to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`}>{player.server}</Link></td>
             </tr>
             {player.motto &&
               <tr>
