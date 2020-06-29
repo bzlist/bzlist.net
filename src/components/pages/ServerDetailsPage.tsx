@@ -350,7 +350,8 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
                         owner: this.state.server.owner,
                         country: this.state.server.country,
                         countryCode: this.state.server.countryCode
-                      }})}>
+                      }})}
+                      aria-label={`${server.players.length}`}>
                     </div>
                   )}
                   <span>-{Math.round((Math.floor(new Date().getTime() / 1000) - this.state.history[this.state.history.length - 1].timestamp) / 60)}m</span>
