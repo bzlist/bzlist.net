@@ -108,6 +108,7 @@ div.content{
   flex-direction: row;
   align-items: flex-end;
   position: relative;
+  border-bottom: 1px solid var(--color-text);
   user-select: none;
 
   & > span{
@@ -124,17 +125,12 @@ div.content{
     }
   }
 
-  & > *:not(span){
-    width: calc(100% / 24);
-
-    & > div:first-child{
-      background-color: $color-primary;
-    }
-
-    & > div:last-child{
-      font-size: .8rem;
-      text-align: center;
-    }
+  & > div{
+    width: 100%;
+    // min-width: 3px;
+    background: $gradient-primary;
+    border-left: 1px solid var(--bg-darker);
+    box-sizing: border-box;
   }
 }
 

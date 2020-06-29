@@ -109,12 +109,6 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
   fetchHistory(): void{
     const hours = this.state.historyPeriod === "3 Days" ? 72 : this.state.historyPeriod === "Week" ? 168 : 24;
     api(`history/${this.address}/${this.port}?hours=${hours}`, undefined, "GET").then((data: Server[]) => {
-      if(this.state.historyPeriod === "Week"){
-        data = data.filter((server: Server, i) => i % 4 === 0);
-      }else if(this.state.historyPeriod === "3 Days"){
-        data = data.filter((server: Server, i) => i % 2 === 0);
-      }
-
       this.setState({
         history: data.sort((a: Server, b: Server) => a.timestamp - b.timestamp).map((server: Server) => {
           if(server.players){
@@ -342,12 +336,12 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
               <span className="label">Last</span>
               <Dropdown items={["Day", "3 Days", "Week"]} selected={this.state.historyPeriod} onChange={(value: any) => this.setState({historyPeriod: value})}/><br/>
               {this.state.history.length > 0 ?
-                <div className="history" style={{height: `${[...this.state.history].sort((a: Server, b: Server) => a.players.length < b.players.length ? 1 : -1)[0].players.length * 6 + 32}px`}}>
+                <div className="history" style={{height: `${[...this.state.history].sort((a: Server, b: Server) => a.players.length < b.players.length ? 1 : -1)[0].players.length * 4 + 32}px`}}>
                   <span>-{Math.ceil((Math.floor(new Date().getTime() / 1000) - this.state.history[0].timestamp) / 3600)}h</span>
                   {this.state.history.map((server: Server) =>
                     <div
                       key={server.timestamp}
-                      style={{cursor: settings.getBool(settings.EXPERIMENTAL_HISTORY) ? "pointer" : "inherit"}}
+                      style={{cursor: settings.getBool(settings.EXPERIMENTAL_HISTORY) ? "pointer" : "inherit", height: server.players.length * 4}}
                       onClick={() => settings.getBool(settings.EXPERIMENTAL_HISTORY) && this.state.server && this.setState({past: true, server: {
                         ...newServerToLegacy(server),
                         address: this.state.server.address,
@@ -357,8 +351,6 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
                         country: this.state.server.country,
                         countryCode: this.state.server.countryCode
                       }})}>
-                      <div style={{height: server.players.length * 6}}></div>
-                      <div>{server.players.length}</div>
                     </div>
                   )}
                   <span>-{Math.round((Math.floor(new Date().getTime() / 1000) - this.state.history[this.state.history.length - 1].timestamp) / 60)}m</span>
