@@ -10,6 +10,7 @@ interface Props{
 
 interface State{
   query: string;
+  focus: boolean;
 }
 
 export class Search extends React.PureComponent<Props, State>{
@@ -17,7 +18,8 @@ export class Search extends React.PureComponent<Props, State>{
     super(props);
 
     this.state = {
-      query: ""
+      query: "",
+      focus: false
     };
   }
 
@@ -28,7 +30,7 @@ export class Search extends React.PureComponent<Props, State>{
 
   render(): JSX.Element{
     return (
-      <div className="search-box">
+      <div className={`search-box ${this.state.focus ? "focus" : ""}`} onFocus={() => this.setState({focus: true})} onBlur={() => this.setState({focus: false})}>
         <div className="icon">{Icon("search")}</div>
         <input type="text" placeholder={this.props.placeholder} value={this.state.query} onChange={(e) => this.setQuery(e.target.value)}/>
         {this.state.query !== "" && <button className="btn icon" onClick={() => this.setQuery("")}>{Icon("close")}</button>}

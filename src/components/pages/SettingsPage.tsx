@@ -124,7 +124,7 @@ export class SettingsPage extends React.PureComponent<any, State>{
             <Dropdown items={themes} selected={currentTheme} onChange={(value: string) => this.setTheme(value.toLowerCase())}/>
           </>}
           {this.state.tab === 1 && <>
-            <br/><i>Notifications are {notificationStatusText()}.</i><br/><br/>
+            <br/><i>Notifications {notificationStatusText()}.</i><br/><br/>
             <Switch label="Receive Notifications"
                     description="Any notifications"
                     checked={settings.getBool(settings.NOTIFICATIONS)}
