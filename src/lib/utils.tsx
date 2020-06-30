@@ -181,8 +181,8 @@ export const newServerToLegacy = (server: any): Server => {
     port: server.port,
     ip: server.ip,
     owner: server.owner,
-    country: "",
-    countryCode: "",
+    country: server.country ?? "",
+    countryCode: server.countryCode ?? "",
     timestamp: server.timestamp,
     title: server.title,
     teams: server.teams.map((team: any) => {

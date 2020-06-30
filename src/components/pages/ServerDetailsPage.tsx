@@ -66,7 +66,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
     window.history.replaceState({}, document.title, url.substring(0, url.indexOf("?")));
 
     this.state = {
-      server: isNaN(this.timestamp) ? this.server : null,
+      server: this.server,
       selectTeam,
       favorite: isFavoriteServer(this.server),
       history: [],
@@ -140,6 +140,10 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
     }
 
     document.title = `${data.title} - BZList`;
+
+    if(this.state.past){
+      return;
+    }
 
     // update servers cache
     if(this.serversCache){
