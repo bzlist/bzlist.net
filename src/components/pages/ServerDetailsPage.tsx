@@ -91,7 +91,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
       this.fetchData();
     }
 
-    if(prevState.historyPeriod !== this.state.historyPeriod){
+    if(prevState.historyPeriod !== this.state.historyPeriod || prevState.server?.timestamp !== this.state.server?.timestamp){
       this.fetchHistory();
     }
   }
@@ -108,7 +108,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
 
   fetchHistory(): void{
     const hours = this.state.historyPeriod === "3 Days" ? 72 : this.state.historyPeriod === "Week" ? 168 : 24;
-    api(`history/${this.address}/${this.port}?hours=${hours}`, undefined, "GET").then((data: Server[]) => {
+    api(`history/${this.address}/${this.port}?hours=${hours}${this.state.server ? `&timestamp=${this.state.server.timestamp}` : ""}`, undefined, "GET").then((data: Server[]) => {
       this.setState({
         history: data.sort((a: Server, b: Server) => a.timestamp - b.timestamp).map((server: Server) => {
           if(server.players){
@@ -337,7 +337,9 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
               <Dropdown items={["Day", "3 Days", "Week"]} selected={this.state.historyPeriod} onChange={(value: any) => this.setState({historyPeriod: value})}/><br/>
               {this.state.history.length > 0 ?
                 <div className="history" style={{height: `${[...this.state.history].sort((a: Server, b: Server) => a.players.length < b.players.length ? 1 : -1)[0].players.length * 4 + 32}px`}}>
-                  <span>-{Math.ceil((Math.floor(new Date().getTime() / 1000) - this.state.history[0].timestamp) / 3600)}h</span>
+                  <span>
+                    -{Math.ceil(((this.state.past ? this.state.server.timestamp : Math.floor(new Date().getTime() / 1000)) - this.state.history[0].timestamp) / 3600)}h
+                  </span>
                   {this.state.history.map((server: Server) =>
                     <div
                       key={server.timestamp}
@@ -354,7 +356,9 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
                       aria-label={`${server.players.length}`}>
                     </div>
                   )}
-                  <span>-{Math.round((Math.floor(new Date().getTime() / 1000) - this.state.history[this.state.history.length - 1].timestamp) / 60)}m</span>
+                  <span>
+                    -{Math.round(((this.state.past ? this.state.server.timestamp : Math.floor(new Date().getTime() / 1000)) - this.state.history[this.state.history.length - 1].timestamp) / 60)}m
+                  </span>
                 </div>
               :
                 <span>Loading...</span>
