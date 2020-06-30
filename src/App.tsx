@@ -36,8 +36,6 @@ interface State{
 }
 
 class App extends React.PureComponent<any, State>{
-  drawerToggleRef: React.RefObject<HTMLInputElement>;
-
   constructor(props: any){
     super(props);
 
@@ -46,8 +44,6 @@ class App extends React.PureComponent<any, State>{
       updateAvailable: false,
       isDialogOpen: false
     };
-
-    this.drawerToggleRef = React.createRef<HTMLInputElement>();
 
     document.documentElement.style.setProperty("--animations", settings.getBool(settings.DISABLE_ANIMATIONS) ? "0" : "1");
 
@@ -83,10 +79,6 @@ class App extends React.PureComponent<any, State>{
     this.setPageTitle(history.location.pathname);
     history.listen((location: any, action: string) => {
       this.setPageTitle(location.pathname);
-
-      if(this.drawerToggleRef.current){
-        this.drawerToggleRef.current.checked = false;
-      }
 
       if(action !== "POP"){
         window.scrollTo(0, 0);
@@ -224,7 +216,7 @@ class App extends React.PureComponent<any, State>{
               <Route path="/privacy-policy" component={PrivacyPolicyPage}/>
               <Route path="/terms-of-service" component={TermsOfServicePage}/>
               <Route path="/help" component={HelpPage}/>
-              <Route path="/s/:address/:port" component={ServerDetailsPage}/>
+              <Route path="/s/:address/:port/:timestamp?" component={ServerDetailsPage}/>
               <Route path="/settings" component={SettingsPage}/>
               <Route path="/account" component={AccountPage}/>
               <Route path="/feedback" component={FeedbackPage}/>

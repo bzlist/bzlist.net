@@ -2,7 +2,7 @@ import React from "react";
 import {match, Link} from "react-router-dom";
 import "./ServerDetailsPage.scss";
 
-import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings, isFavoriteServer, favoriteServer, hideServer, api, isServerHidden, newServerToLegacy, joinGame, teamSort} from "lib";
+import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings, isFavoriteServer, favoriteServer, hideServer, api, isServerHidden, newServerToLegacy, joinGame, teamSort, history} from "lib";
 import {Server, Player, Team, TeamName} from "models";
 import {TimeAgo, PlayerRow, Switch, Icon, playerSort, Dropdown} from "components";
 import {imageExt} from "index";
@@ -11,6 +11,7 @@ import {Dialog} from "components/Dialog";
 interface Params{
   address: string;
   port: string;
+  timestamp: string;
 }
 
 interface Props{
@@ -30,6 +31,7 @@ interface State{
 export class ServerDetailsPage extends React.PureComponent<Props, State>{
   address = "";
   port = -1;
+  timestamp = 0;
   server: Server | null = null;
   serversCache: Server[];
   playersCache: Player[];
@@ -39,6 +41,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
 
     this.address = this.props.match.params.address;
     this.port = +this.props.match.params.port;
+    this.timestamp = +this.props.match.params.timestamp;
 
     // get cache
     this.serversCache = cache.getJson("servers", []);
@@ -63,19 +66,23 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
     window.history.replaceState({}, document.title, url.substring(0, url.indexOf("?")));
 
     this.state = {
-      server: this.server,
+      server: isNaN(this.timestamp) ? this.server : null,
       selectTeam,
       favorite: isFavoriteServer(this.server),
       history: [],
-      past: false,
+      past: !isNaN(this.timestamp),
       historyPeriod: "Day",
       selectedTeam: null
     };
 
     this.handleData = this.handleData.bind(this);
 
-    this.fetchHistory();
-    this.fetchData();
+    if(this.timestamp){
+      api(`servers/${this.address}/${this.port}/${this.timestamp}`, undefined, "GET").then((data) => newServerToLegacy(data)).then(this.handleData);
+    }else{
+      this.fetchHistory();
+      this.fetchData();
+    }
   }
 
   componentWillUnmount(): void{
@@ -128,6 +135,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
     this.setState({server: data});
 
     if(!data){
+      document.title = "Server Not Found - BZList";
       return;
     }
 
@@ -190,10 +198,9 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
 
   render(): JSX.Element{
     if(!this.state.server){
-      const {address, port} = this.props.match.params;
       return (
         <div className="wrapper">
-          <h1>{address}:{port} isn't in the database :(</h1><br/><br/>
+          <h1>{this.address}:{this.port} isn't in the database :(</h1><br/><br/>
           <Link to="/" className="btn btn-primary">Go Home</Link>
         </div>
       );
@@ -333,7 +340,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
             </div>
             <div>
               <h2>Player History<span className="beta"></span></h2>
-              <span className="label">Last</span>
+              <span className="label">Past</span>
               <Dropdown items={["Day", "3 Days", "Week"]} selected={this.state.historyPeriod} onChange={(value: any) => this.setState({historyPeriod: value})}/><br/>
               {this.state.history.length > 0 ?
                 <div className="history" style={{height: `${[...this.state.history].sort((a: Server, b: Server) => a.players.length < b.players.length ? 1 : -1)[0].players.length * 4 + 32}px`}}>
@@ -343,16 +350,24 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
                   {this.state.history.map((server: Server) =>
                     <div
                       key={server.timestamp}
-                      style={{cursor: settings.getBool(settings.EXPERIMENTAL_HISTORY) ? "pointer" : "inherit", height: server.players.length * 4}}
-                      onClick={() => settings.getBool(settings.EXPERIMENTAL_HISTORY) && this.state.server && this.setState({past: true, server: {
-                        ...newServerToLegacy(server),
-                        address: this.state.server.address,
-                        port: this.state.server.port,
-                        ip: this.state.server.ip,
-                        owner: this.state.server.owner,
-                        country: this.state.server.country,
-                        countryCode: this.state.server.countryCode
-                      }})}
+                      style={{cursor: "pointer", height: server.players.length * 4}}
+                      onClick={() => {
+                        if(!this.state.server){
+                          return;
+                        }
+
+                        history.push(`/s/${this.address}/${this.port}/${server.timestamp}`);
+                        this.setState({past: true});
+                        this.handleData({
+                          ...newServerToLegacy(server),
+                          address: this.state.server.address,
+                          port: this.state.server.port,
+                          ip: this.state.server.ip,
+                          owner: this.state.server.owner,
+                          country: this.state.server.country,
+                          countryCode: this.state.server.countryCode
+                        });
+                      }}
                       aria-label={`${server.players.length}`}>
                     </div>
                   )}
@@ -360,6 +375,8 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
                     -{Math.round(((this.state.past ? this.state.server.timestamp : Math.floor(new Date().getTime() / 1000)) - this.state.history[this.state.history.length - 1].timestamp) / 60)}m
                   </span>
                 </div>
+              : this.state.history.length === 0 ?
+                <span>No data for this period.</span>
               :
                 <span>Loading...</span>
               }
