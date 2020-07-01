@@ -146,7 +146,7 @@ export class SettingsPage extends React.PureComponent<any, State>{
             <div className="list">
               <List
                 items={settings.getJson("favoriteServers", []).sort((a: string, b: string) => a.toLowerCase().localeCompare(b.toLowerCase()))}
-                increment={37}
+                increment={36}
                 render={(server: string) =>
                   <div key={server} onClick={(e) => !shouldIgnoreClick(e) && history.push(`/s/${server.split(":")[0]}/${server.split(":")[1]}`)}>
                     <b>{server}</b>
@@ -169,7 +169,7 @@ export class SettingsPage extends React.PureComponent<any, State>{
             <div className="list">
               <List
                 items={settings.getJson("friends", []).sort((a: string, b: string) => a.toLowerCase().localeCompare(b.toLowerCase()))}
-                increment={37}
+                increment={36}
                 render={(callsign: string) =>
                   <div key={callsign}>
                     <b>{callsign}</b>
@@ -192,7 +192,7 @@ export class SettingsPage extends React.PureComponent<any, State>{
             <div className="list">
               <List
                 items={settings.getJson("hiddenServers", []).sort((a: string, b: string) => a.toLowerCase().localeCompare(b.toLowerCase()))}
-                increment={37}
+                increment={36}
                 render={(server: string) =>
                   <div key={server} onClick={(e) => !shouldIgnoreClick(e) && history.push(`/s/${server.split(":")[0]}/${server.split(":")[1]}`)}>
                     <b>{server}</b>

@@ -412,6 +412,7 @@ textarea{
   grid-gap: .7rem;
 
   & > div{
+    height: 36px;
     padding: .15rem;
     background-color: var(--bg-lighter);
     display: flex;
@@ -420,12 +421,20 @@ textarea{
     border-radius: $border-radius;
     animation: slide-in calc(var(--animations) * .15s) forwards ease;
     opacity: calc(var(--animations) * -1 + 1);
+    position: relative;
+    box-sizing: border-box;
 
     b{
       margin-left: .6rem;
       font-size: .9rem;
+      font-weight: 500;
       word-break: break-word;
-      flex: 1;
+    }
+
+    .btn{
+      position: absolute;
+      top: 2px;
+      right: 2px;
     }
 
     @for $i from 2 through 6{

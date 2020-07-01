@@ -54,5 +54,9 @@
     .btn-list{
       margin-top: 3rem;
     }
+
+    .list:not(:nth-child(7)){
+      cursor: pointer;
+    }
   }
 }
