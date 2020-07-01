@@ -1,6 +1,6 @@
 import React from "react";
 
-import {verboseGameStyle, history, favoriteServer, isFavoriteServer, isServerHidden} from "lib";
+import {verboseGameStyle, history, favoriteServer, isFavoriteServer, isServerHidden, shouldIgnoreClick} from "lib";
 import {Server} from "models";
 import {Icon} from "components";
 
@@ -11,14 +11,20 @@ class ServerBase extends React.Component<{server: Server, onMouseMove?: (e: Reac
     this.state = {
       favorite: isFavoriteServer(this.props.server)
     };
+
+    this.onClick = this.onClick.bind(this);
   }
 
   shouldComponentUpdate(nextProps: {server: Server}, nextState: {favorite: boolean}): boolean{
     return nextState.favorite !== this.state.favorite || nextProps.server.timestamp !== this.props.server.timestamp;
   }
 
-  onClick(append: string = ""): void{
-    history.push(`/s/${this.props.server.address}/${this.props.server.port}${append}`);
+  onClick(e?: React.MouseEvent, append?: string): void{
+    if(e && shouldIgnoreClick(e)){
+      return;
+    }
+
+    history.push(`/s/${this.props.server.address}/${this.props.server.port}${append ?? ""}`);
   }
 }
 
@@ -31,7 +37,7 @@ export class ServerRow extends ServerBase{
           color: isServerHidden(this.props.server) ? "hsla(210, 5%, 50%, .7)" : this.props.server.players.length > 0 ? "var(--color-text-headings)" : "inherit",
           cursor: "pointer"
         }}
-        onClick={() => this.onClick()}
+        onClick={this.onClick}
         onMouseMove={this.props.onMouseMove}
         data-server
       >
@@ -42,15 +48,11 @@ export class ServerRow extends ServerBase{
         </td>
         <td><span aria-label={verboseGameStyle(this.props.server.style)}>{this.props.server.style}</span></td>
         <td>{this.props.server.title}</td>
-        <td><button className="btn icon" onClick={(e) => {
-          e.stopPropagation();
+        <td><button className="btn icon" onClick={() => {
           favoriteServer(this.props.server);
           this.setState({favorite: isFavoriteServer(this.props.server)});
         }} aria-label={this.state.favorite ? "Unfavorite" : "Favorite"}>{Icon("heart", this.state.favorite, "url(#a)")}</button></td>
-        <td><button className="btn icon" onClick={(e) => {
-          e.stopPropagation();
-          this.onClick("?play");
-        }} aria-label="Play">{Icon("playCircle", true, "url(#c)")}</button></td>
+        <td><button className="btn icon" onClick={(e) => this.onClick(undefined, "?play")} aria-label="Play">{Icon("playCircle", true, "url(#c)")}</button></td>
       </tr>
     );
   }
@@ -61,8 +63,7 @@ export class ServerCard extends ServerBase{
     return (
       <div onClick={() => this.onClick()}>
         <h2>
-          <button className="btn icon" onClick={(e) => {
-            e.stopPropagation();
+          <button className="btn icon" onClick={() => {
             favoriteServer(this.props.server);
             this.setState({favorite: isFavoriteServer(this.props.server)});
           }}>{Icon("heart", isFavoriteServer(this.props.server), "url(#a)")}</button>

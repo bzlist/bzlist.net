@@ -211,3 +211,18 @@ export const newServerToLegacy = (server: any): Server => {
 export const joinGame = (server: Server | string, team: TeamName): void => {
   window.location.href = `bzflag-launcher:${typeof(server) === "object" ? `${server.address}:${server.port}` : server} ${team.toLowerCase()}`;
 };
+
+export const shouldIgnoreClick = (e: React.MouseEvent): boolean => {
+  let currentTarget: HTMLElement | null = (e.target as HTMLElement);
+  while(currentTarget){
+    if(currentTarget.classList.contains("btn") || currentTarget.nodeName === "A"){
+      return true;
+    }else if(currentTarget.nodeName === "TD"){
+      break;
+    }
+
+    currentTarget = currentTarget.parentElement;
+  }
+
+  return false;
+};

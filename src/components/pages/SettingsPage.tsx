@@ -2,7 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import "./SettingsPage.scss";
 
-import {settings, cache, IBoolSetting, user, storage, favoriteServer, friendPlayer, history, hideServer} from "lib";
+import {settings, cache, IBoolSetting, user, storage, favoriteServer, friendPlayer, history, hideServer, shouldIgnoreClick} from "lib";
 import {Dropdown, Switch, Icon} from "components";
 import {List} from "components/List";
 
@@ -148,10 +148,9 @@ export class SettingsPage extends React.PureComponent<any, State>{
                 items={settings.getJson("favoriteServers", []).sort((a: string, b: string) => a.toLowerCase().localeCompare(b.toLowerCase()))}
                 increment={37}
                 render={(server: string) =>
-                  <div key={server} onClick={() => history.push(`/s/${server.split(":")[0]}/${server.split(":")[1]}`)}>
+                  <div key={server} onClick={(e) => !shouldIgnoreClick(e) && history.push(`/s/${server.split(":")[0]}/${server.split(":")[1]}`)}>
                     <b>{server}</b>
-                    <button className="btn icon" onClick={(e) => {
-                      e.stopPropagation();
+                    <button className="btn icon" onClick={() => {
                       favoriteServer(server);
                       this.forceUpdate();
                     }}>{Icon("close")}</button>
@@ -195,10 +194,9 @@ export class SettingsPage extends React.PureComponent<any, State>{
                 items={settings.getJson("hiddenServers", []).sort((a: string, b: string) => a.toLowerCase().localeCompare(b.toLowerCase()))}
                 increment={37}
                 render={(server: string) =>
-                  <div key={server} onClick={() => history.push(`/s/${server.split(":")[0]}/${server.split(":")[1]}`)}>
+                  <div key={server} onClick={(e) => !shouldIgnoreClick(e) && history.push(`/s/${server.split(":")[0]}/${server.split(":")[1]}`)}>
                     <b>{server}</b>
-                    <button className="btn icon" onClick={(e) => {
-                      e.stopPropagation();
+                    <button className="btn icon" onClick={() => {
                       hideServer(server);
                       this.forceUpdate();
                     }}>{Icon("close")}</button>

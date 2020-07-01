@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-import {settings, friendPlayer, isPlayerFriend, joinGame} from "lib";
+import {settings, friendPlayer, isPlayerFriend, joinGame, shouldIgnoreClick} from "lib";
 import {Player} from "models";
 import {Icon} from "components";
 import {setDialog, showDialog} from "App";
@@ -40,7 +40,11 @@ class PlayerBase extends React.Component<Props, State>{
     return nextState.friend !== this.state.friend || nextProps.player.timestamp !== this.props.player.timestamp;
   }
 
-  showDialog(): void{
+  showDialog(e: React.MouseEvent): void{
+    if(shouldIgnoreClick(e)){
+      return;
+    }
+
     const {player, showServer} = this.props;
     setDialog({
       title: player.callsign,
@@ -82,7 +86,7 @@ export class PlayerRow extends PlayerBase{
   render(): JSX.Element{
     const {player, showMotto} = this.props;
     const serverTr = player.server && this.props.showServer && <td>
-      <Link onClick={(e) => e.stopPropagation()} to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`}>{player.server}</Link>
+      <Link to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`}>{player.server}</Link>
     </td>;
 
     return (
@@ -92,8 +96,7 @@ export class PlayerRow extends PlayerBase{
         <td>{player.team}</td>
         {serverTr}
         {this.props.showFriend &&
-          <td><button className="btn icon" onClick={(e) => {
-            e.stopPropagation();
+          <td><button className="btn icon" onClick={() => {
             friendPlayer(player.callsign);
             this.setState({friend: isPlayerFriend(player.callsign)});
           }} aria-label={this.state.friend ? "Remove friend" : "Add as friend"}>{Icon("friend", this.state.friend, "url(#a)")}</button></td>
@@ -111,7 +114,6 @@ export class PlayerCard extends PlayerBase{
       <div onClick={this.showDialog}>
         <h2>
           <button className="btn icon" onClick={(e) => {
-            e.stopPropagation();
             friendPlayer(player.callsign);
             this.setState({friend: isPlayerFriend(player.callsign)});
           }}>{Icon("friend", settings.getJson("friends", []).includes(player.callsign), "url(#a)")}</button>
@@ -127,7 +129,7 @@ export class PlayerCard extends PlayerBase{
             }
             <tr>
               <td>Server</td>
-              <td><Link onClick={(e) => e.stopPropagation()} to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`}>{player.server}</Link></td>
+              <td><Link to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`}>{player.server}</Link></td>
             </tr>
             {player.motto &&
               <tr>
