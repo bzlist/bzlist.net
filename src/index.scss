@@ -458,10 +458,14 @@ input[type=text]{
   color: var(--color-text);
   font-size: .9rem;
   box-sizing: border-box;
-  border: none;
+  border: 1px solid transparent;
   border-radius: $border-radius;
   outline: none;
   box-shadow: $shadow;
+
+  &:focus{
+    border-color: $color-primary;
+  }
 
   &::placeholder{
     color: var(--color-text);
