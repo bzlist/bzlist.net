@@ -4,9 +4,8 @@ module.exports = {
     "build/*.html",
     "build/manifest.webmanifest",
     "build/static/**/!(*map*)",
-    "build/images/servers/default.png",
-    "build/images/servers/*.webp",
-    "build/favicon.ico"
+    "build/images/**/*",
+    "build/favicon.*"
   ],
   runtimeCaching: [{
     urlPattern: "",
