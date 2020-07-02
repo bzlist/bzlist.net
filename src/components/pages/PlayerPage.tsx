@@ -160,7 +160,7 @@ export class PlayerPage extends React.PureComponent<any, State>{
         </div>
         <div className="container">
           <h2>{autoPlural(`${playerCount} Player`)} and {autoPlural(`${observerCount} Observer`)} Online</h2>
-          Updated <TimeAgo timestamp={timestamp}/>.<br/><br/>
+          <div style={{margin: ".5rem 0 1rem 0"}}>Updated <TimeAgo timestamp={timestamp}/>.</div>
           {table}
           <div className="btn-list">
             <button className="btn btn-primary" onClick={() => this.setState({showObservers: !this.state.showObservers})}>{!this.state.showObservers ? "Show Observers" : "Hide Observers"}</button>

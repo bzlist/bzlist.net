@@ -59,14 +59,15 @@ body{
 h1, h2, h3, b, th, .label{
   margin: 0;
   color: var(--color-text-headings);
+  font-weight: 500;
 }
 
 h1{
   background: $gradient-primary;
   background-clip: text;
   color: transparent;
-  font-size: 2.75rem;
-  font-weight: 500;
+  font-size: 2.6rem;
+  letter-spacing: 2px;
   display: inline-block;
 
   @include mobile{
@@ -75,7 +76,8 @@ h1{
 }
 
 h2{
-  font-size: 2rem;
+  font-size: 1.9rem;
+  letter-spacing: 1px;
 
   @include mobile{
     font-size: 1.5rem;
@@ -347,7 +349,6 @@ tr > td, tr > th{
   padding: .1rem 0;
   display: inline-block;
   font-size: 1.05rem;
-  font-weight: 700;
 }
 
 .header{

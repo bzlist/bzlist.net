@@ -33,7 +33,7 @@ export class ServerRow extends ServerBase{
     return (
       <tr
         style={{
-          fontWeight: this.props.server.players.length > 0 ? "bold" : "inherit",
+          fontWeight: this.props.server.players.length > 0 ? 500 : "inherit",
           color: isServerHidden(this.props.server) ? "hsla(210, 5%, 50%, .7)" : this.props.server.players.length > 0 ? "var(--color-text-headings)" : "inherit",
           cursor: "pointer"
         }}

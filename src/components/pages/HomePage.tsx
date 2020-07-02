@@ -248,7 +248,7 @@ export class HomePage extends React.PureComponent<any, State>{
         </div>
         <div className="container">
           <h2>{this.state.servers.length} Public Servers Online</h2>
-          {autoPlural(`${playerCount} player`)} and {autoPlural(`${observerCount} observer`)} online. Updated <TimeAgo timestamp={timestamp}/>.<br/><br/>
+          <div style={{margin: ".5rem 0 1rem 0"}}>{autoPlural(`${playerCount} player`)} and {autoPlural(`${observerCount} observer`)} online. Updated <TimeAgo timestamp={timestamp}/>.</div>
           {servers}
           <div className="btn-list">
             {this.state.servers.length > this.state.serversToShow &&
