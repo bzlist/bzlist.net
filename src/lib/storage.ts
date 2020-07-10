@@ -16,7 +16,7 @@ export class Storage{
     return value ? value : "";
   }
 
-  getJson(key: string, defaultValue: Object = {}): any{
+  getJson(key: string, defaultValue: unknown = {}): any{
     const value = localStorage.getItem(this.prefix+key);
     try{
       return value ? JSON.parse(value) : defaultValue;
@@ -49,7 +49,7 @@ export class Storage{
     }
   }
 
-  json(): Object{
+  json(): unknown{
     const data: any = {};
     for(let i = 0; i < localStorage.length; i++){
       const key = localStorage.key(i);
@@ -65,7 +65,7 @@ export class Storage{
     this.clear();
 
     for(const key in data){
-      if(data.hasOwnProperty(key)){
+      if(Object.prototype.hasOwnProperty.call(data, key)){
         this.set(key, data[key], false);
       }
     }

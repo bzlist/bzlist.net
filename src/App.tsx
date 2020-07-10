@@ -203,8 +203,10 @@ class App extends React.PureComponent<any, State>{
                       e.currentTarget.src = `https://forums.bzflag.org/download/file.php?avatar=${user.bzid}.gif`;
                     }
                   }} height="15" alt="" style={{borderRadius: "2px"}}/>
+                /* eslint-disable indent */
                 :
                   Icon("account")
+                /* eslint-enable indent */
                 }
               </span>
               <span>Account</span>

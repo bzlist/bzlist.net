@@ -1,7 +1,7 @@
 import React from "react";
 
 export const TermsOfServicePage = (): JSX.Element => (
-  /* tslint:disable:max-line-length */
+  /* eslint-disable max-len */
   <div className="wrapper">
     <h1>BZList Terms of Service</h1><br/><br/>
     <h2>1. Terms</h2>
@@ -24,5 +24,5 @@ export const TermsOfServicePage = (): JSX.Element => (
     <h2>8. Governing Law</h2>
     <p>These terms and conditions are governed by and construed in accordance with the laws of United States and you irrevocably submit to the exclusive jurisdiction of the courts in that State or location.</p>
   </div>
-  /* tslint:enable:max-line-length */
+  /* eslint-enable max-len */
 );

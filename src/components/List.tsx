@@ -6,7 +6,7 @@ interface Props{
   render: (item: any) => JSX.Element;
 }
 
-export class List extends React.PureComponent<Props, {}>{
+export class List extends React.PureComponent<Props, unknown>{
   lastScrollY = 0;
 
   componentDidMount(): void{
@@ -23,7 +23,7 @@ export class List extends React.PureComponent<Props, {}>{
     }
 
     this.lastScrollY = window.scrollY;
-  }
+  };
 
   render(): JSX.Element{
     return (

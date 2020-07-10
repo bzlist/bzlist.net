@@ -6,7 +6,7 @@ import {Player} from "models";
 import {Icon} from "components";
 import {setDialog, showDialog} from "App";
 
-export const playerSort = (a: Player, b: Player) => a.team === "Observer" ? 1 : b.team === "Observer" ? -1 : (a.wins || 0) - (a.losses || 0) > (b.wins || 0) - (b.losses || 0) ? -1 : 1;
+export const playerSort = (a: Player, b: Player): 1 | -1 => a.team === "Observer" ? 1 : b.team === "Observer" ? -1 : (a.wins || 0) - (a.losses || 0) > (b.wins || 0) - (b.losses || 0) ? -1 : 1;
 
 interface Props{
   player: Player;
@@ -113,7 +113,7 @@ export class PlayerCard extends PlayerBase{
     return (
       <div onClick={this.showDialog}>
         <h2>
-          <button className="btn icon" onClick={(e) => {
+          <button className="btn icon" onClick={() => {
             friendPlayer(player.callsign);
             this.setState({friend: isPlayerFriend(player.callsign)});
           }}>{Icon("friend", settings.getJson("friends", []).includes(player.callsign), "url(#a)")}</button>

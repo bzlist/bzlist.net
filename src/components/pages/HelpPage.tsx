@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import {version} from "../../../package.json";
 
 export const HelpPage = (): JSX.Element => (
-  /* tslint:disable:max-line-length */
+  /* eslint-disable max-len */
   <div className="wrapper">
     <h1>Help</h1>
     <p>
@@ -31,5 +31,5 @@ export const HelpPage = (): JSX.Element => (
     </p>
     <p><small>Release version <a href={`https://github.com/bzlist/bzlist.net/releases/tag/v${version}`} target="_blank" rel="noopener noreferrer">v{version}</a>. See <a href={`https://github.com/bzlist/bzlist.net/compare/v${version}...master`} target="_blank" rel="noopener noreferrer">what's new</a>.</small></p>
   </div>
-  /* tslint:enable:max-line-length */
+  /* eslint-enable max-len */
 );

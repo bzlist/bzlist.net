@@ -88,15 +88,17 @@ export class AccountPage extends React.PureComponent<any, State>{
             <p>
               View <a href={`https://forums.bzflag.org/memberlist.php?mode=viewprofile&u=${user.bzid}`} target="_blank" rel="noopener noreferrer">forum profile</a>. More features coming soon!
             </p>
-            <Switch label="Sync Settings"
-                    description="Sync all of your settings across devices"
-                    checked={storage.get("syncSettings") !== "false"}
-                    onChange={async (value: boolean) => {
-                      storage.set("syncSettings", value.toString());
-                      fetchSettings();
-                    }}/><br/>
+            <Switch
+              label="Sync Settings"
+              description="Sync all of your settings across devices"
+              checked={storage.get("syncSettings") !== "false"}
+              onChange={async (value: boolean) => {
+                storage.set("syncSettings", value.toString());
+                fetchSettings();
+              }}/><br/>
             <button className="link" onClick={() => signout()}>Sign Out</button> • <button className="link" onClick={() => deleteAccount()}>Delete Account</button>
           </div>
+        /* eslint-disable indent */
         :
           <div>
             <h1>Account</h1>
@@ -106,6 +108,7 @@ export class AccountPage extends React.PureComponent<any, State>{
             </p>
             <a className="btn btn-primary" href={bzLoginURL}>Sign In with BZFlag</a>
           </div>
+        /* eslint-enable indent */
         }
         {this.state.error !== "" && <p className="no">Error: {this.state.error}</p>}
       </div>

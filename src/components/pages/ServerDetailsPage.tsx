@@ -2,7 +2,23 @@ import React from "react";
 import {match, Link} from "react-router-dom";
 import "./ServerDetailsPage.scss";
 
-import {cache, socket, booleanYesNo, verboseGameStyle, autoPlural, settings, isFavoriteServer, favoriteServer, hideServer, api, isServerHidden, newServerToLegacy, joinGame, teamSort, history} from "lib";
+import {
+  cache,
+  socket,
+  booleanYesNo,
+  verboseGameStyle,
+  autoPlural,
+  settings,
+  isFavoriteServer,
+  favoriteServer,
+  hideServer,
+  api,
+  isServerHidden,
+  newServerToLegacy,
+  joinGame,
+  teamSort,
+  history
+} from "lib";
 import {Server, Player, Team, TeamName} from "models";
 import {TimeAgo, PlayerRow, Switch, Icon, playerSort, Dropdown} from "components";
 import {imageExt} from "index";
@@ -305,14 +321,14 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
               <div className="players">
                 <h2>{autoPlural(`${playerCount} Player`)} and {autoPlural(`${observerCount} Observer`)}</h2>
                 <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
-                <thead>
-                  <tr>
-                    <th>Callsign</th>
-                    <th>Score</th>
-                    <th>Team</th>
-                    <th></th>
-                  </tr>
-                </thead>
+                  <thead>
+                    <tr>
+                      <th>Callsign</th>
+                      <th>Score</th>
+                      <th>Team</th>
+                      <th></th>
+                    </tr>
+                  </thead>
                   <tbody>
                     {this.state.server.players.map((player: Player) =>
                       <PlayerRow key={`${player.callsign}:${player.server}${this.state.server?.timestamp}`} player={player} showServer={false} showMotto={false}/>
@@ -324,13 +340,13 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
             <div className="teams">
               <h2>{autoPlural(`${this.state.server.teams.length} Team`)}</h2>
               <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Score</th>
-                  <th>Players</th>
-                </tr>
-              </thead>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Score</th>
+                    <th>Players</th>
+                  </tr>
+                </thead>
                 <tbody>
                   {this.state.server.teams.sort(teamSort).map((team: Team) =>
                     <tr key={team.name} onClick={() => this.setState({selectedTeam: team})}>
@@ -379,10 +395,12 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
                     -{Math.round(((this.state.past ? this.state.server.timestamp : Math.floor(new Date().getTime() / 1000)) - this.state.history[this.state.history.length - 1].timestamp) / 60)}m
                   </span>
                 </div>
+              /* eslint-disable indent */
               : this.state.history.length === 0 ?
                 <span>No data for this period.</span>
               :
                 <span>Loading...</span>
+              /* eslint-enable indent */
               }
             </div>
           </div>

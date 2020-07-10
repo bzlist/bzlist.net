@@ -3,15 +3,12 @@ import {Link} from "react-router-dom";
 import "./SettingsPage.scss";
 
 import {settings, cache, IBoolSetting, user, storage, favoriteServer, friendPlayer, history, hideServer, shouldIgnoreClick} from "lib";
-import {Dropdown, Switch, Icon} from "components";
-import {List} from "components/List";
+import {Dropdown, Switch, Icon, List} from "components";
 
 const themes = ["Light", "Dark", "Midnight"];
 const TABS = ["Appearance", "Notifications", "Servers & Players", "Data Usage"];
 
-const tabToUrl = (tab: string): string => {
-  return tab.replace(/&/g, "").replace(/\s+/g, " ").replace(/ /g, "-").toLowerCase();
-};
+const tabToUrl = (tab: string): string => tab.replace(/&/g, "").replace(/\s+/g, " ").replace(/ /g, "-").toLowerCase();
 
 const notificationStatusText = (): string => {
   if("Notification" in window){
@@ -92,47 +89,56 @@ export class SettingsPage extends React.PureComponent<any, State>{
         <div className="settings__inner">
           <h1>{TABS[this.state.tab]}</h1>
           {this.state.tab === 0 && <>
-            <Switch label="Compact Tables"
-                    description="Reduce the height of table rows to fit more on the screen at once"
-                    checked={settings.getBool(settings.COMPACT_TABLES)}
-                    onChange={(value: boolean) => this.set(settings.COMPACT_TABLES, value)}/>
-            <Switch label="Ignore Online Observers"
-                    description="Don't treat observers as players on the server list"
-                    checked={settings.getBool(settings.EXCLUDE_OBSERVERS)}
-                    onChange={(value: boolean) => this.set(settings.EXCLUDE_OBSERVERS, value)}/>
-            <Switch label="Ignore Observers Bots"
-                    description="Ignore observers that appear to be bots"
-                    checked={settings.getBool(settings.IGNORE_OBSERVER_BOTS)}
-                    onChange={(value: boolean) => this.set(settings.IGNORE_OBSERVER_BOTS, value)}/>
-            <Switch label="Custom Scrollbars"
-                    description="Use custom scrollbars instead of the default ones"
-                    checked={settings.getBool(settings.CUSTOM_SCROLLBARS)}
-                    onChange={(value: boolean) => this.set(settings.CUSTOM_SCROLLBARS, value)}/>
-            <Switch label="Disable Animations"
-                    description="Disable all animations"
-                    checked={settings.getBool(settings.DISABLE_ANIMATIONS)}
-                    onChange={(value: boolean) => this.set(settings.DISABLE_ANIMATIONS, value)}/>
-            <Switch label="Experimental Info Cards"
-                    description="Show experimental info card when mousing over a server"
-                    checked={settings.getBool(settings.INFO_CARDS)}
-                    onChange={(value: boolean) => this.set(settings.INFO_CARDS, value)}/>
+            <Switch
+              label="Compact Tables"
+              description="Reduce the height of table rows to fit more on the screen at once"
+              checked={settings.getBool(settings.COMPACT_TABLES)}
+              onChange={(value: boolean) => this.set(settings.COMPACT_TABLES, value)}/>
+            <Switch
+              label="Ignore Online Observers"
+              description="Don't treat observers as players on the server list"
+              checked={settings.getBool(settings.EXCLUDE_OBSERVERS)}
+              onChange={(value: boolean) => this.set(settings.EXCLUDE_OBSERVERS, value)}/>
+            <Switch
+              label="Ignore Observers Bots"
+              description="Ignore observers that appear to be bots"
+              checked={settings.getBool(settings.IGNORE_OBSERVER_BOTS)}
+              onChange={(value: boolean) => this.set(settings.IGNORE_OBSERVER_BOTS, value)}/>
+            <Switch
+              label="Custom Scrollbars"
+              description="Use custom scrollbars instead of the default ones"
+              checked={settings.getBool(settings.CUSTOM_SCROLLBARS)}
+              onChange={(value: boolean) => this.set(settings.CUSTOM_SCROLLBARS, value)}/>
+            <Switch
+              label="Disable Animations"
+              description="Disable all animations"
+              checked={settings.getBool(settings.DISABLE_ANIMATIONS)}
+              onChange={(value: boolean) => this.set(settings.DISABLE_ANIMATIONS, value)}/>
+            <Switch
+              label="Experimental Info Cards"
+              description="Show experimental info card when mousing over a server"
+              checked={settings.getBool(settings.INFO_CARDS)}
+              onChange={(value: boolean) => this.set(settings.INFO_CARDS, value)}/>
             <span className="label">Theme</span>
             <Dropdown items={themes} selected={currentTheme} onChange={(value: string) => this.setTheme(value.toLowerCase())}/>
           </>}
           {this.state.tab === 1 && <>
             <br/><i>Notifications {notificationStatusText()}.</i><br/><br/>
-            <Switch label="Receive Notifications"
-                    description="Any notifications"
-                    checked={settings.getBool(settings.NOTIFICATIONS)}
-                    onChange={(value: boolean) => this.set(settings.NOTIFICATIONS, value)}/>
-            <Switch label="Favorite Servers"
-                    description="You will receive a notification if one of your favorite servers is online"
-                    checked={settings.getBool(settings.SERVER_NOTIFICATIONS)}
-                    onChange={(value: boolean) => this.set(settings.SERVER_NOTIFICATIONS, value)}/>
-            <Switch label="Friends"
-                    description="You will receive a notification if one of your friends is online"
-                    checked={settings.getBool(settings.PLAYER_NOTIFICATIONS)}
-                    onChange={(value: boolean) => this.set(settings.PLAYER_NOTIFICATIONS, value)}/>
+            <Switch
+              label="Receive Notifications"
+              description="Any notifications"
+              checked={settings.getBool(settings.NOTIFICATIONS)}
+              onChange={(value: boolean) => this.set(settings.NOTIFICATIONS, value)}/>
+            <Switch
+              label="Favorite Servers"
+              description="You will receive a notification if one of your favorite servers is online"
+              checked={settings.getBool(settings.SERVER_NOTIFICATIONS)}
+              onChange={(value: boolean) => this.set(settings.SERVER_NOTIFICATIONS, value)}/>
+            <Switch
+              label="Friends"
+              description="You will receive a notification if one of your friends is online"
+              checked={settings.getBool(settings.PLAYER_NOTIFICATIONS)}
+              onChange={(value: boolean) => this.set(settings.PLAYER_NOTIFICATIONS, value)}/>
           </>}
           {this.state.tab === 2 && <>
             <h3>Favorite Servers</h3>
@@ -206,22 +212,26 @@ export class SettingsPage extends React.PureComponent<any, State>{
             </div>
           </>}
           {this.state.tab === 3 && <>
-            <Switch label="Data Saver"
-                    description="Use less network data (can reduce performance)"
-                    checked={settings.getBool(settings.DATA_SAVER)}
-                    onChange={(value: boolean) => this.set(settings.DATA_SAVER, value)}/>
-            <Switch label="Active Servers Only"
-                    description="Only get servers with at least 1 player or observer"
-                    checked={settings.getBool(settings.ONLY_SERVERS_WITH_PLAYERS)}
-                    onChange={(value: boolean) => this.set(settings.ONLY_SERVERS_WITH_PLAYERS, value)}/>
-            <Switch label="Disable Real-time Data"
-                    description="Don't use real-time data (may save data)"
-                    checked={settings.getBool(settings.DISABLE_REALTIME_DATA)}
-                    onChange={(value: boolean) => this.set(settings.DISABLE_REALTIME_DATA, value)}/>
-            <Switch label="Disable Analytics"
-                    description="Don't collect client side analytics"
-                    checked={settings.getBool(settings.DISABLE_ANALYTICS)}
-                    onChange={(value: boolean) => this.set(settings.DISABLE_ANALYTICS, value)}/>
+            <Switch
+              label="Data Saver"
+              description="Use less network data (can reduce performance)"
+              checked={settings.getBool(settings.DATA_SAVER)}
+              onChange={(value: boolean) => this.set(settings.DATA_SAVER, value)}/>
+            <Switch
+              label="Active Servers Only"
+              description="Only get servers with at least 1 player or observer"
+              checked={settings.getBool(settings.ONLY_SERVERS_WITH_PLAYERS)}
+              onChange={(value: boolean) => this.set(settings.ONLY_SERVERS_WITH_PLAYERS, value)}/>
+            <Switch
+              label="Disable Real-time Data"
+              description="Don't use real-time data (may save data)"
+              checked={settings.getBool(settings.DISABLE_REALTIME_DATA)}
+              onChange={(value: boolean) => this.set(settings.DISABLE_REALTIME_DATA, value)}/>
+            <Switch
+              label="Disable Analytics"
+              description="Don't collect client side analytics"
+              checked={settings.getBool(settings.DISABLE_ANALYTICS)}
+              onChange={(value: boolean) => this.set(settings.DISABLE_ANALYTICS, value)}/>
           </>}
           <div className="btn-list">
             <button className="btn btn-outline" onClick={() => {settings.clear();this.message("Settings cleared");}} aria-label="Reset all settings to default">Reset</button>

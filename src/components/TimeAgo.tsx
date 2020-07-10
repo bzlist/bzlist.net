@@ -64,6 +64,12 @@ export class TimeAgo extends React.PureComponent<Props, State>{
     // create timer
     clearTimeout(this.timer);
     this.timer = setTimeout(this.update, Number.isNaN(this.props.timestamp) ? 1000 : this.getSecondsUntilUpdate(value) * 1000);
+  };
+
+  render(): JSX.Element{
+    return (
+      <span>{this.state.text}</span>
+    );
   }
 
   private getSecondsUntilUpdate(seconds: number): number{
@@ -83,11 +89,5 @@ export class TimeAgo extends React.PureComponent<Props, State>{
 
     // update every hour
     return HOUR;
-  }
-
-  render(): JSX.Element{
-    return (
-      <span>{this.state.text}</span>
-    );
   }
 }

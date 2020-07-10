@@ -2,7 +2,7 @@ import React from "react";
 import "./Dialog.scss";
 import {Icon} from "components";
 
-export const Dialog = (props: {open: boolean, title: string, onClose: () => void, children: React.ReactNode}): JSX.Element | null =>
+export const Dialog = (props: {open: boolean; title: string; onClose: () => void; children: React.ReactNode}): JSX.Element | null =>
   props.open ?
     <div className="dialog">
       <span className="dialog__overlay" onClick={() => props.onClose()}></span>
@@ -15,5 +15,5 @@ export const Dialog = (props: {open: boolean, title: string, onClose: () => void
           {props.children}
         </div>
       </div>
-    </div>
-  : null;
+    </div> : null
+;

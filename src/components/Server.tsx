@@ -4,7 +4,7 @@ import {verboseGameStyle, history, favoriteServer, isFavoriteServer, isServerHid
 import {Server} from "models";
 import {Icon} from "components";
 
-class ServerBase extends React.Component<{server: Server, onMouseMove?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void}, {favorite: boolean}>{
+class ServerBase extends React.Component<{server: Server; onMouseMove?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void}, {favorite: boolean}>{
   constructor(props: any){
     super(props);
 
@@ -52,7 +52,7 @@ export class ServerRow extends ServerBase{
           favoriteServer(this.props.server);
           this.setState({favorite: isFavoriteServer(this.props.server)});
         }} aria-label={this.state.favorite ? "Unfavorite" : "Favorite"}>{Icon("heart", this.state.favorite, "url(#a)")}</button></td>
-        <td><button className="btn icon" onClick={(e) => this.onClick(undefined, "?play")} aria-label="Play">{Icon("playCircle", true, "url(#c)")}</button></td>
+        <td><button className="btn icon" onClick={() => this.onClick(undefined, "?play")} aria-label="Play">{Icon("playCircle", true, "url(#c)")}</button></td>
       </tr>
     );
   }

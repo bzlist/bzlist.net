@@ -98,7 +98,7 @@ export const deleteAccount = async (): Promise<string | true> => {
   return true;
 };
 
-export const authHeaders = async (): Promise<Object> => {
+export const authHeaders = async (): Promise<any> => {
   const refreshToken = storage.get("refreshToken");
   const tokenData = parseToken();
 

@@ -2,8 +2,7 @@ import React from "react";
 
 import {cache, socket, autoPlural, settings, history, notification, api, sortBy} from "lib";
 import {Player} from "models";
-import {TimeAgo, Search, PlayerRow, PlayerCard} from "components";
-import {List} from "components/List";
+import {TimeAgo, Search, PlayerRow, PlayerCard, List} from "components";
 
 const SORT_INDEXES = ["callsign", "score", "team", "server"];
 
@@ -95,8 +94,8 @@ export class PlayerPage extends React.PureComponent<any, State>{
 
     players = players.sort((a: Player, b: Player) =>
       a.team === "Observer" ? 1 : b.team === "Observer" ? -1 :
-      this.state.sort === "score" ? (a.wins || 0) - (a.losses || 0) > (b.wins || 0) - (b.losses || 0) ? -this.state.sortOrder : this.state.sortOrder :
-      a[this.state.sort] > b[this.state.sort] ? -this.state.sortOrder : this.state.sortOrder
+        this.state.sort === "score" ? (a.wins || 0) - (a.losses || 0) > (b.wins || 0) - (b.losses || 0) ? -this.state.sortOrder : this.state.sortOrder :
+          a[this.state.sort] > b[this.state.sort] ? -this.state.sortOrder : this.state.sortOrder
     );
 
     return players;
@@ -144,7 +143,11 @@ export class PlayerPage extends React.PureComponent<any, State>{
     let observerCount = 0;
     let timestamp = -1;
     for(const player of this.state.players){
-      player.team === "Observer" ? observerCount++ : playerCount++;
+      if(player.team === "Observer"){
+        observerCount++;
+      }else{
+        playerCount++;
+      }
 
       if(player.timestamp > timestamp){
         timestamp = player.timestamp;

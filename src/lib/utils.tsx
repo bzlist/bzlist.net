@@ -7,38 +7,34 @@ import {Server, GameStyle, TeamName, Team} from "../models";
 export const API_ROOT = "https://api.bzlist.net";
 export const history = createBrowserHistory();
 
-export const teamSort = (a: Team, b: Team) =>
+export const teamSort = (a: Team, b: Team): 1 | -1 =>
   a.wins === undefined || a.losses === undefined ? 1 : b.wins === undefined || b.losses === undefined ? -1 : (a.wins - a.losses) > (b.wins - b.losses) ? -1 : 1;
 
 export const verboseGameStyle = (value: GameStyle): string => {
   // turn the short abbreviation string to the verbose version
   switch(value){
-    case "CTF":
-      return "Capture The Flag";
-    case "FFA":
-      return "Free For All";
-    case "OFFA":
-      return "Open (Teamless) Free For All";
-    case "Rabbit":
-      return "Rabbit Chase";
-    default:
-      break;
+  case "CTF":
+    return "Capture The Flag";
+  case "FFA":
+    return "Free For All";
+  case "OFFA":
+    return "Open (Teamless) Free For All";
+  case "Rabbit":
+    return "Rabbit Chase";
+  default:
+    break;
   }
 
   return value;
 };
 
-export const booleanYesNo = (value: boolean): JSX.Element => {
-  // convert boolean value to yes/no with proper class
-  return value ? <span className="yes">Yes</span> : <span className="no">No</span>;
-};
+// convert boolean value to yes/no with proper class
+export const booleanYesNo = (value: boolean): JSX.Element => value ? <span className="yes">Yes</span> : <span className="no">No</span>;
 
-export const autoPlural = (value: string): string => {
-  return value.split(" ")[0] === "1" ? value : `${value}s`;
-};
+export const autoPlural = (value: string): string => value.split(" ")[0] === "1" ? value : `${value}s`;
 
-export const api = async (endpoint: string, body: any = undefined, method = "POST", headers: any = {}): Promise<any> => {
-  return fetch(`${API_ROOT}/${endpoint}`, {
+export const api = async (endpoint: string, body: any = undefined, method = "POST", headers: any = {}): Promise<any> =>
+  fetch(`${API_ROOT}/${endpoint}`, {
     headers: {
       "Content-Type": "application/json",
       ...headers
@@ -46,7 +42,6 @@ export const api = async (endpoint: string, body: any = undefined, method = "POS
     method,
     body: body !== undefined ? JSON.stringify(body) : undefined
   }).then((res: Response) => res.json()).catch(console.error);
-};
 
 export const notification = (title: string, body: string, tag: string, onclick: (this: Notification, event: Event) => void): void => {
   if(!window.Notification){
@@ -175,6 +170,7 @@ export const sortBy = (
   callback(sort, sortOrder);
 };
 
+/* eslint-disable arrow-body-style */
 export const newServerToLegacy = (server: any): Server => {
   return {
     address: server.address,
@@ -207,6 +203,7 @@ export const newServerToLegacy = (server: any): Server => {
     style: server.style
   } as Server;
 };
+/* eslint-enable arrow-body-style */
 
 export const joinGame = (server: Server | string, team: TeamName): void => {
   window.location.href = `bzflag-launcher:${typeof(server) === "object" ? `${server.address}:${server.port}` : server} ${team.toLowerCase()}`;

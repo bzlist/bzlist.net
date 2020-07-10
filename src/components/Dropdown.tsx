@@ -49,7 +49,7 @@ export class Dropdown extends React.PureComponent<Props, State>{
     }else if(this.state.show){
       this.isOpen = true;
     }
-  }
+  };
 
   select(item: string): void{
     this.setState({label: item, show: false});

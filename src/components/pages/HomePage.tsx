@@ -267,14 +267,14 @@ export class HomePage extends React.PureComponent<any, State>{
           <div>
             {this.state.infoServer.players.length > 0 && this.state.infoServer.players && <>
               <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
-              <thead>
-                <tr>
-                  <th>Callsign</th>
-                  <th>Score</th>
-                  <th>Team</th>
-                  <th></th>
-                </tr>
-              </thead>
+                <thead>
+                  <tr>
+                    <th>Callsign</th>
+                    <th>Score</th>
+                    <th>Team</th>
+                    <th></th>
+                  </tr>
+                </thead>
                 <tbody>
                   {this.state.infoServer.players.sort(playerSort).map((player: Player) =>
                     <PlayerRow key={`${player.callsign}:${player.server}`} player={player} showServer={false} showFriend={false}/>
@@ -283,13 +283,13 @@ export class HomePage extends React.PureComponent<any, State>{
               </table>
             </>}
             <table className={settings.getBool(settings.COMPACT_TABLES) ? "table-compact" : ""}>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Score</th>
-                <th>Players</th>
-              </tr>
-            </thead>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Score</th>
+                  <th>Players</th>
+                </tr>
+              </thead>
               <tbody>
                 {this.state.infoServer.teams.sort(teamSort).map((team: Team) =>
                   <tr key={team.name}>

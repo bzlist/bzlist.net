@@ -2,10 +2,10 @@ import * as io from "socket.io-client";
 import {API_ROOT} from "./utils";
 
 export const socket: {
-  _socket: SocketIOClient.Socket | undefined,
-  emit: (event: string, data?: any) => void,
-  on: <T>(event: string, callback: (data: T) => void) => void,
-  off: (event: string) =>void
+  _socket: SocketIOClient.Socket | undefined;
+  emit: (event: string, data?: any) => void;
+  on: <T>(event: string, callback: (data: T) => void) => void;
+  off: (event: string) => void;
 } = {
   _socket: undefined,
 

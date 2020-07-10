@@ -2,7 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 
 export const PrivacyPolicyPage = (): JSX.Element => (
-  /* tslint:disable:max-line-length */
+  /* eslint-disable max-len */
   <div className="wrapper">
     <h1>Privacy Policy</h1>
     <p>This policy is effective as of 2 November 2019.</p>
@@ -23,5 +23,5 @@ export const PrivacyPolicyPage = (): JSX.Element => (
     <h2>Information Disclosure</h2>
     <p>I don’t share any personally identifying information publicly or with third-parties, except when required to by law.</p>
   </div>
-  /* tslint:enable:max-line-length */
+  /* eslint-enable max-len */
 );

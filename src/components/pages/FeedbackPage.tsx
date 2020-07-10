@@ -24,7 +24,7 @@ export class FeedbackPage extends React.PureComponent<any, State>{
     });
 
     if(!data){
-      this.setState({message: `Unknown error`});
+      this.setState({message: "Unknown error"});
     }
 
     if(data.error){
@@ -44,8 +44,10 @@ export class FeedbackPage extends React.PureComponent<any, State>{
             <button className="btn btn-primary" onClick={() => this.submit()}>Submit</button>
             {this.state.message !== "" && <span>&nbsp;&nbsp;{this.state.message}</span>}
           </p>
+        /* eslint-disable indent */
         :
           <p>To prevent spam, you must be <Link to="/account">signed in</Link> to leave feedback. You can also see how to reach me on the <Link to="/help">help</Link> page.</p>
+        /* eslint-enable indent */
         }
       </div>
     );
