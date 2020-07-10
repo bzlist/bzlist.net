@@ -55,7 +55,6 @@
     "@types/socket.io-client": "^1.4.33",
     "@typescript-eslint/eslint-plugin": "^3.6.0",
     "@typescript-eslint/parser": "^3.6.0",
-    "eslint": "^7.4.0",
     "imagemin": "^7.0.1",
     "imagemin-webp": "^5.1.0",
     "source-map-loader": "^0.2.4",
