@@ -103,35 +103,23 @@ div.content{
 }
 
 .history{
-  min-height: 2rem;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  position: relative;
-  border-bottom: 1px solid var(--color-text);
   user-select: none;
 
-  & > span{
-    padding: 0 .1rem;
-    font-size: .9rem;
-    font-weight: 500;
-    align-self: flex-start;
-    position: absolute;
-    top: -.25rem;
-    pointer-events: none;
+  & > div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 
-    &:last-child{
-      right: 0;
+    & > span{
+      font-size: .85rem;
+      font-weight: 500;
     }
   }
+}
 
-  & > div{
-    width: 100%;
-    // min-width: 3px;
-    background: $gradient-primary;
-    border-left: 1px solid var(--bg-darker);
-    box-sizing: border-box;
-  }
+.chart polyline{
+  stroke: var(--color-text-headings);
+  stroke-width: 1px;
 }
 
 .play-dialog .dialog__inner{

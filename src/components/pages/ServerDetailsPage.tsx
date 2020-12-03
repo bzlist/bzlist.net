@@ -16,13 +16,17 @@ import {
   isServerHidden,
   newServerToLegacy,
   joinGame,
-  teamSort,
-  history
+  teamSort
 } from "lib";
 import {Server, Player, Team, TeamName} from "models";
 import {TimeAgo, PlayerRow, Switch, Icon, playerSort, Dropdown} from "components";
 import {imageExt} from "index";
 import {Dialog} from "components/Dialog";
+
+const HISTORY_CHART_SIZE = {
+  width: 300,
+  height: 50
+};
 
 interface Params{
   address: string;
@@ -232,6 +236,9 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
 
     const imageUrl = `/images/servers/${this.state.server.address}_${this.state.server.port}`;
 
+    const maxPlayerCountServer = [...this.state.history].sort((a: Server, b: Server) => a.players.length < b.players.length ? 1 : -1)[0];
+    const historyPlayerMultiplier = (maxPlayerCountServer ? HISTORY_CHART_SIZE.height / maxPlayerCountServer.players.length : 0);
+
     return (
       <div>
         <div className="title" style={{background: `url(${imageUrl}.${imageExt}), url(/images/servers/default.png) center`}}>
@@ -363,44 +370,26 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
               <span className="label">Past</span>
               <Dropdown items={["Day", "3 Days", "Week"]} selected={this.state.historyPeriod} onChange={(value: any) => this.setState({historyPeriod: value})}/><br/>
               {this.state.history.length > 0 ?
-                <div className="history" style={{height: `${[...this.state.history].sort((a: Server, b: Server) => a.players.length < b.players.length ? 1 : -1)[0].players.length * 4 + 32}px`}}>
-                  <span>
-                    -{Math.ceil(((this.state.past ? this.state.server.timestamp : Math.floor(new Date().getTime() / 1000)) - this.state.history[0].timestamp) / 3600)}h
-                  </span>
-                  {this.state.history.map((server: Server) =>
-                    <div
-                      key={server.timestamp}
-                      style={{cursor: "pointer", height: server.players.length * 4}}
-                      onClick={() => {
-                        if(!this.state.server){
-                          return;
-                        }
-
-                        history.push(`/s/${this.address}/${this.port}/${server.timestamp}`);
-                        this.setState({past: true});
-                        this.handleData({
-                          ...newServerToLegacy(server),
-                          address: this.state.server.address,
-                          port: this.state.server.port,
-                          ip: this.state.server.ip,
-                          owner: this.state.server.owner,
-                          country: this.state.server.country,
-                          countryCode: this.state.server.countryCode
-                        });
-                      }}
-                      aria-label={`${server.players.length}`}>
-                    </div>
-                  )}
-                  <span>
-                    -{Math.round(((this.state.past ? this.state.server.timestamp : Math.floor(new Date().getTime() / 1000)) - this.state.history[this.state.history.length - 1].timestamp) / 60)}m
-                  </span>
+                <div className="history">
+                  <svg viewBox={`0 0 ${HISTORY_CHART_SIZE.width} ${HISTORY_CHART_SIZE.height}`} className="chart">
+                    <polyline
+                      fill="none"
+                      points={this.state.history.map((server: Server, i: number) =>
+                        `${HISTORY_CHART_SIZE.width / this.state.history.length * i},${HISTORY_CHART_SIZE.height - server.players.length * historyPlayerMultiplier}`
+                      ).join(" ")}
+                    />
+                  </svg>
+                  <div>
+                    <span>
+                      -{Math.ceil(((this.state.past ? this.state.server.timestamp : Math.floor(new Date().getTime() / 1000)) - this.state.history[0].timestamp) / 3600)}h
+                    </span>
+                    <span>
+                      -{Math.round(((this.state.past ? this.state.server.timestamp : Math.floor(new Date().getTime() / 1000)) - this.state.history[this.state.history.length - 1].timestamp) / 60)}m
+                    </span>
+                  </div>
                 </div>
-              /* eslint-disable indent */
-              : this.state.history.length === 0 ?
-                <span>No data for this period.</span>
-              :
-                <span>Loading...</span>
-              /* eslint-enable indent */
+                : this.state.history.length === 0 ? <span>No data for this period.</span>
+                  : <span>Loading...</span>
               }
             </div>
           </div>
