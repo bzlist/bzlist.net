@@ -36,6 +36,7 @@
   border-radius: $border-radius;
   user-select: none;
   z-index: 1;
+  animation: slide-down calc(var(--animations) * .1s) forwards;
 }
 
 .dropdown__option{
