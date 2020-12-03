@@ -30,6 +30,7 @@
 
 .dropdown__content{
   width: 300px;
+  margin-top: .25rem;
   background: linear-gradient($gradient-angle, var(--bg-darker), var(--bg-lighter));
   position: absolute;
   box-shadow: $shadow;
