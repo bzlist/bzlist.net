@@ -61,7 +61,7 @@ export class ServerRow extends ServerBase{
 export class ServerCard extends ServerBase{
   render(): JSX.Element{
     return (
-      <div onClick={() => this.onClick()}>
+      <div onClick={(e) => this.onClick(e)}>
         <h2>
           <button className="btn icon" onClick={() => {
             favoriteServer(this.props.server);
