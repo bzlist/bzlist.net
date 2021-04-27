@@ -234,7 +234,7 @@ class App extends React.PureComponent<any, State>{
               <Link to="/terms-of-service">Terms of Service</Link> •&nbsp;
               <Link to="/privacy-policy">Privacy Policy</Link>
             </div>
-            <div className="copyright">Copyright © 2019-2020 The Noah</div>
+            <div className="copyright">Copyright © 2019-2021 The Noah</div>
           </footer>
         </div>
         <Dialog title={dialog?.title ?? ""} open={this.state.isDialogOpen} onClose={() => this.setState({isDialogOpen: false})}>
