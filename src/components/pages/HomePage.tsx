@@ -192,7 +192,7 @@ export class HomePage extends React.PureComponent<any, State>{
                 increment={settings.getBool(settings.COMPACT_TABLES) ? 28 : 36}
                 render={(server: Server) =>
                   <ServerRow key={`${server.address}:${server.port}`} server={server} onMouseMove={!settings.getBool(settings.INFO_CARDS) ? undefined : (e) => {
-                    if(this.state.infoServer?.address !== server.address || this.state.infoServer.port !== server.port){
+                    if(this.state.infoServer?.address !== server.address || this.state.infoServer?.port !== server.port){
                       this.setState({infoServer: server});
                     }
                     if(!this.infoPopoutRef.current){
@@ -295,7 +295,7 @@ export class HomePage extends React.PureComponent<any, State>{
                   <tr key={team.name}>
                     <td><b>{team.name}</b></td>
                     <td>{team.wins !== undefined && team.losses !== undefined && team.wins - team.losses}</td>
-                    <td>{this.state.infoServer?.players.filter((player: Player) => player.team === team.name)} / {team.maxPlayers}</td>
+                    <td>{this.state.infoServer?.players.filter((player: Player) => player.team === team.name).length} / {team.maxPlayers}</td>
                   </tr>
                 )}
               </tbody>
