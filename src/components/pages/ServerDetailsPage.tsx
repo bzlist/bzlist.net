@@ -14,11 +14,10 @@ import {
   hideServer,
   api,
   isServerHidden,
-  newServerToLegacy,
   joinGame,
   teamSort
 } from "lib";
-import {Server, Player, Team, TeamName} from "models";
+import {IServer, IPlayer, ITeam, TeamName} from "models";
 import {TimeAgo, PlayerRow, Switch, Icon, playerSort, Dropdown} from "components";
 import {imageExt} from "index";
 import {Dialog} from "components/Dialog";
@@ -39,22 +38,22 @@ interface Props{
 }
 
 interface State{
-  server: Server | null;
+  server: IServer | null;
   selectTeam: boolean;
   favorite: boolean;
-  history: Server[];
+  history: IServer[];
   past: boolean;
   historyPeriod: "Day" | "3 Days" | "Week";
-  selectedTeam: Team | null;
+  selectedTeam: ITeam | null;
 }
 
 export class ServerDetailsPage extends React.PureComponent<Props, State>{
   address = "";
   port = -1;
   timestamp = 0;
-  server: Server | null = null;
-  serversCache: Server[];
-  playersCache: Player[];
+  server: IServer | null = null;
+  serversCache: IServer[];
+  playersCache: IPlayer[];
 
   constructor(props: Props){
     super(props);
@@ -68,9 +67,9 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
     this.playersCache = cache.getJson("players", []);
 
     if(this.serversCache && this.playersCache){
-      this.server = this.serversCache.filter((_server: Server) => _server.address === this.address && _server.port === this.port)[0];
+      this.server = this.serversCache.filter((_server: IServer) => _server.address === this.address && _server.port === this.port)[0];
       if(this.server){
-        this.server.players = this.playersCache.filter((player: Player) => player.server === `${this.address}:${this.port}`).sort(playerSort);
+        this.server.players = this.playersCache.filter((player: IPlayer) => player.server === `${this.address}:${this.port}`).sort(playerSort);
       }
     }
 
@@ -98,7 +97,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
     this.handleData = this.handleData.bind(this);
 
     if(this.timestamp){
-      api(`servers/${this.address}/${this.port}/${this.timestamp}`, undefined, "GET").then((data) => newServerToLegacy(data)).then(this.handleData);
+      api(`servers/${this.address}/${this.port}/${this.timestamp}`, undefined, "GET").then(this.handleData);
     }else{
       this.fetchHistory();
       this.fetchData();
@@ -129,15 +128,15 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
       return;
     }
 
-    socket.on<Server>(`${this.address}:${this.port}`, this.handleData);
+    socket.on<IServer>(`${this.address}:${this.port}`, this.handleData);
     socket.emit("server", {address: this.address, port: this.port});
   }
 
   fetchHistory(): void{
     const hours = this.state.historyPeriod === "3 Days" ? 72 : this.state.historyPeriod === "Week" ? 168 : 24;
-    api(`history/${this.address}/${this.port}?hours=${hours}${this.state.server ? `&timestamp=${this.state.server.timestamp}` : ""}`, undefined, "GET").then((data: Server[]) => {
+    api(`history/${this.address}/${this.port}?hours=${hours}${this.state.server ? `&timestamp=${this.state.server.timestamp}` : ""}`, undefined, "GET").then((data: IServer[]) => {
       this.setState({
-        history: data.sort((a: Server, b: Server) => a.timestamp - b.timestamp).map((server: Server) => {
+        history: data.sort((a: IServer, b: IServer) => a.timestamp - b.timestamp).map((server: IServer) => {
           if(server.players){
             server.players = server.players.sort(playerSort);
           }
@@ -148,7 +147,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
     });
   }
 
-  handleData(data: Server): void{
+  handleData(data: IServer): void{
     if(data && data.players){
       data.players.sort(playerSort);
     }
@@ -167,7 +166,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
 
     // update servers cache
     if(this.serversCache){
-      this.server = this.serversCache.filter((_server: Server) => _server.address === data.address && _server.port === data.port)[0];
+      this.server = this.serversCache.filter((_server: IServer) => _server.address === data.address && _server.port === data.port)[0];
       if(this.server){
         const serverIndex = this.serversCache.indexOf(this.server);
         this.server = {...data};
@@ -180,7 +179,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
 
     // update players cache
     if(this.playersCache && data.players){
-      let players = data.players.map((player: Player) => {
+      let players = data.players.map((player: IPlayer) => {
         player.server = `${data.address}:${data.port}`;
         player.timestamp = data.timestamp;
 
@@ -208,16 +207,16 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
     this.setState({selectTeam: false, selectedTeam: null});
   }
 
-  getTeamCount(team: Team | null): number{
+  getTeamCount(team: ITeam | null): number{
     if(!this.state.server || !team){
       return 0;
     }
 
     if(team.name === "Rogue"){
-      return this.state.server.players.filter((player: Player) => player.team === "Rogue" || player.team === "Hunter" || player.team === "Rabbit").length;
+      return this.state.server.players.filter((player: IPlayer) => player.team === "Rogue" || player.team === "Hunter" || player.team === "Rabbit").length;
     }
 
-    return this.state.server.players.filter((player: Player) => player.team === team.name).length;
+    return this.state.server.players.filter((player: IPlayer) => player.team === team.name).length;
   }
 
   render(): JSX.Element{
@@ -231,12 +230,12 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
     }
 
     // calculate number of players and observers
-    const observerCount = this.state.server.players.filter((player: Player) => player.team === "Observer").length;
+    const observerCount = this.state.server.players.filter((player: IPlayer) => player.team === "Observer").length;
     const playerCount = this.state.server.players.length - observerCount;
 
     const imageUrl = `/images/servers/${this.state.server.address}_${this.state.server.port}`;
 
-    const maxPlayerCountServer = [...this.state.history].sort((a: Server, b: Server) => a.players.length < b.players.length ? 1 : -1)[0];
+    const maxPlayerCountServer = [...this.state.history].sort((a: IServer, b: IServer) => a.players.length < b.players.length ? 1 : -1)[0];
     const historyPlayerMultiplier = (maxPlayerCountServer ? HISTORY_CHART_SIZE.height / maxPlayerCountServer.players.length : 0);
 
     return (
@@ -252,7 +251,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
           </div>
           <div>
             <button className="btn icon" onClick={() => {
-              favoriteServer(this.state.server as Server);
+              favoriteServer(this.state.server as IServer);
               this.setState({favorite: isFavoriteServer(this.state.server)});
             }}>{Icon("heart", isFavoriteServer(this.state.server), "url(#a)")}</button>
           </div>
@@ -295,31 +294,37 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
                   </tr>
                   <tr>
                     <th>Max shots</th>
-                    <td>{this.state.server.configuration.maxShots}</td>
+                    <td>{this.state.server.maxShots}</td>
                   </tr>
                   <tr>
                     <th>Max Players</th>
-                    <td>{this.state.server.configuration.maxPlayers}</td>
+                    <td>{this.state.server.maxPlayers}</td>
                   </tr>
                   <tr>
                     <th>Flags</th>
-                    <td>{booleanYesNo(this.state.server.configuration.superflags)}</td>
+                    <td>{booleanYesNo(this.state.server.options.flags)}</td>
                   </tr>
                   <tr>
                     <th>No Team Kills</th>
-                    <td>{booleanYesNo(this.state.server.configuration.noTeamKills)}</td>
+                    <td>{booleanYesNo(this.state.server.options.noTeamKills)}</td>
                   </tr>
                   <tr>
                     <th>Jumping</th>
-                    <td>{booleanYesNo(this.state.server.configuration.jumping)}</td>
+                    <td>{booleanYesNo(this.state.server.options.jumping)}</td>
                   </tr>
                   <tr>
                     <th>Ricochet</th>
-                    <td>{booleanYesNo(this.state.server.configuration.ricochet)}</td>
+                    <td>{booleanYesNo(this.state.server.options.ricochet)}</td>
                   </tr>
                   <tr>
                     <th>Drop Bad Flags After</th>
-                    <td>{autoPlural(`${this.state.server.configuration.dropBadFlags.wins} win`)} or {autoPlural(`${this.state.server.configuration.dropBadFlags.time} second`)}</td>
+                    <td>
+                      {
+                        this.state.server.shake ?
+                          `${autoPlural(`${this.state.server.shake.wins} win`)} or ${autoPlural(`${this.state.server.shake.timeout} second`)}` :
+                          "Never"
+                      }
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -337,7 +342,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
                     </tr>
                   </thead>
                   <tbody>
-                    {this.state.server.players.map((player: Player) =>
+                    {this.state.server.players.map((player: IPlayer) =>
                       <PlayerRow key={`${player.callsign}:${player.server}${this.state.server?.timestamp}`} player={player} showServer={false} showMotto={false}/>
                     )}
                   </tbody>
@@ -355,7 +360,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
                   </tr>
                 </thead>
                 <tbody>
-                  {this.state.server.teams.sort(teamSort).map((team: Team) =>
+                  {this.state.server.teams.sort(teamSort).map((team: ITeam) =>
                     <tr key={team.name} onClick={() => this.setState({selectedTeam: team})}>
                       <td><b>{team.name}</b></td>
                       <td>{team.wins !== undefined && team.losses !== undefined && team.wins - team.losses}</td>
@@ -374,7 +379,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
                   <svg viewBox={`0 0 ${HISTORY_CHART_SIZE.width} ${HISTORY_CHART_SIZE.height}`} className="chart">
                     <polyline
                       fill="none"
-                      points={this.state.history.map((server: Server, i: number) =>
+                      points={this.state.history.map((server: IServer, i: number) =>
                         `${HISTORY_CHART_SIZE.width / this.state.history.length * i},${HISTORY_CHART_SIZE.height - server.players.length * historyPlayerMultiplier}`
                       ).join(" ")}
                     />
@@ -403,7 +408,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
         </div>
         <div className="play-dialog">
           <Dialog title="Select Team" open={this.state.selectTeam} onClose={() => this.setState({selectTeam: false})}>
-            {this.state.server.teams.map((team: Team) =>
+            {this.state.server.teams.map((team: ITeam) =>
               <button key={team.name} className="btn btn-outline" onClick={() => this.joinTeam(team.name)}>{autoPlural(`${this.getTeamCount(team)} ${team.name}`)}</button>
             )}
           </Dialog>

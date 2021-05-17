@@ -2,12 +2,12 @@ import React from "react";
 
 import {createBrowserHistory} from "history";
 import {settings} from ".";
-import {Server, GameStyle, TeamName, Team} from "../models";
+import {IServer, GameStyle, TeamName, ITeam} from "../models";
 
 export const API_ROOT = "https://api.bzlist.net";
 export const history = createBrowserHistory();
 
-export const teamSort = (a: Team, b: Team): 1 | -1 =>
+export const teamSort = (a: ITeam, b: ITeam): 1 | -1 =>
   a.wins === undefined || a.losses === undefined ? 1 : b.wins === undefined || b.losses === undefined ? -1 : (a.wins - a.losses) > (b.wins - b.losses) ? -1 : 1;
 
 export const verboseGameStyle = (value: GameStyle): string => {
@@ -75,7 +75,7 @@ export const notification = (title: string, body: string, tag: string, onclick: 
   }
 };
 
-export const favoriteServer = (server: Server | string): void => {
+export const favoriteServer = (server: IServer | string): void => {
   if(server === undefined || server === null){
     return;
   }
@@ -92,7 +92,7 @@ export const favoriteServer = (server: Server | string): void => {
   settings.set("favoriteServers", JSON.stringify(favoriteServers));
 };
 
-export const isFavoriteServer = (server: Server | null): boolean => {
+export const isFavoriteServer = (server: IServer | null): boolean => {
   if(!server){
     return false;
   }
@@ -114,7 +114,7 @@ export const friendPlayer = (callsign: string): void => {
 
 export const isPlayerFriend = (callsign: string): boolean => settings.getJson("friends", []).includes(callsign);
 
-export const hideServer = (server: Server | null | string): void => {
+export const hideServer = (server: IServer | null | string): void => {
   if(server === undefined || server === null){
     return;
   }
@@ -131,7 +131,7 @@ export const hideServer = (server: Server | null | string): void => {
   settings.set("hiddenServers", JSON.stringify(hiddenServers));
 };
 
-export const isServerHidden = (server: Server | null | string): boolean => {
+export const isServerHidden = (server: IServer | null | string): boolean => {
   if(server === undefined || server === null){
     return false;
   }
@@ -170,42 +170,7 @@ export const sortBy = (
   callback(sort, sortOrder);
 };
 
-/* eslint-disable arrow-body-style */
-export const newServerToLegacy = (server: any): Server => {
-  return {
-    address: server.address,
-    port: server.port,
-    ip: server.ip,
-    owner: server.owner,
-    country: server.country ?? "",
-    countryCode: server.countryCode ?? "",
-    timestamp: server.timestamp,
-    title: server.title,
-    teams: server.teams.map((team: any) => {
-      team.score = team.wins - team.losses;
-      return team;
-    }),
-    players: server.players,
-    configuration: {
-      maxShots: server.maxShots,
-      maxPlayers: server.maxPlayers,
-      superflags: server.options.flags,
-      jumping: server.options.jumping,
-      ricochet: server.options.ricochet,
-      inertia: server.options.inertia,
-      shaking: server.options.shaking,
-      noTeamKills: server.options.noTeamKills,
-      dropBadFlags: {
-        wins: server.options.shake?.wins || 0,
-        time: server.options.shake?.timeout || 0
-      }
-    },
-    style: server.style
-  } as Server;
-};
-/* eslint-enable arrow-body-style */
-
-export const joinGame = (server: Server | string, team: TeamName): void => {
+export const joinGame = (server: IServer | string, team: TeamName): void => {
   window.location.href = `bzflag-launcher:${typeof(server) === "object" ? `${server.address}:${server.port}` : server} ${team.toLowerCase()}`;
 };
 

@@ -1,10 +1,10 @@
 import React from "react";
 
 import {verboseGameStyle, history, favoriteServer, isFavoriteServer, isServerHidden, shouldIgnoreClick} from "lib";
-import {Server} from "models";
+import {IServer} from "models";
 import {Icon} from "components";
 
-class ServerBase extends React.Component<{server: Server; onMouseMove?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void}, {favorite: boolean}>{
+class ServerBase extends React.Component<{server: IServer; onMouseMove?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void}, {favorite: boolean}>{
   constructor(props: any){
     super(props);
 
@@ -15,7 +15,7 @@ class ServerBase extends React.Component<{server: Server; onMouseMove?: (e: Reac
     this.onClick = this.onClick.bind(this);
   }
 
-  shouldComponentUpdate(nextProps: {server: Server}, nextState: {favorite: boolean}): boolean{
+  shouldComponentUpdate(nextProps: {server: IServer}, nextState: {favorite: boolean}): boolean{
     return nextState.favorite !== this.state.favorite || nextProps.server.timestamp !== this.props.server.timestamp;
   }
 

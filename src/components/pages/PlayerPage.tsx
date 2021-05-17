@@ -1,13 +1,13 @@
 import React from "react";
 
 import {cache, socket, autoPlural, settings, history, notification, api, sortBy} from "lib";
-import {Player} from "models";
+import {IPlayer} from "models";
 import {TimeAgo, Search, PlayerRow, PlayerCard, List} from "components";
 
 const SORT_INDEXES = ["callsign", "score", "team", "server"];
 
 interface State{
-  players: Player[];
+  players: IPlayer[];
   sort: string;
   sortOrder: number;
   showObservers: boolean;
@@ -37,7 +37,7 @@ export class PlayerPage extends React.PureComponent<any, State>{
       return;
     }
 
-    socket.on<Player[]>("players", this.handleData);
+    socket.on<IPlayer[]>("players", this.handleData);
     socket.emit("players");
   }
 
@@ -57,19 +57,19 @@ export class PlayerPage extends React.PureComponent<any, State>{
     socket.off("players");
   }
 
-  handleData(data: Player[]): void{
+  handleData(data: IPlayer[]): void{
     this.setState({players: data});
     cache.set("players", JSON.stringify(data));
 
     // send notification(s) if any friends are online
     if(!this.firstData && settings.getBool(settings.NOTIFICATIONS) && settings.getBool(settings.PLAYER_NOTIFICATIONS) && settings.getJson("friends", []) !== []){
-      data.forEach((player: Player) => {
+      data.forEach((player: IPlayer) => {
         if(!settings.getJson("friends", []).includes(player.callsign)){
           return;
         }
 
         notification(`${player.callsign} is online`, "", player.callsign, () => {
-          history.push(`/s/${player.server.replace(":", "/")}`);
+          history.push(`/s/${player.server?.replace(":", "/")}`);
         });
       });
     }
@@ -83,16 +83,16 @@ export class PlayerPage extends React.PureComponent<any, State>{
     );
   }
 
-  getPlayers(): Player[]{
-    let players: Player[] = JSON.parse(JSON.stringify(this.state.players));
+  getPlayers(): IPlayer[]{
+    let players: IPlayer[] = JSON.parse(JSON.stringify(this.state.players));
 
     if(this.state.searchQuery !== ""){
       players = players.filter((player) => player.callsign.toLowerCase().includes(this.state.searchQuery));
     }else if(!this.state.showObservers){
-      players = players.filter((player: Player) => player.team !== "Observer");
+      players = players.filter((player: IPlayer) => player.team !== "Observer");
     }
 
-    players = players.sort((a: Player, b: Player) =>
+    players = players.sort((a: IPlayer, b: IPlayer) =>
       a.team === "Observer" ? 1 : b.team === "Observer" ? -1 :
         this.state.sort === "score" ? (a.wins || 0) - (a.losses || 0) > (b.wins || 0) - (b.losses || 0) ? -this.state.sortOrder : this.state.sortOrder :
           a[this.state.sort] > b[this.state.sort] ? -this.state.sortOrder : this.state.sortOrder
@@ -108,7 +108,7 @@ export class PlayerPage extends React.PureComponent<any, State>{
       if(this.mobile){
         table = (
           <div className="card-list">
-            {this.getPlayers().map((player: Player) => <PlayerCard key={`${player.callsign}:${player.server}`} player={player}/>)}
+            {this.getPlayers().map((player: IPlayer) => <PlayerCard key={`${player.callsign}:${player.server}`} player={player}/>)}
           </div>
         );
       }else{
@@ -127,7 +127,7 @@ export class PlayerPage extends React.PureComponent<any, State>{
               <List
                 items={this.getPlayers()}
                 increment={settings.getBool(settings.COMPACT_TABLES) ? 28 : 36}
-                render={(player: Player) => <PlayerRow key={`${player.callsign}:${player.server}`} player={player} showServer={true}/>}/>
+                render={(player: IPlayer) => <PlayerRow key={`${player.callsign}:${player.server}`} player={player} showServer={true}/>}/>
             </tbody>
           </table>
         );
@@ -149,8 +149,8 @@ export class PlayerPage extends React.PureComponent<any, State>{
         playerCount++;
       }
 
-      if(player.timestamp > timestamp){
-        timestamp = player.timestamp;
+      if(player.timestamp ?? 0 > timestamp){
+        timestamp = player.timestamp ?? 0;
       }
     }
 

@@ -1,20 +1,20 @@
 import React from "react";
 
 import {cache, socket, history, autoPlural, settings, notification, api, sortBy, favoriteServer, isServerHidden, teamSort} from "lib";
-import {Server, Team, Player} from "models";
+import {IServer, ITeam, IPlayer} from "models";
 import {TimeAgo, Search, ServerRow, ServerCard, PlayerRow, playerSort, List} from "components";
 import {imageExt} from "index";
 
 const SORT_INDEXES = ["playersCount", "address", "country", "style", "title"];
 
 interface State{
-  servers: Server[];
+  servers: IServer[];
   sort: string;
   sortOrder: number;
   serversToShow: number;
   showHidden: boolean;
   searchQuery: string;
-  infoServer: Server | null;
+  infoServer: IServer | null;
 }
 
 export class HomePage extends React.PureComponent<any, State>{
@@ -29,8 +29,8 @@ export class HomePage extends React.PureComponent<any, State>{
     const playerCache = cache.getJson("players", []);
 
     this.state = {
-      servers: cache.getJson("servers", []).map((server: Server) => {
-        server.players = playerCache.filter((player: Player) => player.server === `${server.address}:${server.port}`);
+      servers: cache.getJson("servers", []).map((server: IServer) => {
+        server.players = playerCache.filter((player: IPlayer) => player.server === `${server.address}:${server.port}`);
         return server;
       }),
       sort: "",
@@ -56,7 +56,7 @@ export class HomePage extends React.PureComponent<any, State>{
       return;
     }
 
-    socket.on<Server[]>("servers", this.handleData);
+    socket.on<IServer[]>("servers", this.handleData);
     socket.emit("servers", {onlinePlayers: settings.getBool(settings.ONLY_SERVERS_WITH_PLAYERS)});
   }
 
@@ -80,17 +80,17 @@ export class HomePage extends React.PureComponent<any, State>{
     socket.off("servers");
   }
 
-  handleData(data: Server[]): void{
+  handleData(data: IServer[]): void{
     this.setState({servers: data});
     cache.set("servers", JSON.stringify(data));
-    cache.set("players", JSON.stringify(([] as Player[]).concat.apply([], data.map((server: Server) => (server.players || []).map((player: Player) => {
+    cache.set("players", JSON.stringify(([] as IPlayer[]).concat.apply([], data.map((server: IServer) => (server.players || []).map((player: IPlayer) => {
       player.server = `${server.address}:${server.port}`;
       player.timestamp = server.timestamp;
       return player;
     })))));
 
-    data.forEach((server: Server) => {
-      const playerCount = server.players.filter((player: Player) => player.team !== "Observer").length;
+    data.forEach((server: IServer) => {
+      const playerCount = server.players.filter((player: IPlayer) => player.team !== "Observer").length;
       if(playerCount >= 1){
         if(!settings.getBool(settings.DATA_SAVER)){
           new Image().src = `/images/servers/${server.address}_${server.port}.${imageExt}`;
@@ -118,8 +118,8 @@ export class HomePage extends React.PureComponent<any, State>{
     );
   }
 
-  getServers(): Server[]{
-    let servers: Server[] = JSON.parse(JSON.stringify(this.state.servers));
+  getServers(): IServer[]{
+    let servers: IServer[] = JSON.parse(JSON.stringify(this.state.servers));
 
     if(!this.state.showHidden && this.state.searchQuery === ""){
       servers = servers.filter((server) => !isServerHidden(server));
@@ -130,25 +130,25 @@ export class HomePage extends React.PureComponent<any, State>{
     }
 
     if(settings.getBool(settings.EXCLUDE_OBSERVERS)){
-      servers = servers.map((server: Server) => {
-        server.players.length -= server.players.filter((player: Player) => player.team !== "Observer").length;
+      servers = servers.map((server: IServer) => {
+        server.players.length -= server.players.filter((player: IPlayer) => player.team !== "Observer").length;
         return server;
       });
     }else if(settings.getBool(settings.IGNORE_OBSERVER_BOTS)){
-      servers = servers.map((server: Server) => {
-        server.players.length -= server.players.filter((player: Player) => player.team === "Observer" && ["admin", "r3"].includes(player.callsign)).length;
+      servers = servers.map((server: IServer) => {
+        server.players.length -= server.players.filter((player: IPlayer) => player.team === "Observer" && ["admin", "r3"].includes(player.callsign)).length;
         return server;
       });
     }
 
-    servers.sort((a: Server, b: Server) => `${a.address}:${a.port}` > `${b.address}:${b.port}` ? 1 : -1);
+    servers.sort((a: IServer, b: IServer) => `${a.address}:${a.port}` > `${b.address}:${b.port}` ? 1 : -1);
     if(this.state.sort.startsWith("configuration.")){
       const sort = this.state.sort.replace("configuration.", "");
-      servers.sort((a: Server, b: Server) => a.configuration[sort] > b.configuration[sort] ? -this.state.sortOrder : this.state.sortOrder);
+      servers.sort((a: IServer, b: IServer) => a.configuration[sort] > b.configuration[sort] ? -this.state.sortOrder : this.state.sortOrder);
     }else if(this.state.sort === "playersCount"){
-      servers.sort((a: Server, b: Server) => a.players.length > b.players.length ? -this.state.sortOrder : this.state.sortOrder);
+      servers.sort((a: IServer, b: IServer) => a.players.length > b.players.length ? -this.state.sortOrder : this.state.sortOrder);
     }else{
-      servers.sort((a: Server, b: Server) => a[this.state.sort] > b[this.state.sort] ? -this.state.sortOrder : this.state.sortOrder);
+      servers.sort((a: IServer, b: IServer) => a[this.state.sort] > b[this.state.sort] ? -this.state.sortOrder : this.state.sortOrder);
     }
 
     return servers.slice(0, this.state.serversToShow > 0 ? this.state.serversToShow : this.state.servers.length);
@@ -169,7 +169,7 @@ export class HomePage extends React.PureComponent<any, State>{
       if(this.mobile){
         servers = (
           <div className="card-list">
-            {this.getServers().map((server: Server) => <ServerCard key={`${server.address}:${server.port}`} server={server}/>)}
+            {this.getServers().map((server: IServer) => <ServerCard key={`${server.address}:${server.port}`} server={server}/>)}
           </div>
         );
       }else{
@@ -190,7 +190,7 @@ export class HomePage extends React.PureComponent<any, State>{
               <List
                 items={this.getServers()}
                 increment={settings.getBool(settings.COMPACT_TABLES) ? 28 : 36}
-                render={(server: Server) =>
+                render={(server: IServer) =>
                   <ServerRow key={`${server.address}:${server.port}`} server={server} onMouseMove={!settings.getBool(settings.INFO_CARDS) ? undefined : (e) => {
                     if(this.state.infoServer?.address !== server.address || this.state.infoServer?.port !== server.port){
                       this.setState({infoServer: server});
@@ -230,7 +230,7 @@ export class HomePage extends React.PureComponent<any, State>{
     let observerCount = 0;
     let timestamp = -1;
     for(const server of this.state.servers){
-      const serverObserverCount = server.players.filter((player: Player) => player.team === "Observer").length;
+      const serverObserverCount = server.players.filter((player: IPlayer) => player.team === "Observer").length;
       observerCount += serverObserverCount;
       playerCount += server.players.length - serverObserverCount;
 
@@ -276,7 +276,7 @@ export class HomePage extends React.PureComponent<any, State>{
                   </tr>
                 </thead>
                 <tbody>
-                  {this.state.infoServer.players.sort(playerSort).map((player: Player) =>
+                  {this.state.infoServer.players.sort(playerSort).map((player: IPlayer) =>
                     <PlayerRow key={`${player.callsign}:${player.server}`} player={player} showServer={false} showFriend={false}/>
                   )}
                 </tbody>
@@ -291,11 +291,11 @@ export class HomePage extends React.PureComponent<any, State>{
                 </tr>
               </thead>
               <tbody>
-                {this.state.infoServer.teams.sort(teamSort).map((team: Team) =>
+                {this.state.infoServer.teams.sort(teamSort).map((team: ITeam) =>
                   <tr key={team.name}>
                     <td><b>{team.name}</b></td>
                     <td>{team.wins !== undefined && team.losses !== undefined && team.wins - team.losses}</td>
-                    <td>{this.state.infoServer?.players.filter((player: Player) => player.team === team.name).length} / {team.maxPlayers}</td>
+                    <td>{this.state.infoServer?.players.filter((player: IPlayer) => player.team === team.name).length} / {team.maxPlayers}</td>
                   </tr>
                 )}
               </tbody>

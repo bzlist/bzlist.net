@@ -2,14 +2,14 @@ import React from "react";
 import {Link} from "react-router-dom";
 
 import {settings, friendPlayer, isPlayerFriend, joinGame, shouldIgnoreClick} from "lib";
-import {Player} from "models";
+import {IPlayer} from "models";
 import {Icon} from "components";
 import {setDialog, showDialog} from "App";
 
-export const playerSort = (a: Player, b: Player): 1 | -1 => a.team === "Observer" ? 1 : b.team === "Observer" ? -1 : (a.wins || 0) - (a.losses || 0) > (b.wins || 0) - (b.losses || 0) ? -1 : 1;
+export const playerSort = (a: IPlayer, b: IPlayer): 1 | -1 => a.team === "Observer" ? 1 : b.team === "Observer" ? -1 : (a.wins || 0) - (a.losses || 0) > (b.wins || 0) - (b.losses || 0) ? -1 : 1;
 
 interface Props{
-  player: Player;
+  player: IPlayer;
   showServer?: boolean;
   showMotto?: boolean;
   showFriend: boolean;
@@ -74,8 +74,11 @@ class PlayerBase extends React.Component<Props, State>{
           </tbody>
         </table>
         <div className="btn-list">
-          <button className="btn btn-primary" onClick={() => {showDialog(false); joinGame(player.server, player.team);}}>Join</button>
-          {showServer && <Link onClick={() => showDialog(false)} to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`} className="btn btn-outline">View Server</Link>}
+          <button className="btn btn-primary" onClick={() => {
+            showDialog(false);
+            joinGame(player.server ?? "", player.team);
+          }}>Join</button>
+          {showServer && <Link onClick={() => showDialog(false)} to={`/s/${player.server?.split(":")[0]}/${player.server?.split(":")[1]}`} className="btn btn-outline">View Server</Link>}
         </div>
       </>
     });
@@ -129,7 +132,7 @@ export class PlayerCard extends PlayerBase{
             }
             <tr>
               <td>Server</td>
-              <td><Link to={`/s/${player.server.split(":")[0]}/${player.server.split(":")[1]}`}>{player.server}</Link></td>
+              <td><Link to={`/s/${player.server?.split(":")[0]}/${player.server?.split(":")[1]}`}>{player.server}</Link></td>
             </tr>
             {player.motto &&
               <tr>
