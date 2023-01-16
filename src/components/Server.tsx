@@ -44,7 +44,7 @@ export class ServerRow extends ServerBase{
         <td>{this.props.server.players.length}</td>
         <td>{this.props.server.address}:{this.props.server.port}</td>
         <td>
-          <span aria-label={this.props.server.country}><img src={`/images/country-flags/${this.props.server.countryCode.toLowerCase()}.svg`} height="32px" alt={this.props.server.countryCode}/></span>
+          <span aria-label={this.props.server.country}><img src={`/images/country-flags/${this.props.server.countryCode.toLowerCase()}.svg`} height="16px" alt={this.props.server.countryCode}/></span>
         </td>
         <td><span aria-label={verboseGameStyle(this.props.server.style)}>{this.props.server.style}</span></td>
         <td>{this.props.server.title}</td>
