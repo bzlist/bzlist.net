@@ -261,7 +261,7 @@ export class ServerDetailsPage extends React.PureComponent<Props, State>{
             } aria-label="Share">{Icon("share", false)}</button>
           </div>}
           <div>
-            <img src={`/images/country-flags/${this.state.server.countryCode.toLowerCase()}.svg`} style={{margin:"0 4px 0 0"}} alt=""/>
+            <img src={`/images/country-flags/${this.state.server.countryCode.toLowerCase()}.svg`} height="32px" style={{margin:"0 4px 0 0"}} alt=""/>
             {this.state.server.country}
           </div>
           <div><b>{autoPlural(`${this.state.server.players.length} Player`)}</b></div>
